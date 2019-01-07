@@ -12,6 +12,8 @@
 		117905B921E391980019EEAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117905B721E391980019EEAA /* Main.storyboard */; };
 		117905BB21E3919A0019EEAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 117905BA21E3919A0019EEAA /* Assets.xcassets */; };
 		117905BE21E3919A0019EEAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117905BC21E3919A0019EEAA /* LaunchScreen.storyboard */; };
+		117905CA21E3DBD90019EEAA /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905C921E3DBD90019EEAA /* Receipt.swift */; };
+		117905CC21E3DD820019EEAA /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905CB21E3DD820019EEAA /* Category.swift */; };
 		CE9E8CE33B597F78416F2287 /* Pods_KeepReceipt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C013AC9315C3515CB64F4A /* Pods_KeepReceipt.framework */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +26,8 @@
 		117905BA21E3919A0019EEAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		117905BD21E3919A0019EEAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		117905BF21E3919A0019EEAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		117905C921E3DBD90019EEAA /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		117905CB21E3DD820019EEAA /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		64C013AC9315C3515CB64F4A /* Pods_KeepReceipt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KeepReceipt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C17B31690DDEB95C096260ED /* Pods-KeepReceipt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepReceipt.release.xcconfig"; path = "Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,6 +65,9 @@
 		117905B221E391980019EEAA /* KeepReceipt */ = {
 			isa = PBXGroup;
 			children = (
+				117905C821E3DB620019EEAA /* View */,
+				117905C721E3DB5A0019EEAA /* Controller */,
+				117905C621E3DB4D0019EEAA /* Model */,
 				117905B321E391980019EEAA /* AppDelegate.swift */,
 				117905B521E391980019EEAA /* ViewController.swift */,
 				117905B721E391980019EEAA /* Main.storyboard */,
@@ -69,6 +76,29 @@
 				117905BF21E3919A0019EEAA /* Info.plist */,
 			);
 			path = KeepReceipt;
+			sourceTree = "<group>";
+		};
+		117905C621E3DB4D0019EEAA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				117905C921E3DBD90019EEAA /* Receipt.swift */,
+				117905CB21E3DD820019EEAA /* Category.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		117905C721E3DB5A0019EEAA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		117905C821E3DB620019EEAA /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		70585BA05D90DDA4A5B61332 /* Frameworks */ = {
@@ -224,8 +254,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				117905CA21E3DBD90019EEAA /* Receipt.swift in Sources */,
 				117905B621E391980019EEAA /* ViewController.swift in Sources */,
 				117905B421E391980019EEAA /* AppDelegate.swift in Sources */,
+				117905CC21E3DD820019EEAA /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
