@@ -9,10 +9,9 @@ target 'KeepReceipt' do
     pod 'RealmSwift'
     pod 'SVProgressHUD'
     pod 'NewPopMenu'
-    pod 'SwipeCellKit'
     pod 'FSCalendar'
     pod 'ImageViewer'
-    pod 'SnapKit', '~> 4.0.0'
     pod 'DZNEmptyDataSet'
+    pod 'Eureka'
 
 end

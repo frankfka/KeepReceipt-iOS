@@ -92,21 +92,20 @@
                                             <constraint firstAttribute="height" constant="200" id="PU6-ib-fcF"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Arv-p2-p9b">
-                                        <rect key="frame" x="54" y="225" width="267" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="9yl-mm-WFh">
+                                        <rect key="frame" x="0.0" y="200" width="375" height="403"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                    </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="Arv-p2-p9b" firstAttribute="top" secondItem="JjH-QQ-2K3" secondAttribute="bottom" constant="25" id="2fE-bb-yCh"/>
+                                    <constraint firstAttribute="bottom" secondItem="9yl-mm-WFh" secondAttribute="bottom" id="23f-sZ-8zm"/>
                                     <constraint firstItem="JjH-QQ-2K3" firstAttribute="leading" secondItem="G5K-ov-M1d" secondAttribute="leading" id="8MJ-wE-9Vf"/>
+                                    <constraint firstItem="9yl-mm-WFh" firstAttribute="leading" secondItem="G5K-ov-M1d" secondAttribute="leading" id="KbT-6Q-KTI"/>
+                                    <constraint firstItem="9yl-mm-WFh" firstAttribute="top" secondItem="JjH-QQ-2K3" secondAttribute="bottom" id="M4x-ft-0dG"/>
                                     <constraint firstItem="JjH-QQ-2K3" firstAttribute="top" secondItem="G5K-ov-M1d" secondAttribute="top" id="PVs-Pv-vFf"/>
-                                    <constraint firstItem="Arv-p2-p9b" firstAttribute="leading" secondItem="G5K-ov-M1d" secondAttribute="leading" constant="54" id="THf-ua-lCK"/>
                                     <constraint firstAttribute="trailing" secondItem="JjH-QQ-2K3" secondAttribute="trailing" id="Z0e-iM-Nsx"/>
-                                    <constraint firstItem="Arv-p2-p9b" firstAttribute="centerX" secondItem="JjH-QQ-2K3" secondAttribute="centerX" id="cqX-Aw-RTh"/>
+                                    <constraint firstAttribute="trailing" secondItem="9yl-mm-WFh" secondAttribute="trailing" id="abY-vC-YuL"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -132,7 +131,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="receiptImageView" destination="JjH-QQ-2K3" id="cYB-wp-KMA"/>
-                        <outlet property="vendorTextField" destination="Arv-p2-p9b" id="JpK-xN-ThV"/>
+                        <outlet property="tableView" destination="9yl-mm-WFh" id="euC-wZ-uHc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3py-yi-Fi7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -169,5 +168,4 @@
             <point key="canvasLocation" x="-122.40000000000001" y="98.50074962518741"/>
         </scene>
     </scenes>
-    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

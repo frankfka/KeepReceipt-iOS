@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import Eureka
 
-class AddReceiptViewController: UIViewController {
+class AddReceiptViewController: FormViewController {
+    
+    // Struct for form items tag constants
+    struct FormItems {
+        static let name = "name"
+        static let birthDate = "birthDate"
+        static let like = "like"
+    }
     
     var receiptImage: UIImage?
     
@@ -19,13 +27,25 @@ class AddReceiptViewController: UIViewController {
     
     // UI Stuff
     @IBOutlet weak var receiptImageView: UIImageView!
-    @IBOutlet weak var vendorTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if let image = receiptImage {
             receiptImageView.image = image
+        }
+        
+        form +++ Section("About You")
+            <<< TextRow(FormItems.name) { row in
+                row.title = "Name"
+                row.placeholder = "Your Name"
+            }
+            <<< DateRow(FormItems.birthDate) { row in
+                row.title = "Birthday"
+            }
+            <<< CheckRow(FormItems.like) { row in
+                row.title = "I like Eureka"
+                row.value = true
         }
         
     }
