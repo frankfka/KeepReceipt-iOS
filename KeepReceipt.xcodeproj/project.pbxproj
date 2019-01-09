@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		117905B421E391980019EEAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905B321E391980019EEAA /* AppDelegate.swift */; };
-		117905B621E391980019EEAA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905B521E391980019EEAA /* ViewController.swift */; };
 		117905B921E391980019EEAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117905B721E391980019EEAA /* Main.storyboard */; };
 		117905BB21E3919A0019EEAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 117905BA21E3919A0019EEAA /* Assets.xcassets */; };
 		117905BE21E3919A0019EEAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117905BC21E3919A0019EEAA /* LaunchScreen.storyboard */; };
 		117905CA21E3DBD90019EEAA /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905C921E3DBD90019EEAA /* Receipt.swift */; };
 		117905CC21E3DD820019EEAA /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905CB21E3DD820019EEAA /* Category.swift */; };
+		1179060021E5AAA50019EEAA /* AllReceiptsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905FF21E5AAA50019EEAA /* AllReceiptsTableViewController.swift */; };
+		1179060221E5AEC30019EEAA /* RealmConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060121E5AEC30019EEAA /* RealmConfig.swift */; };
+		1179060421E5B9540019EEAA /* AddReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060321E5B9540019EEAA /* AddReceiptViewController.swift */; };
 		CE9E8CE33B597F78416F2287 /* Pods_KeepReceipt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C013AC9315C3515CB64F4A /* Pods_KeepReceipt.framework */; };
 /* End PBXBuildFile section */
 
@@ -21,13 +23,15 @@
 		10CBB929F2160907E4CE89E3 /* Pods-KeepReceipt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepReceipt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt.debug.xcconfig"; sourceTree = "<group>"; };
 		117905B021E391980019EEAA /* KeepReceipt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeepReceipt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		117905B321E391980019EEAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		117905B521E391980019EEAA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		117905B821E391980019EEAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		117905BA21E3919A0019EEAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		117905BD21E3919A0019EEAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		117905BF21E3919A0019EEAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		117905C921E3DBD90019EEAA /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
 		117905CB21E3DD820019EEAA /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		117905FF21E5AAA50019EEAA /* AllReceiptsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReceiptsTableViewController.swift; sourceTree = "<group>"; };
+		1179060121E5AEC30019EEAA /* RealmConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConfig.swift; sourceTree = "<group>"; };
+		1179060321E5B9540019EEAA /* AddReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReceiptViewController.swift; sourceTree = "<group>"; };
 		64C013AC9315C3515CB64F4A /* Pods_KeepReceipt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KeepReceipt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C17B31690DDEB95C096260ED /* Pods-KeepReceipt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepReceipt.release.xcconfig"; path = "Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,7 +73,6 @@
 				117905C721E3DB5A0019EEAA /* Controller */,
 				117905C621E3DB4D0019EEAA /* Model */,
 				117905B321E391980019EEAA /* AppDelegate.swift */,
-				117905B521E391980019EEAA /* ViewController.swift */,
 				117905B721E391980019EEAA /* Main.storyboard */,
 				117905BA21E3919A0019EEAA /* Assets.xcassets */,
 				117905BC21E3919A0019EEAA /* LaunchScreen.storyboard */,
@@ -83,6 +86,7 @@
 			children = (
 				117905C921E3DBD90019EEAA /* Receipt.swift */,
 				117905CB21E3DD820019EEAA /* Category.swift */,
+				1179060121E5AEC30019EEAA /* RealmConfig.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -97,6 +101,8 @@
 		117905C821E3DB620019EEAA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				117905FF21E5AAA50019EEAA /* AllReceiptsTableViewController.swift */,
+				1179060321E5B9540019EEAA /* AddReceiptViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -255,8 +261,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				117905CA21E3DBD90019EEAA /* Receipt.swift in Sources */,
-				117905B621E391980019EEAA /* ViewController.swift in Sources */,
+				1179060421E5B9540019EEAA /* AddReceiptViewController.swift in Sources */,
 				117905B421E391980019EEAA /* AppDelegate.swift in Sources */,
+				1179060221E5AEC30019EEAA /* RealmConfig.swift in Sources */,
+				1179060021E5AAA50019EEAA /* AllReceiptsTableViewController.swift in Sources */,
 				117905CC21E3DD820019EEAA /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
