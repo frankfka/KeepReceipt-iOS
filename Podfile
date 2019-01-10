@@ -10,7 +10,7 @@ target 'KeepReceipt' do
     pod 'SVProgressHUD'
     pod 'NewPopMenu'
     pod 'FSCalendar'
-    pod 'ImageViewer'
+    pod 'SimpleImageViewer', '~> 1.1.1'
     pod 'DZNEmptyDataSet'
     pod 'Eureka'
 

@@ -2,22 +2,22 @@ PODS:
   - DZNEmptyDataSet (1.8.1)
   - Eureka (4.3.1)
   - FSCalendar (2.8.0)
-  - ImageViewer (5.0.0)
   - NewPopMenu (2.1.1)
   - Realm (3.12.0):
     - Realm/Headers (= 3.12.0)
   - Realm/Headers (3.12.0)
   - RealmSwift (3.12.0):
     - Realm (= 3.12.0)
+  - SimpleImageViewer (1.1.1)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - DZNEmptyDataSet
   - Eureka
   - FSCalendar
-  - ImageViewer
   - NewPopMenu
   - RealmSwift
+  - SimpleImageViewer (~> 1.1.1)
   - SVProgressHUD
 
 SPEC REPOS:
@@ -25,22 +25,22 @@ SPEC REPOS:
     - DZNEmptyDataSet
     - Eureka
     - FSCalendar
-    - ImageViewer
     - NewPopMenu
     - Realm
     - RealmSwift
+    - SimpleImageViewer
     - SVProgressHUD
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Eureka: 28ea296f06710f6745266b71f17862048941a32d
   FSCalendar: 3a5ed3636e2ba1b83ebebfcf0c2603105a6f5efe
-  ImageViewer: 3def6e39c6979ce3e9d001c78eec0d8b895f2f73
   NewPopMenu: 60d67846a401964dcaa51bffb792f04f6fe2fc76
   Realm: cdaef23c4ddb36ab1ddffed23f5a7f3332fc5585
   RealmSwift: 5576324033f0aa5ef1e0a839a3da2281dff47a7f
+  SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 3d791bf16b26a6e5a4f80022fc9779edb451e16f
+PODFILE CHECKSUM: 6500f732b07e6bdce8def2ca48e33550694d9d33
 
 COCOAPODS: 1.5.3
