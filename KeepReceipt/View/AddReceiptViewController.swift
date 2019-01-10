@@ -8,18 +8,21 @@
 
 import UIKit
 import Eureka
-import SVProgressHUD
 import SimpleImageViewer
 import RealmSwift
 
 class AddReceiptViewController: FormViewController {
     
     // Constants for all the form text/ID's
-    let VENDOR_NAME_TAG = "vendorName"
-    let VENDOR_NAME_TITLE = "Vendor Name"
-    let VENDOR_NAME_PLACEHOLDER = "Enter the vendor name"
-    let TXN_AMT_TAG = "txnAmount"
-    let TXN_DATE_TAG = "txnDate"
+    private let SECTION_TITLE = "Receipt Details"
+    private let VENDOR_NAME_TAG = "vendorName"
+    private let VENDOR_NAME_TITLE = "Vendor Name"
+    private let VENDOR_NAME_PLACEHOLDER = "Enter the vendor name"
+    private let TXN_AMT_TAG = "txnAmount"
+    private let TXN_AMT_TITLE = "Amount"
+    private let TXN_AMT_PLACEHOLDER = "Enter the transaction amount"
+    private let TXN_DATE_TAG = "txnDate"
+    private let TXN_DATE_TITLE = "Transaction Date"
     
     let realm = try! Realm(configuration: RealmConfig.defaultConfig())
     var receiptImage: UIImage?
@@ -27,7 +30,7 @@ class AddReceiptViewController: FormViewController {
     var statedAmount: Double?
     var statedDate: Date?
     
-    // UI Stuff
+    // UI Variables
     @IBOutlet weak var receiptImageView: UIImageView!
     override var preferredStatusBarStyle: UIStatusBarStyle {
         // Switch status bar to white
@@ -41,30 +44,44 @@ class AddReceiptViewController: FormViewController {
         if let image = receiptImage {
             receiptImageView.image = image
             
+            // Add a recognizer to the ImageView so we can expand it on tap
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
             receiptImageView.isUserInteractionEnabled = true
             receiptImageView.addGestureRecognizer(tapGestureRecognizer)
         }
+        
+        // Create form elements
         setUpForm()
         
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+        
+        // Load the entered values within the form & validate
         getEnteredValues()
-        if validateOrShowError() {
-            if let savedImage = ImageService.saveImage(for: receiptImage!) {
+        if validateFormFields() {
+            if let savedImageId = ImageService.saveImageAndGetId(for: receiptImage!) {
                 
-                print ("Image saved successfully")
-                receiptImageView.image = ImageService.getImage(for: savedImage)!
+                receiptImageView.image = ImageService.getImage(for: savedImageId)!
+                let newReceipt = Receipt()
+                newReceipt.receiptId = savedImageId
+                newReceipt.vendor = statedVendor!
+                newReceipt.amount = statedAmount!
+                newReceipt.transactionTime = statedDate!
+                try! realm.write {
+                    realm.add(newReceipt)
+                }
                 
+                // Dismiss VC and show success
+                UIService.showHUDWithNoAction(isSuccessful: true, with: "Receipt Saved")
+                dismiss(animated: true, completion: nil)
+                
+            } else {
+                UIService.showHUDWithNoAction(isSuccessful: false, with: "Something went wrong, please try again")
             }
-//            let newReciept = Receipt()
-//            newReciept.vendor = statedVendor!
-//            newReciept.amount = statedAmount!
-//            newReciept.transactionTime = statedDate!
-//            try! realm.write {
-//                realm.add(newReciept)
-//            }
+        } else {
+            // Show error prompt
+            UIService.showHUDWithNoAction(isSuccessful: false, with: "Please fill out all fields")
         }
     }
     
@@ -73,17 +90,17 @@ class AddReceiptViewController: FormViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
-    {
+    // We use the SimpleImageViewer library to show an activity with fullscreen image
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        
         if let tappedImage = tapGestureRecognizer.view as? UIImageView {
-            
             let imageViewerConfig = ImageViewerConfiguration { config in
                 config.imageView = tappedImage
             }
             let imageViewerController = ImageViewerController(configuration: imageViewerConfig)
             present(imageViewerController, animated: true)
-            
         }
+        
     }
     
     // Set up form using the Eureka library
@@ -92,8 +109,7 @@ class AddReceiptViewController: FormViewController {
         // Enables smooth scrolling between form elements
         animateScroll = true
         
-        // TODO replace all of these with constants
-        form +++ Section("Receipt Details")
+        form +++ Section(SECTION_TITLE)
             <<< TextRow() { row in
                 row.tag = VENDOR_NAME_TAG
                 row.title = VENDOR_NAME_TITLE
@@ -101,12 +117,12 @@ class AddReceiptViewController: FormViewController {
             }
             <<< DecimalRow() { row in
                 row.tag = TXN_AMT_TAG
-                row.title = "Amount"
-                row.placeholder = "Enter the transaction amount"
+                row.title = TXN_AMT_TITLE
+                row.placeholder = TXN_AMT_PLACEHOLDER
             }
             <<< DateRow(){ row in
                 row.tag = TXN_DATE_TAG
-                row.title = "Transaction Date"
+                row.title = TXN_DATE_TITLE
                 // Set to current date
                 row.value = Date()
         }
@@ -121,11 +137,9 @@ class AddReceiptViewController: FormViewController {
     }
     
     // Returns true if all fields are filled in
-    private func validateOrShowError() -> Bool {
+    private func validateFormFields() -> Bool {
         // No need to check date because it will always be non-nil
         if statedVendor == nil || statedAmount == nil {
-            SVProgressHUD.showError(withStatus: "Please fill out all fields")
-            SVProgressHUD.dismiss(withDelay: TimeInterval(2))
             return false
         }
         return true

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 import RealmSwift
 
 class AllReceiptsTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -28,9 +27,15 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
         displayedReceipts = realm.objects(Receipt.self)
 
         // Register custom tableview cell
-//        tableView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellReuseIdentifier: "restaurantCell")
+//        tableView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellReuseIdentifier: "ReceiptTableViewCell")
         
         
+    }
+    
+    // Reload tableview every time we return to this VC
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -41,10 +46,10 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Get an unused cell - TODO use a formatted cell instead
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tempReceiptCell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ReceiptTableViewCell") as! ReceiptTableViewCell
         // Don't do anything if the receipt is somehow nil
         if let receipt = displayedReceipts?[indexPath.row] {
-            cell.textLabel?.text = receipt.vendor
+            cell.initializeUI(for: receipt)
         }
         return cell
         
@@ -59,8 +64,7 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
             present(takeImageVC, animated: true)
         }
         else {
-            SVProgressHUD.showError(withStatus: "No Camera is Available")
-            SVProgressHUD.dismiss(withDelay: TimeInterval(2))
+            UIService.showHUDWithNoAction(isSuccessful: false, with: "No camera available")
         }
     }
     
