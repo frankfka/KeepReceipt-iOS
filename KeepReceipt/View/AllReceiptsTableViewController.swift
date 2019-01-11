@@ -15,6 +15,7 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
     var allReceipts: Results<Receipt>?
     // Displayed may not be all in the case that a search is entered
     var displayedReceipts: Results<Receipt>?
+    var selectedReceipt: Receipt?
     
     // For the add button
     var receiptImageToAdd: UIImage?
@@ -27,7 +28,7 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
         displayedReceipts = realm.objects(Receipt.self)
 
         // Register custom tableview cell
-//        tableView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellReuseIdentifier: "ReceiptTableViewCell")
+        tableView.register(UINib(nibName: "ReceiptTableViewCell", bundle: nil), forCellReuseIdentifier: "ReceiptTableViewCell")
         
         
     }
@@ -52,6 +53,14 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
             cell.initializeUI(for: receipt)
         }
         return cell
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // If we have multiple tables, will need to check the table but we can ignore that for now
+        selectedReceipt = displayedReceipts![indexPath.row]
+        performSegue(withIdentifier: "ReceiptListToReceiptSegue", sender: self)
         
     }
 
@@ -87,6 +96,10 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
         if segue.identifier == "AllReceiptsToAddReceipt" {
             let destinationVC = segue.destination as! AddReceiptViewController
             destinationVC.receiptImage = receiptImageToAdd
+        } else if segue.identifier == "ReceiptListToReceiptSegue" {
+            // There should be a receipt specified
+            let destinationVC = segue.destination as! ViewReceiptViewController
+            destinationVC.receipt = selectedReceipt
         }
         // Else do nothing
     }

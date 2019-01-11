@@ -20,6 +20,9 @@
 		1179060921E788220019EEAA /* UIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060821E788220019EEAA /* UIService.swift */; };
 		1179060C21E78C150019EEAA /* ReceiptTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060A21E78C150019EEAA /* ReceiptTableViewCell.swift */; };
 		1179060D21E78C150019EEAA /* ReceiptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1179060B21E78C150019EEAA /* ReceiptTableViewCell.xib */; };
+		1179060F21E84CD10019EEAA /* TextFormatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060E21E84CD10019EEAA /* TextFormatService.swift */; };
+		1179061121E8D7DB0019EEAA /* ViewReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179061021E8D7DB0019EEAA /* ViewReceiptViewController.swift */; };
+		1179061321E8F8090019EEAA /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179061221E8F8090019EEAA /* DatabaseService.swift */; };
 		CE9E8CE33B597F78416F2287 /* Pods_KeepReceipt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C013AC9315C3515CB64F4A /* Pods_KeepReceipt.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +43,9 @@
 		1179060821E788220019EEAA /* UIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIService.swift; sourceTree = "<group>"; };
 		1179060A21E78C150019EEAA /* ReceiptTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptTableViewCell.swift; sourceTree = "<group>"; };
 		1179060B21E78C150019EEAA /* ReceiptTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReceiptTableViewCell.xib; sourceTree = "<group>"; };
+		1179060E21E84CD10019EEAA /* TextFormatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormatService.swift; sourceTree = "<group>"; };
+		1179061021E8D7DB0019EEAA /* ViewReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewReceiptViewController.swift; sourceTree = "<group>"; };
+		1179061221E8F8090019EEAA /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		64C013AC9315C3515CB64F4A /* Pods_KeepReceipt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KeepReceipt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C17B31690DDEB95C096260ED /* Pods-KeepReceipt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepReceipt.release.xcconfig"; path = "Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,6 +120,7 @@
 				1179060321E5B9540019EEAA /* AddReceiptViewController.swift */,
 				1179060A21E78C150019EEAA /* ReceiptTableViewCell.swift */,
 				1179060B21E78C150019EEAA /* ReceiptTableViewCell.xib */,
+				1179061021E8D7DB0019EEAA /* ViewReceiptViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -123,6 +130,8 @@
 			children = (
 				1179060621E6F8860019EEAA /* ImageService.swift */,
 				1179060821E788220019EEAA /* UIService.swift */,
+				1179060E21E84CD10019EEAA /* TextFormatService.swift */,
+				1179061221E8F8090019EEAA /* DatabaseService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -285,9 +294,12 @@
 				1179060421E5B9540019EEAA /* AddReceiptViewController.swift in Sources */,
 				117905B421E391980019EEAA /* AppDelegate.swift in Sources */,
 				1179060221E5AEC30019EEAA /* RealmConfig.swift in Sources */,
+				1179061321E8F8090019EEAA /* DatabaseService.swift in Sources */,
+				1179061121E8D7DB0019EEAA /* ViewReceiptViewController.swift in Sources */,
 				1179060021E5AAA50019EEAA /* AllReceiptsTableViewController.swift in Sources */,
 				117905CC21E3DD820019EEAA /* Category.swift in Sources */,
 				1179060721E6F8860019EEAA /* ImageService.swift in Sources */,
+				1179060F21E84CD10019EEAA /* TextFormatService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

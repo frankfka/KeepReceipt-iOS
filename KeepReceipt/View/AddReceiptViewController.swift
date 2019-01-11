@@ -68,9 +68,7 @@ class AddReceiptViewController: FormViewController {
                 newReceipt.vendor = statedVendor!
                 newReceipt.amount = statedAmount!
                 newReceipt.transactionTime = statedDate!
-                try! realm.write {
-                    realm.add(newReceipt)
-                }
+                DatabaseService.saveReceipt(newReceipt)
                 
                 // Dismiss VC and show success
                 UIService.showHUDWithNoAction(isSuccessful: true, with: "Receipt Saved")
