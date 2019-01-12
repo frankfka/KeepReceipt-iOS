@@ -11,7 +11,7 @@ import Eureka
 import SimpleImageViewer
 import RealmSwift
 
-class AddReceiptViewController: FormViewController {
+class AddOrEditReceiptViewController: FormViewController {
     
     // Constants for all the form text/ID's
     private let SECTION_TITLE = "Receipt Details"
@@ -25,7 +25,8 @@ class AddReceiptViewController: FormViewController {
     private let TXN_DATE_TITLE = "Transaction Date"
     
     let realm = try! Realm(configuration: RealmConfig.defaultConfig())
-    var receiptImage: UIImage?
+    var receiptToAddImage: UIImage? // If we're trying to add a new receipt
+    var receiptToEdit: Receipt?
     var statedVendor: String?
     var statedAmount: Double?
     var statedDate: Date?
@@ -40,18 +41,28 @@ class AddReceiptViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load image into view
-        if let image = receiptImage {
-            receiptImageView.image = image
-            
-            // Add a recognizer to the ImageView so we can expand it on tap
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-            receiptImageView.isUserInteractionEnabled = true
-            receiptImageView.addGestureRecognizer(tapGestureRecognizer)
-        }
-        
         // Create form elements
         setUpForm()
+        
+        // Check if we're adding or editing a receipt
+        if let image = receiptToAddImage {
+            title = "Add Receipt"
+            receiptImageView.image = image
+        } else if let receipt = receiptToEdit {
+            title = "Edit Receipt"
+            // Populate all the form elements
+            receiptImageView.image = ImageService.getImage(for: receipt.receiptId!)
+            setExistingValues()
+        } else {
+            // This is an error case, should never happen, dismiss to prevent further problems
+            print("AddOrEditViewController initialized without an image or a receipt")
+            dismiss(animated: true, completion: nil)
+        }
+        
+        // Add a recognizer to the ImageView so we can expand it on tap
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        receiptImageView.isUserInteractionEnabled = true
+        receiptImageView.addGestureRecognizer(tapGestureRecognizer)
         
     }
     
@@ -60,23 +71,42 @@ class AddReceiptViewController: FormViewController {
         // Load the entered values within the form & validate
         getEnteredValues()
         if validateFormFields() {
-            if let savedImageId = ImageService.saveImageAndGetId(for: receiptImage!) {
+            
+            // Case where we're adding a new receipt
+            if let receiptImage = receiptToAddImage {
                 
-                receiptImageView.image = ImageService.getImage(for: savedImageId)!
-                let newReceipt = Receipt()
-                newReceipt.receiptId = savedImageId
-                newReceipt.vendor = statedVendor!
-                newReceipt.amount = statedAmount!
-                newReceipt.transactionTime = statedDate!
-                DatabaseService.saveReceipt(newReceipt)
+                if let savedImageId = ImageService.saveImageAndGetId(for: receiptImage) {
+                    
+                    receiptImageView.image = ImageService.getImage(for: savedImageId)!
+                    let newReceipt = Receipt()
+                    newReceipt.receiptId = savedImageId
+                    newReceipt.vendor = statedVendor!
+                    newReceipt.amount = statedAmount!
+                    newReceipt.transactionTime = statedDate!
+                    DatabaseService.save(newReceipt)
+                    
+                    // Dismiss VC and show success
+                    UIService.showHUDWithNoAction(isSuccessful: true, with: "Receipt Saved")
+                    dismiss(animated: true, completion: nil)
+                    
+                } else {
+                    UIService.showHUDWithNoAction(isSuccessful: false, with: "Something went wrong, please try again")
+                }
+                
+            // Case where we're updating a receipt
+            } else if let receipt = receiptToEdit {
+                
+                try! realm.write {
+                    receipt.vendor = statedVendor!
+                    receipt.amount = statedAmount!
+                    receipt.transactionTime = statedDate!
+                }
                 
                 // Dismiss VC and show success
-                UIService.showHUDWithNoAction(isSuccessful: true, with: "Receipt Saved")
+                UIService.showHUDWithNoAction(isSuccessful: true, with: "Changes Saved")
                 dismiss(animated: true, completion: nil)
-                
-            } else {
-                UIService.showHUDWithNoAction(isSuccessful: false, with: "Something went wrong, please try again")
             }
+            
         } else {
             // Show error prompt
             UIService.showHUDWithNoAction(isSuccessful: false, with: "Please fill out all fields")
@@ -117,6 +147,10 @@ class AddReceiptViewController: FormViewController {
                 row.tag = TXN_AMT_TAG
                 row.title = TXN_AMT_TITLE
                 row.placeholder = TXN_AMT_PLACEHOLDER
+                row.displayValueFor = {
+                    // TODO this does not work on overwrite
+                    return $0.map { "$" + String(describing: $0) }
+                }
             }
             <<< DateRow(){ row in
                 row.tag = TXN_DATE_TAG
@@ -132,6 +166,13 @@ class AddReceiptViewController: FormViewController {
         statedVendor = enteredValues[VENDOR_NAME_TAG] as! String?
         statedAmount = enteredValues[TXN_AMT_TAG] as! Double?
         statedDate = enteredValues[TXN_DATE_TAG] as! Date?
+    }
+    
+    // Loads current receipt values into the form
+    private func setExistingValues() {
+        if let receipt = receiptToEdit {
+            form.setValues([VENDOR_NAME_TAG: receipt.vendor, TXN_AMT_TAG: receipt.amount, TXN_DATE_TAG: receipt.transactionTime])
+        }
     }
     
     // Returns true if all fields are filled in

@@ -56,6 +56,16 @@ class ImageService {
         }
     }
     
+    // Deletes the image with the file name, returns true if successful, false if not
+    static func deleteImage(with imageName: String) -> Bool {
+        do {
+            try FileManager.default.removeItem(at: documentPath.appendingPathComponent(imageName + fileTypeString))
+            return true
+        } catch {
+            return false
+        }
+    }
+    
     // Retrieves the image using the receipt ID
     static func getImage(for imageName: String) -> UIImage? {
         let filePath = documentPath.appendingPathComponent(imageName + fileTypeString)

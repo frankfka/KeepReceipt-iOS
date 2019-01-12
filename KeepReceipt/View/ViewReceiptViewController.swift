@@ -33,11 +33,20 @@ class ViewReceiptViewController: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        loadViews()
+    }
+    
 
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
-        
-        // TODO segue to edit
-        
+        performSegue(withIdentifier: "EditReceiptSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EditReceiptSegue" {
+            let destinationVC = segue.destination as! AddOrEditReceiptViewController
+            destinationVC.receiptToEdit = receipt
+        }
     }
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
@@ -47,7 +56,7 @@ class ViewReceiptViewController: UIViewController {
         // Delete action
         confirmationAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
             
-            // Delete the receipt
+            // Delete the receipt - including the image
             DatabaseService.deleteReceipt(self.receipt!)
             // Go back to list of receipts
             self.navigationController!.popViewController(animated: true)

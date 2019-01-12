@@ -173,7 +173,7 @@
         <!--New Receipt-->
         <scene sceneID="NiK-S3-8lK">
             <objects>
-                <viewController title="New Receipt" id="Qoh-ds-eVE" customClass="AddReceiptViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="New Receipt" id="Qoh-ds-eVE" customClass="AddOrEditReceiptViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dsG-A4-kX4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -190,7 +190,7 @@
                                     <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="Add Receipt" id="njT-tF-afj">
+                                    <navigationItem id="njT-tF-afj">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="vDJ-7W-5LN">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
@@ -293,7 +293,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="o4S-DA-G3f"/>
+        <segue reference="EtJ-jM-M6r"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

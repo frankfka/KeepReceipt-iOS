@@ -24,8 +24,8 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
         super.viewDidLoad()
         
         // Initialize the data
-        allReceipts = realm.objects(Receipt.self)
-        displayedReceipts = realm.objects(Receipt.self)
+        allReceipts = realm.objects(Receipt.self).sorted(byKeyPath: "transactionTime", ascending: false)
+        displayedReceipts = realm.objects(Receipt.self).sorted(byKeyPath: "transactionTime", ascending: false)
 
         // Register custom tableview cell
         tableView.register(UINib(nibName: "ReceiptTableViewCell", bundle: nil), forCellReuseIdentifier: "ReceiptTableViewCell")
@@ -94,8 +94,8 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AllReceiptsToAddReceipt" {
-            let destinationVC = segue.destination as! AddReceiptViewController
-            destinationVC.receiptImage = receiptImageToAdd
+            let destinationVC = segue.destination as! AddOrEditReceiptViewController
+            destinationVC.receiptToAddImage = receiptImageToAdd
         } else if segue.identifier == "ReceiptListToReceiptSegue" {
             // There should be a receipt specified
             let destinationVC = segue.destination as! ViewReceiptViewController

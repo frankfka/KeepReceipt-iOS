@@ -15,7 +15,7 @@
 		117905CC21E3DD820019EEAA /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905CB21E3DD820019EEAA /* Category.swift */; };
 		1179060021E5AAA50019EEAA /* AllReceiptsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905FF21E5AAA50019EEAA /* AllReceiptsTableViewController.swift */; };
 		1179060221E5AEC30019EEAA /* RealmConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060121E5AEC30019EEAA /* RealmConfig.swift */; };
-		1179060421E5B9540019EEAA /* AddReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060321E5B9540019EEAA /* AddReceiptViewController.swift */; };
+		1179060421E5B9540019EEAA /* AddOrEditReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060321E5B9540019EEAA /* AddOrEditReceiptViewController.swift */; };
 		1179060721E6F8860019EEAA /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060621E6F8860019EEAA /* ImageService.swift */; };
 		1179060921E788220019EEAA /* UIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060821E788220019EEAA /* UIService.swift */; };
 		1179060C21E78C150019EEAA /* ReceiptTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179060A21E78C150019EEAA /* ReceiptTableViewCell.swift */; };
@@ -38,7 +38,7 @@
 		117905CB21E3DD820019EEAA /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		117905FF21E5AAA50019EEAA /* AllReceiptsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReceiptsTableViewController.swift; sourceTree = "<group>"; };
 		1179060121E5AEC30019EEAA /* RealmConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConfig.swift; sourceTree = "<group>"; };
-		1179060321E5B9540019EEAA /* AddReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReceiptViewController.swift; sourceTree = "<group>"; };
+		1179060321E5B9540019EEAA /* AddOrEditReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditReceiptViewController.swift; sourceTree = "<group>"; };
 		1179060621E6F8860019EEAA /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		1179060821E788220019EEAA /* UIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIService.swift; sourceTree = "<group>"; };
 		1179060A21E78C150019EEAA /* ReceiptTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptTableViewCell.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				117905FF21E5AAA50019EEAA /* AllReceiptsTableViewController.swift */,
-				1179060321E5B9540019EEAA /* AddReceiptViewController.swift */,
+				1179060321E5B9540019EEAA /* AddOrEditReceiptViewController.swift */,
 				1179060A21E78C150019EEAA /* ReceiptTableViewCell.swift */,
 				1179060B21E78C150019EEAA /* ReceiptTableViewCell.xib */,
 				1179061021E8D7DB0019EEAA /* ViewReceiptViewController.swift */,
@@ -291,7 +291,7 @@
 				1179060C21E78C150019EEAA /* ReceiptTableViewCell.swift in Sources */,
 				117905CA21E3DBD90019EEAA /* Receipt.swift in Sources */,
 				1179060921E788220019EEAA /* UIService.swift in Sources */,
-				1179060421E5B9540019EEAA /* AddReceiptViewController.swift in Sources */,
+				1179060421E5B9540019EEAA /* AddOrEditReceiptViewController.swift in Sources */,
 				117905B421E391980019EEAA /* AppDelegate.swift in Sources */,
 				1179060221E5AEC30019EEAA /* RealmConfig.swift in Sources */,
 				1179061321E8F8090019EEAA /* DatabaseService.swift in Sources */,
