@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import EmptyDataSet_Swift
 
 class AllReceiptsTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -29,7 +30,11 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
 
         // Register custom tableview cell
         tableView.register(UINib(nibName: "ReceiptTableViewCell", bundle: nil), forCellReuseIdentifier: "ReceiptTableViewCell")
+        tableView.separatorStyle = .none
         
+        // Empty dataset stuff
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
         
     }
     
@@ -102,6 +107,34 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
             destinationVC.receipt = selectedReceipt
         }
         // Else do nothing
+    }
+    
+}
+
+extension AllReceiptsTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+    
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: "No Receipts Found")
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: "Tap '+' to add a new receipt.")
+    }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "emptyPlaceholder")
+    }
+    
+    func backgroundColor(forEmptyDataSet scrollView: UIScrollView) -> UIColor? {
+        return UIColor(named: "FFFFFF")
+    }
+    
+    func emptyDataSetWillAppear(_ scrollView: UIScrollView) {
+        tableView.separatorStyle = .none
+    }
+ 
+    func emptyDataSetWillDisappear(_ scrollView: UIScrollView) {
+        tableView.separatorStyle = .singleLine
     }
     
 }

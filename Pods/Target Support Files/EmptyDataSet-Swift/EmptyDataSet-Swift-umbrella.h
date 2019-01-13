@@ -10,8 +10,7 @@
 #endif
 #endif
 
-#import "UIScrollView+EmptyDataSet.h"
 
-FOUNDATION_EXPORT double DZNEmptyDataSetVersionNumber;
-FOUNDATION_EXPORT const unsigned char DZNEmptyDataSetVersionString[];
+FOUNDATION_EXPORT double EmptyDataSet_SwiftVersionNumber;
+FOUNDATION_EXPORT const unsigned char EmptyDataSet_SwiftVersionString[];
 

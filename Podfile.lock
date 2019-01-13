@@ -1,5 +1,5 @@
 PODS:
-  - DZNEmptyDataSet (1.8.1)
+  - EmptyDataSet-Swift (4.2.0)
   - Eureka (4.3.1)
   - FSCalendar (2.8.0)
   - NewPopMenu (2.1.1)
@@ -12,7 +12,7 @@ PODS:
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
-  - DZNEmptyDataSet
+  - EmptyDataSet-Swift (~> 4.2.0)
   - Eureka
   - FSCalendar
   - NewPopMenu
@@ -22,7 +22,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - DZNEmptyDataSet
+    - EmptyDataSet-Swift
     - Eureka
     - FSCalendar
     - NewPopMenu
@@ -32,7 +32,7 @@ SPEC REPOS:
     - SVProgressHUD
 
 SPEC CHECKSUMS:
-  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   Eureka: 28ea296f06710f6745266b71f17862048941a32d
   FSCalendar: 3a5ed3636e2ba1b83ebebfcf0c2603105a6f5efe
   NewPopMenu: 60d67846a401964dcaa51bffb792f04f6fe2fc76
@@ -41,6 +41,6 @@ SPEC CHECKSUMS:
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 6500f732b07e6bdce8def2ca48e33550694d9d33
+PODFILE CHECKSUM: 7306e676c60bafc3348b21044b7662df2244a091
 
 COCOAPODS: 1.5.3

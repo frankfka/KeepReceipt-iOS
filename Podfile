@@ -11,7 +11,7 @@ target 'KeepReceipt' do
     pod 'NewPopMenu'
     pod 'FSCalendar'
     pod 'SimpleImageViewer', '~> 1.1.1'
-    pod 'DZNEmptyDataSet'
+    pod 'EmptyDataSet-Swift', '~> 4.2.0'
     pod 'Eureka'
 
 end
