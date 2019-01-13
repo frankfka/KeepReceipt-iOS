@@ -18,6 +18,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Search for a receipt" id="Cu6-Jg-1Zt">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="tintColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <scopeButtonTitles>
+                                <string>Title</string>
+                                <string>Title</string>
+                            </scopeButtonTitles>
+                        </searchBar>
                         <connections>
                             <outlet property="dataSource" destination="rCF-qS-1R5" id="6aM-cP-TFQ"/>
                             <outlet property="delegate" destination="rCF-qS-1R5" id="FQX-eC-JPe"/>
@@ -32,6 +42,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="Cu6-Jg-1Zt" id="PQF-kI-f9z"/>
                         <segue destination="Qoh-ds-eVE" kind="presentation" identifier="AllReceiptsToAddReceipt" id="o4S-DA-G3f"/>
                         <segue destination="4K9-Ub-V7Y" kind="show" identifier="ReceiptListToReceiptSegue" id="nUa-T8-xtl"/>
                     </connections>

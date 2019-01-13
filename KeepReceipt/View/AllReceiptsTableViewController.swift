@@ -10,13 +10,14 @@ import UIKit
 import RealmSwift
 import EmptyDataSet_Swift
 
-class AllReceiptsTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AllReceiptsTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UISearchBarDelegate {
     
     let realm = try! Realm(configuration: RealmConfig.defaultConfig())
     var allReceipts: Results<Receipt>?
     // Displayed may not be all in the case that a search is entered
     var displayedReceipts: Results<Receipt>?
     var selectedReceipt: Receipt?
+    @IBOutlet weak var searchBar: UISearchBar!
     
     // For the add button
     var receiptImageToAdd: UIImage?
@@ -25,17 +26,23 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
         super.viewDidLoad()
         
         // Initialize the data
-        allReceipts = realm.objects(Receipt.self).sorted(byKeyPath: "transactionTime", ascending: false)
-        displayedReceipts = realm.objects(Receipt.self).sorted(byKeyPath: "transactionTime", ascending: false)
-
+        getAllReceipts()
+        
+        // Initialize search
+        searchBar.delegate = self
+        
         // Register custom tableview cell
         tableView.register(UINib(nibName: "ReceiptTableViewCell", bundle: nil), forCellReuseIdentifier: "ReceiptTableViewCell")
-        tableView.separatorStyle = .none
         
-        // Empty dataset stuff
+        // Empty dataset
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         
+    }
+    
+    func getAllReceipts() {
+        allReceipts = realm.objects(Receipt.self).sorted(byKeyPath: "transactionTime", ascending: false)
+        displayedReceipts = realm.objects(Receipt.self).sorted(byKeyPath: "transactionTime", ascending: false)
     }
     
     // Reload tableview every time we return to this VC
@@ -51,7 +58,6 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // Get an unused cell - TODO use a formatted cell instead
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReceiptTableViewCell") as! ReceiptTableViewCell
         // Don't do anything if the receipt is somehow nil
         if let receipt = displayedReceipts?[indexPath.row] {
@@ -82,6 +88,7 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
         }
     }
     
+    // Used to start a new activity to take an image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         let pickedImage = info[.originalImage] as? UIImage
@@ -109,8 +116,44 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
         // Else do nothing
     }
     
+    //MARK: - Search bar methods
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count > 0 {
+            var filteredReceipts = allReceipts!.filter("vendor CONTAINS[cd] '\(searchText)'")
+            if let amount = Double(string: searchText) {
+                // number entered, try searching in amount as well
+                filteredReceipts = filteredReceipts.filter("amount == \(amount)")
+            }
+            displayedReceipts = filteredReceipts.sorted(byKeyPath: "transactionTime", ascending: false)
+            tableView.reloadData()
+        } else {
+            getAllReceipts()
+            tableView.reloadData()
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        getAllReceipts()
+        tableView.reloadData()
+        searchBar.resignFirstResponder()
+    }
+    
 }
 
+// Extension for empty dataset methods
 extension AllReceiptsTableViewController: EmptyDataSetSource, EmptyDataSetDelegate {
     
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
