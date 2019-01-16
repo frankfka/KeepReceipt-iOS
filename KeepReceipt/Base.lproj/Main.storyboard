@@ -51,6 +51,34 @@
             </objects>
             <point key="canvasLocation" x="816.79999999999995" y="98.50074962518741"/>
         </scene>
+        <!--Pick Category Table View Controller-->
+        <scene sceneID="DxH-GC-hVq">
+            <objects>
+                <tableViewController id="WLg-0A-nIS" customClass="PickCategoryTableViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ODY-HX-MyO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="GUp-n3-fl9">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GUp-n3-fl9" id="wwt-mj-DFk">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="WLg-0A-nIS" id="4SM-9X-mWQ"/>
+                            <outlet property="delegate" destination="WLg-0A-nIS" id="RKy-Ua-e9R"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pxo-s9-9KA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2057" y="862"/>
+        </scene>
         <!--View Receipt View Controller-->
         <scene sceneID="QPG-5D-9Kg">
             <objects>
@@ -267,6 +295,7 @@
                     <connections>
                         <outlet property="receiptImageView" destination="cF8-eT-WJC" id="kKx-aM-GNO"/>
                         <outlet property="tableView" destination="9yl-mm-WFh" id="euC-wZ-uHc"/>
+                        <segue destination="WLg-0A-nIS" kind="presentation" identifier="PickCategoryForReceiptSegue" id="N8D-qk-5tx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3py-yi-Fi7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -303,7 +332,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="o4S-DA-G3f"/>
+        <segue reference="EtJ-jM-M6r"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

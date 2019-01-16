@@ -75,6 +75,7 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
         
     }
 
+    // Called when the add receipt button is tapped
     @IBAction func addNewReceiptPressed(_ sender: UIBarButtonItem) {
         
         // Alert controller to ask whether we want to import or take a photo

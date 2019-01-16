@@ -157,6 +157,12 @@ class AddOrEditReceiptViewController: FormViewController {
                 row.title = TXN_DATE_TITLE
                 // Set to current date
                 row.value = Date()
+            }
+            <<< LabelRow(){ row in
+                row.tag = "test"
+                row.title = "test"
+                }.onCellSelection { cell, row in
+                self.performSegue(withIdentifier: "PickCategoryForReceiptSegue", sender: self)
         }
     }
     
