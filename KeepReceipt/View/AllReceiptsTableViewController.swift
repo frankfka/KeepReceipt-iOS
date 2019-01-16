@@ -77,16 +77,36 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
 
     @IBAction func addNewReceiptPressed(_ sender: UIBarButtonItem) {
         
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let takeImageVC = UIImagePickerController()
-            takeImageVC.sourceType = .camera
-            takeImageVC.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
-            present(takeImageVC, animated: true)
-        }
-        else {
-            UIService.showHUDWithNoAction(isSuccessful: false, with: "No camera available")
-        }
+        // Alert controller to ask whether we want to import or take a photo
+        let addReceiptAlert = UIAlertController(title: "Add New Receipt", message: "Take a new photo or import an existing image", preferredStyle: .alert)
+        // Case where user wants to take a photo
+        addReceiptAlert.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                let takeImageVC = UIImagePickerController()
+                takeImageVC.sourceType = .camera
+                takeImageVC.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
+                self.present(takeImageVC, animated: true)
+            }
+            else {
+                UIService.showHUDWithNoAction(isSuccessful: false, with: "No camera available")
+            }
+        }))
+        // Case where user wants to import a photo
+        addReceiptAlert.addAction(UIAlertAction(title: "Import from Photos", style: .default, handler: { (action) in
+            let importImageVC = UIImagePickerController()
+            importImageVC.sourceType = .photoLibrary
+            importImageVC.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            importImageVC.navigationBar.barStyle = .default
+            self.present(importImageVC, animated: true)
+        }))
+        // Cancel
+        addReceiptAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(addReceiptAlert, animated: true, completion: nil)
+        
+        
     }
+    
     
     // Used to start a new activity to take an image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
