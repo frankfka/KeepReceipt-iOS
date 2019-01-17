@@ -51,34 +51,6 @@
             </objects>
             <point key="canvasLocation" x="816.79999999999995" y="98.50074962518741"/>
         </scene>
-        <!--Pick Category Table View Controller-->
-        <scene sceneID="DxH-GC-hVq">
-            <objects>
-                <tableViewController id="WLg-0A-nIS" customClass="PickCategoryTableViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ODY-HX-MyO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="GUp-n3-fl9">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GUp-n3-fl9" id="wwt-mj-DFk">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="WLg-0A-nIS" id="4SM-9X-mWQ"/>
-                            <outlet property="delegate" destination="WLg-0A-nIS" id="RKy-Ua-e9R"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pxo-s9-9KA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2057" y="862"/>
-        </scene>
         <!--View Receipt View Controller-->
         <scene sceneID="QPG-5D-9Kg">
             <objects>
@@ -295,12 +267,108 @@
                     <connections>
                         <outlet property="receiptImageView" destination="cF8-eT-WJC" id="kKx-aM-GNO"/>
                         <outlet property="tableView" destination="9yl-mm-WFh" id="euC-wZ-uHc"/>
-                        <segue destination="WLg-0A-nIS" kind="presentation" identifier="PickCategoryForReceiptSegue" id="N8D-qk-5tx"/>
+                        <segue destination="tVI-F3-N4I" kind="presentation" identifier="PickCategoryForReceiptSegue" id="D8v-k5-HHe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3py-yi-Fi7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1251" y="862"/>
+            <point key="canvasLocation" x="1283" y="863"/>
+        </scene>
+        <!--Pick Category View Controller-->
+        <scene sceneID="jTj-me-BRu">
+            <objects>
+                <viewController id="tVI-F3-N4I" customClass="PickCategoryViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i9y-YD-fAd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUP-jX-veG">
+                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                                <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Choose Category" id="hEf-BN-oLE">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="CAB-V6-Sbd">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="tVI-F3-N4I" id="iYD-OV-I3K"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="cwp-Wc-GKC">
+                                            <connections>
+                                                <action selector="doneButtonPressed:" destination="tVI-F3-N4I" id="ZiI-IL-Qrt"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0hu-mM-O6Z">
+                                <rect key="frame" x="0.0" y="64" width="414" height="628"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="4Is-ex-GNQ">
+                                    <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chooseCategoryCell" id="xYa-nt-H5z">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xYa-nt-H5z" id="wDf-Qw-eT3">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="tintColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAq-Ig-ojf">
+                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem title="Add" id="M3E-9D-vv8">
+                                        <color key="tintColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="addCategoryButtonPressed:" destination="tVI-F3-N4I" id="6gn-x3-oMo"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Delete" id="j5a-MX-71r">
+                                        <color key="tintColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="deleteCategoryButtonPressed:" destination="tVI-F3-N4I" id="1eM-z9-ajZ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="h93-lm-hH2" firstAttribute="bottom" secondItem="eAq-Ig-ojf" secondAttribute="bottom" id="98v-hr-p71"/>
+                            <constraint firstItem="h93-lm-hH2" firstAttribute="trailing" secondItem="0hu-mM-O6Z" secondAttribute="trailing" id="Lid-o6-nvm"/>
+                            <constraint firstItem="0hu-mM-O6Z" firstAttribute="leading" secondItem="h93-lm-hH2" secondAttribute="leading" id="MGO-8Z-kjV"/>
+                            <constraint firstItem="eAq-Ig-ojf" firstAttribute="trailing" secondItem="h93-lm-hH2" secondAttribute="trailing" id="NbA-Hd-8tX"/>
+                            <constraint firstItem="GUP-jX-veG" firstAttribute="trailing" secondItem="h93-lm-hH2" secondAttribute="trailing" id="TfY-cx-vep"/>
+                            <constraint firstItem="eAq-Ig-ojf" firstAttribute="top" secondItem="0hu-mM-O6Z" secondAttribute="bottom" id="Vwq-jy-EeE"/>
+                            <constraint firstItem="GUP-jX-veG" firstAttribute="leading" secondItem="h93-lm-hH2" secondAttribute="leading" id="a6x-fP-pyZ"/>
+                            <constraint firstItem="GUP-jX-veG" firstAttribute="top" secondItem="h93-lm-hH2" secondAttribute="top" id="bo8-tt-nM2"/>
+                            <constraint firstItem="eAq-Ig-ojf" firstAttribute="leading" secondItem="h93-lm-hH2" secondAttribute="leading" id="eAf-yc-SjG"/>
+                            <constraint firstItem="0hu-mM-O6Z" firstAttribute="top" secondItem="GUP-jX-veG" secondAttribute="bottom" id="jjc-hz-V8G"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="h93-lm-hH2"/>
+                    </view>
+                    <connections>
+                        <outlet property="addCategoryButton" destination="M3E-9D-vv8" id="efN-e8-iM2"/>
+                        <outlet property="cancelChooseButton" destination="CAB-V6-Sbd" id="jaP-YT-dJg"/>
+                        <outlet property="deleteCategoryButton" destination="j5a-MX-71r" id="f2s-yX-7SF"/>
+                        <outlet property="doneButton" destination="cwp-Wc-GKC" id="kF2-jk-1gN"/>
+                        <outlet property="tableView" destination="0hu-mM-O6Z" id="dr2-Xy-JK6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4fi-Gh-wO4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2018.840579710145" y="863.31521739130437"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="y4b-bV-oid">

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1177D87F21EFC30200DD9AD8 /* PickCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1177D87E21EFC30200DD9AD8 /* PickCategoryViewController.swift */; };
 		117905B421E391980019EEAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905B321E391980019EEAA /* AppDelegate.swift */; };
 		117905B921E391980019EEAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117905B721E391980019EEAA /* Main.storyboard */; };
 		117905BB21E3919A0019EEAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 117905BA21E3919A0019EEAA /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		10CBB929F2160907E4CE89E3 /* Pods-KeepReceipt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepReceipt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt.debug.xcconfig"; sourceTree = "<group>"; };
+		1177D87E21EFC30200DD9AD8 /* PickCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickCategoryViewController.swift; sourceTree = "<group>"; };
 		117905B021E391980019EEAA /* KeepReceipt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeepReceipt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		117905B321E391980019EEAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		117905B821E391980019EEAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				1179060A21E78C150019EEAA /* ReceiptTableViewCell.swift */,
 				1179060B21E78C150019EEAA /* ReceiptTableViewCell.xib */,
 				1179061021E8D7DB0019EEAA /* ViewReceiptViewController.swift */,
+				1177D87E21EFC30200DD9AD8 /* PickCategoryViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				1179060221E5AEC30019EEAA /* RealmConfig.swift in Sources */,
 				1179061321E8F8090019EEAA /* DatabaseService.swift in Sources */,
 				1179061121E8D7DB0019EEAA /* ViewReceiptViewController.swift in Sources */,
+				1177D87F21EFC30200DD9AD8 /* PickCategoryViewController.swift in Sources */,
 				1179060021E5AAA50019EEAA /* AllReceiptsTableViewController.swift in Sources */,
 				117905CC21E3DD820019EEAA /* Category.swift in Sources */,
 				1179060721E6F8860019EEAA /* ImageService.swift in Sources */,
