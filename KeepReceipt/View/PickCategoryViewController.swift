@@ -128,6 +128,9 @@ class PickCategoryViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
+        let parentVC = self.presentingViewController as! AddOrEditReceiptViewController
+        parentVC.setSelectedCategory(category: selectedCategory) 
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
