@@ -27,9 +27,14 @@ class AddOrEditReceiptViewController: FormViewController {
     private let CATEGORY_TITLE = "Category"
     
     let realm = try! Realm(configuration: RealmConfig.defaultConfig())
-    var receiptToAddImage: UIImage? // If we're trying to add a new receipt
+    
+    // ADDING RECEIPT
+    var receiptToAddImage: UIImage?
+    // EDITING RECEIPT
     var receiptToEdit: Receipt?
-    var previousCategory: Category? // Selected category before edit
+    var previousCategory: Category?
+    
+    // States from fields
     var statedVendor: String?
     var statedAmount: Double?
     var statedDate: Date?
@@ -56,15 +61,14 @@ class AddOrEditReceiptViewController: FormViewController {
             title = "Edit Receipt"
             // Populate all the form elements
             receiptImageView.image = ImageService.getImage(for: receipt.receiptId!)
+            // Set existing values and update views to match
             setExistingValues()
+            updateViews()
         } else {
             // This is an error case, should never happen, dismiss to prevent further problems
             print("AddOrEditViewController initialized without an image or a receipt")
             dismiss(animated: true, completion: nil)
         }
-        
-        // Update views to match existing values if they exist
-        updateViews()
         
         // Add a recognizer to the ImageView so we can expand it on tap
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
@@ -73,6 +77,16 @@ class AddOrEditReceiptViewController: FormViewController {
         
     }
     
+
+    // Updates view
+    private func updateViews() {
+        form.setValues([CATEGORY_TAG: getSelectedCategoryName()])
+        if let receipt = receiptToEdit {
+            form.setValues([VENDOR_NAME_TAG: receipt.vendor, TXN_AMT_TAG: receipt.amount, TXN_DATE_TAG: receipt.transactionTime])
+        }
+    }
+    
+    // MARK: - Button Pressed Methods
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         
         // Load the entered values within the form & validate
@@ -84,13 +98,14 @@ class AddOrEditReceiptViewController: FormViewController {
                 
                 if let savedImageId = ImageService.saveImageAndGetId(for: receiptImage) {
                     
-                    receiptImageView.image = ImageService.getImage(for: savedImageId)!
+                    // Create a new receipt with the stuff in the fields
                     let newReceipt = Receipt()
                     newReceipt.receiptId = savedImageId
                     newReceipt.vendor = statedVendor!
                     newReceipt.amount = statedAmount!
                     newReceipt.transactionTime = statedDate!
                     DatabaseService.save(newReceipt)
+                    // Save the receipt, then we can add it to a category if one is specified
                     if let category = statedCategory {
                         DatabaseService.updateCategory(for: newReceipt, from: nil, to: category)
                     }
@@ -106,6 +121,7 @@ class AddOrEditReceiptViewController: FormViewController {
             // Case where we're updating a receipt
             } else if let receipt = receiptToEdit {
                 
+                // Update stuff, these methods will handle all the logic
                 DatabaseService.updateReceipt(receipt, newVendor: statedVendor!, newAmount: statedAmount!, newDate: statedDate!)
                 DatabaseService.updateCategory(for: receipt, from: previousCategory, to: statedCategory)
                 
@@ -115,16 +131,23 @@ class AddOrEditReceiptViewController: FormViewController {
             }
             
         } else {
-            // Show error prompt
+            // Show error prompt - happens when form is not validated
             UIService.showHUDWithNoAction(isSuccessful: false, with: "Please fill out all fields")
         }
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO popup validation
-        dismiss(animated: true, completion: nil)
+        // Display popup validation & handle accordingly
+        let confirmCancelController = UIAlertController(title: receiptToAddImage == nil ? "Cancel Edit Receipt" : "Cancel Add Receipt", message: "Are you sure you want to cancel?" , preferredStyle: .alert)
+        confirmCancelController.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        confirmCancelController.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        
+        show(confirmCancelController, sender: self)
     }
     
+    // MARK: - Image/Form Methods
     // We use the SimpleImageViewer library to show an activity with fullscreen image
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         
@@ -176,6 +199,7 @@ class AddOrEditReceiptViewController: FormViewController {
                 }
     }
     
+    // MARK: - Form input/validaton
     // Loads values entered into form into the variables of this class
     private func getEnteredValues() {
         let enteredValues = form.values()
@@ -196,14 +220,6 @@ class AddOrEditReceiptViewController: FormViewController {
         }
     }
     
-    // Updates view for current category, but other relevant UI methods should be in here as well
-    private func updateViews() {
-        form.setValues([CATEGORY_TAG: getSelectedCategoryName()])
-        if let receipt = receiptToEdit {
-            form.setValues([VENDOR_NAME_TAG: receipt.vendor, TXN_AMT_TAG: receipt.amount, TXN_DATE_TAG: receipt.transactionTime])
-        }
-    }
-    
     // Returns true if all fields are filled in
     private func validateFormFields() -> Bool {
         // No need to check date because it will always be non-nil
@@ -214,6 +230,7 @@ class AddOrEditReceiptViewController: FormViewController {
         return true
     }
     
+    // MARK: - Misc Methods
     // This initializes PickCategoryViewController to show the current selected category
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PickCategoryForReceiptSegue" {
