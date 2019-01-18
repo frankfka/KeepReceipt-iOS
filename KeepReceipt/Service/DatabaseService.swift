@@ -28,4 +28,16 @@ class DatabaseService {
         print("Deleted receipt, image deletion successful: \(deleteImageSuccess)")
     }
     
+    static func add(receipt: Receipt, to category: Category) {
+        try! realm.write {
+            category.receipts.append(receipt)
+        }
+    }
+    
+    static func remove(receipt: Receipt, from category: Category) {
+        try! realm.write {
+            category.receipts.remove(at: category.receipts.index(of: receipt)!)
+        }
+    }
+    
 }

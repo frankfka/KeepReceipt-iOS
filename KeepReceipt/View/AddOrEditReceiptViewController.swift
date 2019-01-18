@@ -29,6 +29,7 @@ class AddOrEditReceiptViewController: FormViewController {
     let realm = try! Realm(configuration: RealmConfig.defaultConfig())
     var receiptToAddImage: UIImage? // If we're trying to add a new receipt
     var receiptToEdit: Receipt?
+    var previousCategory: Category? // Selected category before edit
     var statedVendor: String?
     var statedAmount: Double?
     var statedDate: Date?
@@ -62,6 +63,9 @@ class AddOrEditReceiptViewController: FormViewController {
             dismiss(animated: true, completion: nil)
         }
         
+        // Update views to match existing values if they exist
+        updateViews()
+        
         // Add a recognizer to the ImageView so we can expand it on tap
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         receiptImageView.isUserInteractionEnabled = true
@@ -87,6 +91,9 @@ class AddOrEditReceiptViewController: FormViewController {
                     newReceipt.amount = statedAmount!
                     newReceipt.transactionTime = statedDate!
                     DatabaseService.save(newReceipt)
+                    if let category = statedCategory {
+                        DatabaseService.add(receipt: newReceipt, to: category)
+                    }
                     
                     // Dismiss VC and show success
                     UIService.showHUDWithNoAction(isSuccessful: true, with: "Receipt Saved")
@@ -99,10 +106,22 @@ class AddOrEditReceiptViewController: FormViewController {
             // Case where we're updating a receipt
             } else if let receipt = receiptToEdit {
                 
+                // TODO put this in database service
                 try! realm.write {
                     receipt.vendor = statedVendor!
                     receipt.amount = statedAmount!
                     receipt.transactionTime = statedDate!
+                    if previousCategory == nil && statedCategory != nil {
+                        // Add to category
+                        statedCategory!.receipts.append(receipt)
+                    } else if previousCategory != nil && statedCategory == nil {
+                        // Remove previous category
+                        previousCategory!.receipts.remove(at: previousCategory!.receipts.index(of: receipt)!)
+                    } else if previousCategory != nil && statedCategory != nil {
+                        // Remove previous category, add new category
+                        previousCategory!.receipts.remove(at: previousCategory!.receipts.index(of: receipt)!)
+                        statedCategory!.receipts.append(receipt)
+                    }
                 }
                 
                 // Dismiss VC and show success
@@ -167,8 +186,9 @@ class AddOrEditReceiptViewController: FormViewController {
                 row.value = self.getSelectedCategoryName()
                 row.cell.textField.isUserInteractionEnabled = false
                 }.onCellSelection { cell, row in
-                self.performSegue(withIdentifier: "PickCategoryForReceiptSegue", sender: self)
-        }
+                    // When selected, we show the pick category segue
+                    self.performSegue(withIdentifier: "PickCategoryForReceiptSegue", sender: self)
+                }
     }
     
     // Loads values entered into form into the variables of this class
@@ -186,8 +206,16 @@ class AddOrEditReceiptViewController: FormViewController {
             if receipt.categories.count != 0 {
                 // Only one category can be chosen for now
                 statedCategory = receipt.categories[0]
+                previousCategory = receipt.categories[0]
             }
-            form.setValues([VENDOR_NAME_TAG: receipt.vendor, TXN_AMT_TAG: receipt.amount, TXN_DATE_TAG: receipt.transactionTime, CATEGORY_TAG: getSelectedCategoryName()])
+        }
+    }
+    
+    // Updates view for current category, but other relevant UI methods should be in here as well
+    private func updateViews() {
+        form.setValues([CATEGORY_TAG: getSelectedCategoryName()])
+        if let receipt = receiptToEdit {
+            form.setValues([VENDOR_NAME_TAG: receipt.vendor, TXN_AMT_TAG: receipt.amount, TXN_DATE_TAG: receipt.transactionTime])
         }
     }
     
@@ -217,7 +245,7 @@ class AddOrEditReceiptViewController: FormViewController {
     // Sets the selected category and updates UI, used by PickCategoryViewController
     func setSelectedCategory(category: Category?) {
         statedCategory = category
-        setExistingValues()
+        updateViews()
     }
     
 }
