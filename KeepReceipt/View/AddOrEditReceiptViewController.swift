@@ -92,7 +92,7 @@ class AddOrEditReceiptViewController: FormViewController {
                     newReceipt.transactionTime = statedDate!
                     DatabaseService.save(newReceipt)
                     if let category = statedCategory {
-                        DatabaseService.add(receipt: newReceipt, to: category)
+                        DatabaseService.updateCategory(for: newReceipt, from: nil, to: category)
                     }
                     
                     // Dismiss VC and show success
@@ -106,23 +106,8 @@ class AddOrEditReceiptViewController: FormViewController {
             // Case where we're updating a receipt
             } else if let receipt = receiptToEdit {
                 
-                // TODO put this in database service
-                try! realm.write {
-                    receipt.vendor = statedVendor!
-                    receipt.amount = statedAmount!
-                    receipt.transactionTime = statedDate!
-                    if previousCategory == nil && statedCategory != nil {
-                        // Add to category
-                        statedCategory!.receipts.append(receipt)
-                    } else if previousCategory != nil && statedCategory == nil {
-                        // Remove previous category
-                        previousCategory!.receipts.remove(at: previousCategory!.receipts.index(of: receipt)!)
-                    } else if previousCategory != nil && statedCategory != nil {
-                        // Remove previous category, add new category
-                        previousCategory!.receipts.remove(at: previousCategory!.receipts.index(of: receipt)!)
-                        statedCategory!.receipts.append(receipt)
-                    }
-                }
+                DatabaseService.updateReceipt(receipt, newVendor: statedVendor!, newAmount: statedAmount!, newDate: statedDate!)
+                DatabaseService.updateCategory(for: receipt, from: previousCategory, to: statedCategory)
                 
                 // Dismiss VC and show success
                 UIService.showHUDWithNoAction(isSuccessful: true, with: "Changes Saved")

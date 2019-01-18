@@ -19,6 +19,7 @@ class ViewReceiptViewController: UIViewController {
     @IBOutlet weak var vendorNameLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +94,7 @@ class ViewReceiptViewController: UIViewController {
         vendorNameLabel.text = receipt?.vendor
         amountLabel.text = TextFormatService.getCurrencyString(for: receipt!.amount)
         dateLabel.text = TextFormatService.getDateString(for: receipt!.transactionTime!, fullMonth: true)
+        categoryLabel.text = receipt!.categories.count == 0 ? "None" : receipt!.categories[0].name
         
         // Add a recognizer to the ImageView so we can expand it on tap
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))

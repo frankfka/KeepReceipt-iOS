@@ -28,16 +28,28 @@ class DatabaseService {
         print("Deleted receipt, image deletion successful: \(deleteImageSuccess)")
     }
     
-    static func add(receipt: Receipt, to category: Category) {
+    // TODO refactor this using an enum once we add more fields
+    static func updateReceipt(_ receipt: Receipt, newVendor: String, newAmount: Double, newDate: Date) {
         try! realm.write {
-            category.receipts.append(receipt)
+            receipt.vendor = newVendor
+            receipt.amount = newAmount
+            receipt.transactionTime = newDate
         }
     }
     
-    static func remove(receipt: Receipt, from category: Category) {
+    static func updateCategory(for receipt: Receipt, from oldCategory: Category?, to newCategory: Category?) {
         try! realm.write {
-            category.receipts.remove(at: category.receipts.index(of: receipt)!)
+            if oldCategory == nil && newCategory != nil {
+                // Add to category
+                newCategory!.receipts.append(receipt)
+            } else if oldCategory != nil && newCategory == nil {
+                // Remove previous category
+                oldCategory!.receipts.remove(at: oldCategory!.receipts.index(of: receipt)!)
+            } else if oldCategory != nil && newCategory != nil {
+                // Remove previous category, add new category
+                oldCategory!.receipts.remove(at: oldCategory!.receipts.index(of: receipt)!)
+                newCategory!.receipts.append(receipt)
+            }
         }
     }
-    
 }
