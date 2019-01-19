@@ -106,9 +106,7 @@ class PickCategoryViewController: UIViewController, UITableViewDelegate, UITable
         addCategoryAlert.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) in
             // Validate input
             let enteredText = addCategoryAlert.textFields![0].text!
-            if enteredText.isEmpty {
-                UIService.showHUDWithNoAction(isSuccessful: false, with: "Please enter a category name")
-            } else {
+            if self.validateCategoryName(for: enteredText) {
                 // Create and save a new category
                 let newCategory = Category()
                 newCategory.name = enteredText
@@ -170,6 +168,20 @@ class PickCategoryViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 deleteCategoryButton.isEnabled = true
             }
+        }
+    }
+    
+    // Returns true if validated, else will show error HUD
+    private func validateCategoryName(for input: String) -> Bool {
+        
+        if input.isEmpty {
+            UIService.showHUDWithNoAction(isSuccessful: false, with: "Please enter a category name")
+            return false
+        } else if realm.objects(Category.self).filter("name == '\(input)'").count > 0 {
+            UIService.showHUDWithNoAction(isSuccessful: false, with: "This category already exists")
+            return false
+        } else {
+            return true
         }
     }
 
