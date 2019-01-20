@@ -77,6 +77,17 @@ class AddOrEditReceiptViewController: FormViewController {
         
     }
     
+    // This handles the case for when the old category has been deleted
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let prevCategory = previousCategory {
+            if prevCategory.isInvalidated {
+                // Just set previous category to "None"
+                previousCategory = nil
+            }
+        }
+    }
+    
 
     // Updates view
     private func updateViews() {
