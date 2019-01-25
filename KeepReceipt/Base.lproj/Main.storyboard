@@ -46,7 +46,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Search" largeTitleDisplayMode="always" id="u0t-EK-60s"/>
                     <connections>
-                        <segue destination="yfV-nT-9mO" kind="show" id="6Bp-Q8-rdr"/>
+                        <segue destination="yfV-nT-9mO" kind="show" identifier="AdvancedSearchToResultsSegue" id="6Bp-Q8-rdr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DKP-2I-G70" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -61,7 +61,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="YUz-vD-uH8">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="YUz-vD-uH8">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -73,7 +73,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Results" largeTitleDisplayMode="never" id="byd-AV-q9v"/>
                     <connections>
-                        <segue destination="4K9-Ub-V7Y" kind="show" id="xbd-TF-VTh"/>
+                        <segue destination="4K9-Ub-V7Y" kind="show" identifier="SearchResultsToDetailSegue" id="xbd-TF-VTh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sVr-zf-loG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -88,7 +88,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Quick Search" id="Cu6-Jg-1Zt">
+                        <searchBar key="tableHeaderView" contentMode="redraw" misplaced="YES" searchBarStyle="minimal" text="" placeholder="Quick Search" id="Cu6-Jg-1Zt">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="tintColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -507,7 +507,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="o4S-DA-G3f"/>
+        <segue reference="EtJ-jM-M6r"/>
         <segue reference="xbd-TF-VTh"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

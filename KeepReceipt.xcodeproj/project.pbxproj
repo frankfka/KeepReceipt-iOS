@@ -26,6 +26,7 @@
 		1179061321E8F8090019EEAA /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179061221E8F8090019EEAA /* DatabaseService.swift */; };
 		11F377D721FB695300E3CE93 /* AdvancedSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F377D621FB695300E3CE93 /* AdvancedSearchViewController.swift */; };
 		11F377D921FB6A1A00E3CE93 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F377D821FB6A1A00E3CE93 /* SearchResultsTableViewController.swift */; };
+		11F377DB21FBB0FB00E3CE93 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F377DA21FBB0FB00E3CE93 /* Constants.swift */; };
 		CE9E8CE33B597F78416F2287 /* Pods_KeepReceipt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C013AC9315C3515CB64F4A /* Pods_KeepReceipt.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		1179061221E8F8090019EEAA /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		11F377D621FB695300E3CE93 /* AdvancedSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSearchViewController.swift; sourceTree = "<group>"; };
 		11F377D821FB6A1A00E3CE93 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
+		11F377DA21FBB0FB00E3CE93 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		64C013AC9315C3515CB64F4A /* Pods_KeepReceipt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KeepReceipt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C17B31690DDEB95C096260ED /* Pods-KeepReceipt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepReceipt.release.xcconfig"; path = "Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,7 @@
 				117905C921E3DBD90019EEAA /* Receipt.swift */,
 				117905CB21E3DD820019EEAA /* Category.swift */,
 				1179060121E5AEC30019EEAA /* RealmConfig.swift */,
+				11F377DA21FBB0FB00E3CE93 /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				1179060921E788220019EEAA /* UIService.swift in Sources */,
 				1179060421E5B9540019EEAA /* AddOrEditReceiptViewController.swift in Sources */,
 				117905B421E391980019EEAA /* AppDelegate.swift in Sources */,
+				11F377DB21FBB0FB00E3CE93 /* Constants.swift in Sources */,
 				1179060221E5AEC30019EEAA /* RealmConfig.swift in Sources */,
 				1179061321E8F8090019EEAA /* DatabaseService.swift in Sources */,
 				1179061121E8D7DB0019EEAA /* ViewReceiptViewController.swift in Sources */,

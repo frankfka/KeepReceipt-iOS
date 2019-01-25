@@ -13,19 +13,6 @@ import RealmSwift
 
 class AddOrEditReceiptViewController: FormViewController {
     
-    // Constants for all the form text/ID's
-    private let SECTION_TITLE = "Receipt Details"
-    private let VENDOR_NAME_TAG = "vendorName"
-    private let VENDOR_NAME_TITLE = "Vendor Name"
-    private let VENDOR_NAME_PLACEHOLDER = "Enter the vendor name"
-    private let TXN_AMT_TAG = "txnAmount"
-    private let TXN_AMT_TITLE = "Amount"
-    private let TXN_AMT_PLACEHOLDER = "Enter the transaction amount"
-    private let TXN_DATE_TAG = "txnDate"
-    private let TXN_DATE_TITLE = "Transaction Date"
-    private let CATEGORY_TAG = "category"
-    private let CATEGORY_TITLE = "Category"
-    
     let realm = try! Realm(configuration: RealmConfig.defaultConfig())
     
     // ADDING RECEIPT
@@ -91,9 +78,9 @@ class AddOrEditReceiptViewController: FormViewController {
 
     // Updates view
     private func updateViews() {
-        form.setValues([CATEGORY_TAG: getSelectedCategoryName()])
+        form.setValues([Constants.CATEGORY_TAG: getSelectedCategoryName()])
         if let receipt = receiptToEdit {
-            form.setValues([VENDOR_NAME_TAG: receipt.vendor, TXN_AMT_TAG: receipt.amount, TXN_DATE_TAG: receipt.transactionTime])
+            form.setValues([Constants.VENDOR_NAME_TAG: receipt.vendor, Constants.TXN_AMT_TAG: receipt.amount, Constants.TXN_DATE_TAG: receipt.transactionTime])
         }
     }
     
@@ -178,30 +165,30 @@ class AddOrEditReceiptViewController: FormViewController {
         // Enables smooth scrolling between form elements
         animateScroll = true
         
-        form +++ Section(SECTION_TITLE)
+        form +++ Section(Constants.SECTION_TITLE)
             <<< TextRow() { row in
-                row.tag = VENDOR_NAME_TAG
-                row.title = VENDOR_NAME_TITLE
-                row.placeholder = VENDOR_NAME_PLACEHOLDER
+                row.tag = Constants.VENDOR_NAME_TAG
+                row.title = Constants.VENDOR_NAME_TITLE
+                row.placeholder = Constants.VENDOR_NAME_PLACEHOLDER
             }
             <<< DecimalRow() { row in
-                row.tag = TXN_AMT_TAG
-                row.title = TXN_AMT_TITLE
-                row.placeholder = TXN_AMT_PLACEHOLDER
+                row.tag = Constants.TXN_AMT_TAG
+                row.title = Constants.TXN_AMT_TITLE
+                row.placeholder = Constants.TXN_AMT_PLACEHOLDER
                 row.displayValueFor = {
                     // TODO this does not work on overwrite
                     return $0.map { "$" + String(describing: $0) }
                 }
             }
             <<< DateRow(){ row in
-                row.tag = TXN_DATE_TAG
-                row.title = TXN_DATE_TITLE
+                row.tag = Constants.TXN_DATE_TAG
+                row.title = Constants.TXN_DATE_TITLE
                 // Set to current date
                 row.value = Date()
             }
             <<< TextRow(){ row in
-                row.tag = CATEGORY_TAG
-                row.title = CATEGORY_TITLE
+                row.tag = Constants.CATEGORY_TAG
+                row.title = Constants.CATEGORY_TITLE
                 row.value = self.getSelectedCategoryName()
                 row.cell.textField.isUserInteractionEnabled = false
                 }.onCellSelection { cell, row in
@@ -214,9 +201,9 @@ class AddOrEditReceiptViewController: FormViewController {
     // Loads values entered into form into the variables of this class
     private func getEnteredValues() {
         let enteredValues = form.values()
-        statedVendor = enteredValues[VENDOR_NAME_TAG] as! String?
-        statedAmount = enteredValues[TXN_AMT_TAG] as! Double?
-        statedDate = enteredValues[TXN_DATE_TAG] as! Date?
+        statedVendor = enteredValues[Constants.VENDOR_NAME_TAG] as! String?
+        statedAmount = enteredValues[Constants.TXN_AMT_TAG] as! Double?
+        statedDate = enteredValues[Constants.TXN_DATE_TAG] as! Date?
     }
     
     // Loads current receipt values into the form
@@ -229,6 +216,17 @@ class AddOrEditReceiptViewController: FormViewController {
                 previousCategory = receipt.categories[0]
             }
         }
+    }
+    
+    // Returns "None" if category is not selected, else returns category name
+    private func getSelectedCategoryName() -> String {
+        return statedCategory?.name ?? "None"
+    }
+    
+    // Sets the selected category and updates UI, used by PickCategoryViewController
+    func setSelectedCategory(category: Category?) {
+        statedCategory = category
+        updateViews()
     }
     
     // Returns true if all fields are filled in
@@ -248,17 +246,6 @@ class AddOrEditReceiptViewController: FormViewController {
             let destinationVC = segue.destination as! PickCategoryViewController
             destinationVC.selectedCategory = statedCategory
         }
-    }
-    
-    // Returns "None" if category is not selected, else returns category name
-    private func getSelectedCategoryName() -> String {
-        return statedCategory?.name ?? "None"
-    }
-    
-    // Sets the selected category and updates UI, used by PickCategoryViewController
-    func setSelectedCategory(category: Category?) {
-        statedCategory = category
-        updateViews()
     }
     
 }
