@@ -59,7 +59,11 @@
                         <viewLayoutGuide key="safeArea" id="8cX-eC-kLx"/>
                     </view>
                     <navigationItem key="navigationItem" title="Search" largeTitleDisplayMode="always" id="u0t-EK-60s">
-                        <barButtonItem key="rightBarButtonItem" title="Reset" id="dZe-Qu-nSY"/>
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="dZe-Qu-nSY">
+                            <connections>
+                                <action selector="resetButtonPressed:" destination="F5u-T3-7y9" id="xlJ-HP-EYi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="cLf-x7-5Gy" id="Hpn-Wg-NSo"/>

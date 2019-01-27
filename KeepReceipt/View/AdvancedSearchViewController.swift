@@ -39,11 +39,37 @@ class AdvancedSearchViewController: FormViewController {
         setUpForm()
         
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Refreshes all categories in case one has been added
         updateAllCategories()
     }
+    
+    @IBAction func resetButtonPressed(_ sender: UIBarButtonItem) {
+        
+        // Reset all the fields
+        keywordsRow?.value = nil
+        categoryRow?.value = nil
+        minPriceRow?.value = nil
+        maxPriceRow?.value = nil
+        minDateRow?.value = nil
+        maxDateRow?.value = nil
+        
+        // Reload form
+        keywordsRow?.reload()
+        categoryRow?.reload()
+        minPriceRow?.reload()
+        maxPriceRow?.reload()
+        minDateRow?.reload()
+        maxDateRow?.reload()
+        
+        // Reload state variables
+        getEnteredValues()
+        
+    }
+    
+    // MARK: - Form helper functions
     
     // Set up form using the Eureka library
     private func setUpForm() {
@@ -103,18 +129,18 @@ class AdvancedSearchViewController: FormViewController {
                 row.noValueDisplayText = Constants.RECEIPT_SEARCH_ANY_PLACEHOLDER
                 self.maxDateRow = row
             }
-        
+            
             +++ Section()
             <<< ButtonRow() { row in
                 row.title = Constants.RECEIPT_SEARCH_BUTTON_TITLE
                 row.onCellSelection { row, cell in
                     self.getEnteredValues()
+                    self.getQueryString()
                 }
-            }
+        }
         
     }
     
-    // MARK: - Form input/validaton
     // Loads values entered into form into the variables of this class
     private func getEnteredValues() {
         let enteredValues = form.values()
@@ -123,9 +149,10 @@ class AdvancedSearchViewController: FormViewController {
         maxPrice = enteredValues[Constants.RECEIPT_SEARCH_PRICE_MAX_TAG] as! Double?
         minDate = enteredValues[Constants.RECEIPT_SEARCH_DATE_MIN_TAG] as! Date?
         maxDate = enteredValues[Constants.RECEIPT_SEARCH_DATE_MAX_TAG] as! Date?
-
+        selectedCategoryNames = enteredValues[Constants.RECEIPT_SEARCH_CATEGORY_TAG] as! Set<String>?
     }
     
+    // Retrieves all categories from realm and puts them into an array of category names
     private func updateAllCategories() {
         
         // Get categories if not yet initialized
@@ -147,15 +174,46 @@ class AdvancedSearchViewController: FormViewController {
         }
     }
     
-    // Returns "None" if category is not selected, else returns category name
-//    private func getSelectedCategoryName() -> String {
-//        return statedCategory?.name ?? "None"
-//    }
-    
-    // Sets the selected category and updates UI, used by PickCategoryViewController
-//    func setSelectedCategory(category: Category?) {
-//        statedCategory = category
-//        updateViews()
-//    }
+    // MARK: - Creates a filter string for search function
+    private func getQueryString() -> String {
+        var query = ""
+        if let statedKeyword = keywords {
+            query = query + " AND (vendor CONTAINS[cd] '\(statedKeyword)')"
+        }
+        if selectedCategoryNames != nil && !selectedCategoryNames!.isEmpty {
+            
+            let statedCategories = selectedCategoryNames!
+            // This needs to be filtered another way
+            var categoryFilterString = ""
+            for categoryName in statedCategories {
+                categoryFilterString = categoryFilterString + " OR (ANY categories.name = '\(categoryName)')"
+            }
+            if !categoryFilterString.isEmpty {
+                categoryFilterString = String(categoryFilterString.dropFirst(4))
+            }
+            query = query + " AND (\(categoryFilterString))"
+            
+        }
+        if let statedMinPrice = minPrice {
+            query = query + " AND (amount >= \(statedMinPrice))"
+        }
+        if let statedMaxPrice = maxPrice {
+            query = query + " AND (amount <= \(statedMaxPrice))"
+        }
+        if let statedMinDate = minDate {
+            query = query + " AND (transactionTime >= \(statedMinDate))"
+        }
+        if let statedMaxDate = maxDate {
+            query = query + " AND (transactionTime <= \(statedMaxDate))"
+        }
+        
+        // If query is not empty, trip the first AND
+        if !query.isEmpty {
+            query = String(query.dropFirst(5))
+        }
+        
+        print(query)
+        return query
+    }
 
 }
