@@ -186,7 +186,7 @@ class AdvancedSearchViewController: FormViewController {
             // This needs to be filtered another way
             var categoryFilterString = ""
             for categoryName in statedCategories {
-                categoryFilterString = categoryFilterString + " OR (ANY categories.name = '\(categoryName)')"
+                categoryFilterString = categoryFilterString + " OR (ANY categories.name == '\(categoryName)')"
             }
             if !categoryFilterString.isEmpty {
                 categoryFilterString = String(categoryFilterString.dropFirst(4))
@@ -213,6 +213,10 @@ class AdvancedSearchViewController: FormViewController {
         }
         
         print(query)
+        if (!query.isEmpty) {
+            print(realm.objects(Receipt.self).filter(query))
+            
+        }
         return query
     }
 
