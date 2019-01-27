@@ -135,7 +135,9 @@ class AdvancedSearchViewController: FormViewController {
                 row.title = Constants.RECEIPT_SEARCH_BUTTON_TITLE
                 row.onCellSelection { row, cell in
                     self.getEnteredValues()
-                    self.getQueryString()
+                    if self.validateFormFields() {
+                        self.getQuery()
+                    }
                 }
         }
         
@@ -174,50 +176,61 @@ class AdvancedSearchViewController: FormViewController {
         }
     }
     
-    // MARK: - Creates a filter string for search function
-    private func getQueryString() -> String {
-        var query = ""
+    // Validates that max > min for entered fields, returns true if we can go ahead with the query
+    // Will also display HUD for various errors
+    private func validateFormFields() -> Bool {
+        
+        if maxPrice != nil && minPrice != nil && maxPrice! < minPrice! {
+            UIService.showHUDWithNoAction(isSuccessful: false, with: "Please specify a correct price range")
+            return false
+        }
+        
+        if maxDate != nil && minDate != nil && maxDate! < minDate! {
+            UIService.showHUDWithNoAction(isSuccessful: false, with: "Please specify a correct date range")
+            return false
+        }
+        
+        return true
+    }
+    
+    // MARK: - Constructs a query
+    private func getQuery() -> NSCompoundPredicate? {
+        
+        var query: [NSPredicate] = []
+        
         if let statedKeyword = keywords {
-            query = query + " AND (vendor CONTAINS[cd] '\(statedKeyword)')"
+            query.append(NSPredicate(format: "vendor CONTAINS[cd] '\(statedKeyword)'"))
         }
         if selectedCategoryNames != nil && !selectedCategoryNames!.isEmpty {
             
-            let statedCategories = selectedCategoryNames!
-            // This needs to be filtered another way
-            var categoryFilterString = ""
-            for categoryName in statedCategories {
-                categoryFilterString = categoryFilterString + " OR (ANY categories.name == '\(categoryName)')"
+            var categorySubPredicates: [NSPredicate] = []
+            for categoryName in selectedCategoryNames! {
+                categorySubPredicates.append(NSPredicate(format: "ANY categories.name == '\(categoryName)'"))
             }
-            if !categoryFilterString.isEmpty {
-                categoryFilterString = String(categoryFilterString.dropFirst(4))
-            }
-            query = query + " AND (\(categoryFilterString))"
+            query.append(NSCompoundPredicate(orPredicateWithSubpredicates: categorySubPredicates))
             
         }
         if let statedMinPrice = minPrice {
-            query = query + " AND (amount >= \(statedMinPrice))"
+            query.append(NSPredicate(format: "amount >= \(statedMinPrice)"))
         }
         if let statedMaxPrice = maxPrice {
-            query = query + " AND (amount <= \(statedMaxPrice))"
+            query.append(NSPredicate(format: "amount <= \(statedMaxPrice)"))
         }
         if let statedMinDate = minDate {
-            query = query + " AND (transactionTime >= \(statedMinDate))"
+            //TODO decrement by a day so we include the current day
+            query.append(NSPredicate(format: "transactionTime >= %@", NSDate(timeInterval: 0, since: statedMinDate)))
         }
         if let statedMaxDate = maxDate {
-            query = query + " AND (transactionTime <= \(statedMaxDate))"
+            query.append(NSPredicate(format: "transactionTime <= %@", NSDate(timeInterval: 0, since: statedMaxDate)))
         }
         
-        // If query is not empty, trip the first AND
         if !query.isEmpty {
-            query = String(query.dropFirst(5))
-        }
-        
-        print(query)
-        if (!query.isEmpty) {
+            let query = NSCompoundPredicate(andPredicateWithSubpredicates: query)
             print(realm.objects(Receipt.self).filter(query))
-            
+            return query
         }
-        return query
+        // Return nil to signify that no conditions have been specified
+        return nil
     }
 
 }
