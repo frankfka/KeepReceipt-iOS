@@ -165,7 +165,7 @@ class AddOrEditReceiptViewController: FormViewController {
         // Enables smooth scrolling between form elements
         animateScroll = true
         
-        form +++ Section(Constants.SECTION_TITLE)
+        form +++ Section(Constants.RECEIPT_DETAILS_SECTION_TITLE)
             <<< TextRow() { row in
                 row.tag = Constants.VENDOR_NAME_TAG
                 row.title = Constants.VENDOR_NAME_TITLE

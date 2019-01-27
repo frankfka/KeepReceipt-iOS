@@ -8,10 +8,29 @@
 
 import UIKit
 import Eureka
+import RealmSwift
 
 class AdvancedSearchViewController: FormViewController {
     
-    var statedCategory: Category?
+    let realm = try! Realm()
+    
+    // State variables
+    var keywords: String?
+    var selectedCategoryNames: Set<String>?
+    var minPrice: Double?
+    var maxPrice: Double?
+    var minDate: Date?
+    var maxDate: Date?
+    var allCategoriesForm: [String] = []
+    var allCategoriesRealm: Results<Category>?
+    
+    // Form rows
+    var keywordsRow: TextRow?
+    var categoryRow: MultipleSelectorRow<String>?
+    var minPriceRow: DecimalRow?
+    var maxPriceRow: DecimalRow?
+    var minDateRow: DateRow?
+    var maxDateRow: DateRow?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +39,11 @@ class AdvancedSearchViewController: FormViewController {
         setUpForm()
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Refreshes all categories in case one has been added
+        updateAllCategories()
+    }
     
     // Set up form using the Eureka library
     private func setUpForm() {
@@ -27,85 +51,111 @@ class AdvancedSearchViewController: FormViewController {
         // Enables smooth scrolling between form elements
         animateScroll = true
         
+        // Get the categories as a set of strings if the set doesn't exist (on initial load)
+        updateAllCategories()
+        
+        // This creates all the form elements, and assigns the row variables on creation
         form
-            +++ Section("General")
+            +++ Section(Constants.RECEIPT_SEARCH_SECTION_GENERAL_TITLE)
             <<< TextRow() { row in
-                row.tag = Constants.VENDOR_NAME_TAG
-                row.title = "Keywords"
-                row.placeholder = "Vendor"
+                row.tag = Constants.RECEIPT_SEARCH_KEYWORDS_TAG
+                row.title = Constants.RECEIPT_SEARCH_KEYWORDS_TITLE
+                row.placeholder = Constants.RECEIPT_SEARCH_ANY_PLACEHOLDER
+                self.keywordsRow = row
             }
             <<< MultipleSelectorRow<String>() { row in
-                row.title = "Category" //2
-                row.value = ["1"]
-                row.options = ["1", "2", "3"]
-                row.onChange { _ in
-                    if let value = row.value {
-                        // Assign selected value
-                    }
-                }
+                row.title = Constants.RECEIPT_SEARCH_CATEGORY_TITLE
+                row.options = allCategoriesForm // This needs to be initialized at this point
+                row.tag = Constants.RECEIPT_SEARCH_CATEGORY_TAG
+                row.noValueDisplayText = Constants.RECEIPT_SEARCH_ANY_PLACEHOLDER
                 row.onPresent { from, to in
                     to.selectableRowCellUpdate = { cell, row in
                         cell.tintColor = UIColor(named: "accent")
                     }
                 }
+                self.categoryRow = row
             }
             
-            +++ Section("Price")
+            +++ Section(Constants.RECEIPT_SEARCH_SECTION_PRICE_TITLE)
             <<< DecimalRow() { row in
-                row.tag = "112e"
-                row.title = "Min Price"
-                row.placeholder = Constants.TXN_AMT_PLACEHOLDER
+                row.tag = Constants.RECEIPT_SEARCH_PRICE_MIN_TAG
+                row.title = Constants.RECEIPT_SEARCH_PRICE_MIN_TITLE
+                row.placeholder = Constants.RECEIPT_SEARCH_ANY_PLACEHOLDER
+                self.minPriceRow = row
             }
             <<< DecimalRow() { row in
-                row.tag = "fsfd"
-                row.title = "Max Price"
-                row.placeholder = Constants.TXN_AMT_PLACEHOLDER
+                row.tag = Constants.RECEIPT_SEARCH_PRICE_MAX_TAG
+                row.title = Constants.RECEIPT_SEARCH_PRICE_MAX_TITLE
+                row.placeholder = Constants.RECEIPT_SEARCH_ANY_PLACEHOLDER
+                self.maxPriceRow = row
             }
             
-            +++ Section("Date")
-            <<< DateRow(){ row in
-                row.tag = "sdfds"
-                row.title = "From"
-                // Set to current date
-                row.value = Date()
+            +++ Section(Constants.RECEIPT_SEARCH_SECTION_DATE_TITLE)
+            <<< DateRow() { row in
+                row.tag = Constants.RECEIPT_SEARCH_DATE_MIN_TAG
+                row.title = Constants.RECEIPT_SEARCH_DATE_MIN_TITLE
+                row.noValueDisplayText = Constants.RECEIPT_SEARCH_ANY_PLACEHOLDER
+                self.minDateRow = row
             }
-            <<< DateRow(){ row in
-                row.tag = Constants.TXN_DATE_TAG
-                row.title = "To"
-                // Set to current date
-                row.value = Date()
+            <<< DateRow() { row in
+                row.tag = Constants.RECEIPT_SEARCH_DATE_MAX_TAG
+                row.title = Constants.RECEIPT_SEARCH_DATE_MAX_TITLE
+                row.noValueDisplayText = Constants.RECEIPT_SEARCH_ANY_PLACEHOLDER
+                self.maxDateRow = row
+            }
+        
+            +++ Section()
+            <<< ButtonRow() { row in
+                row.title = Constants.RECEIPT_SEARCH_BUTTON_TITLE
+                row.onCellSelection { row, cell in
+                    self.getEnteredValues()
+                }
             }
         
     }
     
     // MARK: - Form input/validaton
     // Loads values entered into form into the variables of this class
-//    private func getEnteredValues() {
-//        let enteredValues = form.values()
-//        statedVendor = enteredValues[Constants.VENDOR_NAME_TAG] as! String?
-//        statedAmount = enteredValues[Constants.TXN_AMT_TAG] as! Double?
-//        statedDate = enteredValues[Constants.TXN_DATE_TAG] as! Date?
-//    }
+    private func getEnteredValues() {
+        let enteredValues = form.values()
+        keywords = enteredValues[Constants.RECEIPT_SEARCH_KEYWORDS_TAG] as! String?
+        minPrice = enteredValues[Constants.RECEIPT_SEARCH_PRICE_MIN_TAG] as! Double?
+        maxPrice = enteredValues[Constants.RECEIPT_SEARCH_PRICE_MAX_TAG] as! Double?
+        minDate = enteredValues[Constants.RECEIPT_SEARCH_DATE_MIN_TAG] as! Date?
+        maxDate = enteredValues[Constants.RECEIPT_SEARCH_DATE_MAX_TAG] as! Date?
+
+    }
+    
+    private func updateAllCategories() {
+        
+        // Get categories if not yet initialized
+        if allCategoriesRealm == nil {
+            allCategoriesRealm = realm.objects(Category.self)
+        }
+        
+        // Create new list
+        allCategoriesForm = []
+        // First convert all the realm values to a set
+        for category in allCategoriesRealm! {
+            allCategoriesForm.append(category.name!)
+        }
+        
+        // Now update the form if the rows have been set up
+        if let categoriesRow = categoryRow {
+            categoriesRow.options = allCategoriesForm
+            categoriesRow.reload()
+        }
+    }
     
     // Returns "None" if category is not selected, else returns category name
-    private func getSelectedCategoryName() -> String {
-        return statedCategory?.name ?? "None"
-    }
+//    private func getSelectedCategoryName() -> String {
+//        return statedCategory?.name ?? "None"
+//    }
     
     // Sets the selected category and updates UI, used by PickCategoryViewController
 //    func setSelectedCategory(category: Category?) {
 //        statedCategory = category
 //        updateViews()
-//    }
-    
-    // Returns true if all fields are filled in
-//    private func validateFormFields() -> Bool {
-        // No need to check date because it will always be non-nil
-        // No need to check category because it is None by default
-//        if statedVendor == nil || statedAmount == nil {
-//            return false
-//        }
-//        return true
 //    }
 
 }
