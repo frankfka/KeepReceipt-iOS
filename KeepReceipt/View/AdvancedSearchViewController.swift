@@ -31,6 +31,9 @@ class AdvancedSearchViewController: FormViewController {
     var maxPriceRow: DecimalRow?
     var minDateRow: DateRow?
     var maxDateRow: DateRow?
+    
+    // For the search results
+    var searchResults: Results<Receipt>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,13 +137,38 @@ class AdvancedSearchViewController: FormViewController {
             <<< ButtonRow() { row in
                 row.title = Constants.RECEIPT_SEARCH_BUTTON_TITLE
                 row.onCellSelection { row, cell in
+                    
+                    // Get entered values then validate
                     self.getEnteredValues()
                     if self.validateFormFields() {
-                        self.getQuery()
+                        
+                        // Create query from fields
+                        if let query = self.getQuery() {
+                            // Query is valid, we proceed
+                            self.searchResults = self.realm.objects(Receipt.self).filter(query).sorted(byKeyPath: "transactionTime", ascending: false)
+                            
+                            // If search results is empty, just show an error instead
+                            if !self.searchResults!.isEmpty {
+                                self.performSegue(withIdentifier: "AdvancedSearchToResultsSegue", sender: self)
+                            } else {
+                                UIService.showHUDWithNoAction(isSuccessful: false, with: "No results found")
+                            }
+                            
+                        } else {
+                            // Just show all the receipts
+                            self.searchResults = self.realm.objects(Receipt.self).sorted(byKeyPath: "transactionTime", ascending: false)
+                            self.performSegue(withIdentifier: "AdvancedSearchToResultsSegue", sender: self)
+                        }
                     }
                 }
         }
-        
+    }
+    
+    // Initialize destination
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // There should be a receipt specified
+        let destinationVC = segue.destination as! SearchResultsTableViewController
+        destinationVC.receiptsToShow = searchResults
     }
     
     // Loads values entered into form into the variables of this class
@@ -203,6 +231,7 @@ class AdvancedSearchViewController: FormViewController {
         }
         if selectedCategoryNames != nil && !selectedCategoryNames!.isEmpty {
             
+            // Loop through all the selected categories & append by OR
             var categorySubPredicates: [NSPredicate] = []
             for categoryName in selectedCategoryNames! {
                 categorySubPredicates.append(NSPredicate(format: "ANY categories.name == '\(categoryName)'"))
@@ -217,19 +246,19 @@ class AdvancedSearchViewController: FormViewController {
             query.append(NSPredicate(format: "amount <= \(statedMaxPrice)"))
         }
         if let statedMinDate = minDate {
-            //TODO decrement by a day so we include the current day
-            query.append(NSPredicate(format: "transactionTime >= %@", NSDate(timeInterval: 0, since: statedMinDate)))
+            // Decrement by a day so that receipts added on the specified date is shown
+            query.append(NSPredicate(format: "transactionTime >= %@", NSDate(timeInterval: -86400, since: statedMinDate)))
         }
         if let statedMaxDate = maxDate {
-            query.append(NSPredicate(format: "transactionTime <= %@", NSDate(timeInterval: 0, since: statedMaxDate)))
+            // Increment by a day so that receipts added on the specified date is shown
+            query.append(NSPredicate(format: "transactionTime <= %@", NSDate(timeInterval: 86400, since: statedMaxDate)))
         }
         
+        // Return query if conditions are specified, otherwise return nil
         if !query.isEmpty {
             let query = NSCompoundPredicate(andPredicateWithSubpredicates: query)
-            print(realm.objects(Receipt.self).filter(query))
             return query
         }
-        // Return nil to signify that no conditions have been specified
         return nil
     }
 
