@@ -46,7 +46,7 @@ class SearchResultsTableViewController: UITableViewController {
     // Segue on click
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedReceipt = receiptsToShow![indexPath.row]
-        performSegue(withIdentifier: "ReceiptListToReceiptSegue", sender: self)
+        performSegue(withIdentifier: "SearchResultsToDetailSegue", sender: self)
     }
     
     // Initialize the destination VC on click

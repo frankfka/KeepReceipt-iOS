@@ -70,7 +70,7 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // If we have multiple tables, will need to check the table but we can ignore that for now
         selectedReceipt = displayedReceipts![indexPath.row]
-        performSegue(withIdentifier: "SearchResultsToDetailSegue", sender: self)
+        performSegue(withIdentifier: "ReceiptListToReceiptSegue", sender: self)
     }
 
     // Called when the add receipt button is tapped
