@@ -119,7 +119,7 @@
                                 <string>Title</string>
                             </scopeButtonTitles>
                         </searchBar>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="SaR-Rl-ANC">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="SaR-Rl-ANC">
                             <rect key="frame" x="0.0" y="583" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
