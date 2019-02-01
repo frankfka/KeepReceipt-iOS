@@ -138,8 +138,9 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
     //MARK: - Search bar methods
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count > 0 {
-            var filteredReceipts = allReceipts!.filter("vendor CONTAINS[cd] '\(searchText)'")
-            if let amount = Double(string: searchText) {
+            let trimmedSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+            var filteredReceipts = allReceipts!.filter("vendor CONTAINS[cd] '\(trimmedSearchText)'")
+            if let amount = Double(string: trimmedSearchText) {
                 // number entered, try searching in amount as well
                 filteredReceipts = filteredReceipts.filter("amount == \(amount)")
             }

@@ -174,7 +174,7 @@ class AdvancedSearchViewController: FormViewController {
     // Loads values entered into form into the variables of this class
     private func getEnteredValues() {
         let enteredValues = form.values()
-        keywords = enteredValues[Constants.RECEIPT_SEARCH_KEYWORDS_TAG] as! String?
+        keywords = (enteredValues[Constants.RECEIPT_SEARCH_KEYWORDS_TAG] as! String?)?.trimmingCharacters(in: .whitespacesAndNewlines)
         minPrice = enteredValues[Constants.RECEIPT_SEARCH_PRICE_MIN_TAG] as! Double?
         maxPrice = enteredValues[Constants.RECEIPT_SEARCH_PRICE_MAX_TAG] as! Double?
         minDate = enteredValues[Constants.RECEIPT_SEARCH_DATE_MIN_TAG] as! Date?

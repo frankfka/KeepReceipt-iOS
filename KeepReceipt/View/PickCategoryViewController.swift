@@ -38,7 +38,7 @@ class PickCategoryViewController: UIViewController, UITableViewDelegate, UITable
         tableView.dataSource = self
         
         // Load all categories
-        allCategories = realm.objects(Category.self)
+        allCategories = realm.objects(Category.self).sorted(byKeyPath: "name", ascending: true)
         
     }
     
@@ -104,8 +104,8 @@ class PickCategoryViewController: UIViewController, UITableViewDelegate, UITable
         let addCategoryAlert = UIAlertController(title: "Add New Category", message: "Specify a name for the category", preferredStyle: .alert)
         addCategoryAlert.addTextField(configurationHandler: nil)
         addCategoryAlert.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) in
-            // Validate input
-            let enteredText = addCategoryAlert.textFields![0].text!
+            // Validate input - we trim so spaces are not accounted for
+            let enteredText = addCategoryAlert.textFields![0].text!.trimmingCharacters(in: .whitespacesAndNewlines)
             if self.validateCategoryName(for: enteredText) {
                 // Create and save a new category
                 let newCategory = Category()
