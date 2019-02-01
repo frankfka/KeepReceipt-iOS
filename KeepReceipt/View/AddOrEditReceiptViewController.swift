@@ -62,6 +62,9 @@ class AddOrEditReceiptViewController: FormViewController {
         receiptImageView.isUserInteractionEnabled = true
         receiptImageView.addGestureRecognizer(tapGestureRecognizer)
         
+        // Change status bar color
+        UIService.setStatusBarBackgroundColor(color: UIColor(named: "primary")!)
+        
     }
     
     // This handles the case for when the old category has been deleted
@@ -75,7 +78,6 @@ class AddOrEditReceiptViewController: FormViewController {
         }
     }
     
-
     // Updates view
     private func updateViews() {
         form.setValues([Constants.CATEGORY_TAG: getSelectedCategoryName()])

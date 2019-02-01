@@ -65,4 +65,10 @@ class UIService {
         
     }
     
+    // For iPhone X and above - sets ONLY the top bar to the color
+    static func setStatusBarBackgroundColor(color: UIColor) {
+        guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+        statusBar.backgroundColor = color
+    }
+    
 }
