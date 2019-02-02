@@ -13,7 +13,7 @@ class ReceiptTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var vendorNameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var receiptImageView: UIImageView!
+//    @IBOutlet weak var receiptImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +29,7 @@ class ReceiptTableViewCell: UITableViewCell {
         // But once we add more, will need to do optional checking
         priceLabel.text = TextFormatService.getCurrencyString(for: receipt.amount)
         vendorNameLabel.text = receipt.vendor
-        receiptImageView.image = ImageService.getImage(for: receipt.receiptId!)
+//        receiptImageView.image = ImageService.getImage(for: receipt.receiptId!)
         dateLabel.text = TextFormatService.getDateString(for: receipt.transactionTime!, fullMonth: true)
         
     }

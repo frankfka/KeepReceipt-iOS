@@ -12,28 +12,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ReceiptTableViewCell" rowHeight="95" id="KGk-i7-Jjw" customClass="ReceiptTableViewCell" customModule="KeepReceipt" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ReceiptTableViewCell" rowHeight="85" id="KGk-i7-Jjw" customClass="ReceiptTableViewCell" customModule="KeepReceipt" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="433" height="94"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="395" height="93.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bbh-Ag-4bf">
-                        <rect key="frame" x="20" y="11" width="72" height="72"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="72" id="HXI-Ag-U3H"/>
-                            <constraint firstAttribute="width" constant="72" id="XxE-U8-PFL"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beH-XE-xu7">
-                        <rect key="frame" x="232.5" y="36" width="154.5" height="21.5"/>
+                        <rect key="frame" x="148.5" y="36" width="238.5" height="21.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIt-rd-QE6">
-                        <rect key="frame" x="104" y="26.5" width="112.5" height="40.5"/>
+                        <rect key="frame" x="20" y="26.5" width="112.5" height="40.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ol-kl-ea4">
                                 <rect key="frame" x="0.0" y="0.0" width="112.5" height="21.5"/>
@@ -61,15 +54,13 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="bbh-Ag-4bf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="6GR-ET-m9P"/>
-                    <constraint firstItem="bbh-Ag-4bf" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" priority="750" id="9fv-Ja-fiH"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="JIt-rd-QE6" secondAttribute="bottom" constant="8" id="3fD-J3-mZq"/>
                     <constraint firstItem="beH-XE-xu7" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="OxC-wB-XZ2"/>
-                    <constraint firstItem="bbh-Ag-4bf" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="topMargin" priority="750" id="QbU-4m-vNZ"/>
-                    <constraint firstItem="JIt-rd-QE6" firstAttribute="leading" secondItem="bbh-Ag-4bf" secondAttribute="trailing" constant="12" id="TVK-bf-7bN"/>
-                    <constraint firstItem="bbh-Ag-4bf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="eKg-4L-syc"/>
                     <constraint firstItem="beH-XE-xu7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gSW-8k-kMf"/>
+                    <constraint firstItem="JIt-rd-QE6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="topMargin" priority="750" constant="8" id="kpz-Zq-bue"/>
                     <constraint firstItem="JIt-rd-QE6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nVk-9X-dAr"/>
                     <constraint firstItem="beH-XE-xu7" firstAttribute="leading" secondItem="JIt-rd-QE6" secondAttribute="trailing" constant="16" id="v9e-WD-50o"/>
+                    <constraint firstItem="JIt-rd-QE6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="yON-aP-pVG"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -77,7 +68,6 @@
             <connections>
                 <outlet property="dateLabel" destination="dGV-mT-Cg8" id="LwV-W1-Mtl"/>
                 <outlet property="priceLabel" destination="beH-XE-xu7" id="P16-mX-OYu"/>
-                <outlet property="receiptImageView" destination="bbh-Ag-4bf" id="dPa-BM-JPM"/>
                 <outlet property="vendorNameLabel" destination="7ol-kl-ea4" id="7p0-GK-MhF"/>
             </connections>
             <point key="canvasLocation" x="376.80000000000001" y="188.90554722638683"/>

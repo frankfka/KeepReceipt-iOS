@@ -64,7 +64,6 @@ class AllReceiptsTableViewController: UITableViewController, UIImagePickerContro
             cell.initializeUI(for: receipt)
         }
         return cell
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
