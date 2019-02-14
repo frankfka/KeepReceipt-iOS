@@ -14,15 +14,17 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // Date variables
     var today: Date?
-    var dateInMonthToDisplayInfoFor: Date?
+    var todayComponents: DateComponents?
     var lastOfDisplayMonth: Date?
     var firstOfDisplayMonth: Date?
     var displayMonthQueryPredicates: [NSPredicate]?
     
     // Picker arrays
     var yearOptions: [String]?
-    var monthOptions = Array(1...12)
-    var monthDisplayOptions: [String]?
+    var monthOptions: [String]?
+    // We use indicies to have greater flexibility - can just retrieve the strings if needed
+    var selectedMonthRow: Int?
+    var selectedYearRow: Int?
     
     // Realm / Database / Utils
     let realm = try! Realm(configuration: RealmConfig.defaultConfig())
@@ -41,28 +43,36 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
 
         // Initialize all the dates
-        today = Date()
-        dateInMonthToDisplayInfoFor = today // For now we just show current month
-        let currentYear = utilCalendar.dateComponents([.year], from: today!).year!
+        today = Date() // start displaying current month
+        todayComponents = utilCalendar.dateComponents([.day, .month, .year], from: today!)
+        let currentYear = todayComponents!.year!
+        let currentMonth = todayComponents!.month!
         
         // Arrays for use in picker
         yearOptions = Array(2000...currentYear).map({ (year) -> String in
             return "\(year)"
         }).reversed()
-        monthOptions = Array(1...12)
-        monthDisplayOptions = monthOptions.map({ (monthCode) -> String in
+        monthOptions = Array(1...12).map({ (monthCode) -> String in
             return TextFormatService.getMonthString(for: monthCode, fullMonth: false)
         })
         
+        // Set initial selection for date picker
+        selectedMonthRow = currentMonth - 1 // So that indicies start at 0
+        selectedYearRow = 0
+        
         // Initialize realm
-        categories = realm.objects(Category.self)
+        categories = realm.objects(Category.self).sorted(byKeyPath: "name", ascending: true)
         receipts = realm.objects(Receipt.self)
         
         // Tableview initialization
         categoryBreakdownTable.delegate = self
         categoryBreakdownTable.dataSource = self
-        
         categoryBreakdownTable.register(UINib(nibName: "CategoryAnalyticsTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryAnalyticsCell")
+        
+        // Add border to button
+        displayMonthLabel.layer.cornerRadius = 4
+        displayMonthLabel.layer.borderWidth = 1
+        displayMonthLabel.layer.borderColor = UIColor.init(named: "primary")!.cgColor
         
         loadViews()
         
@@ -76,10 +86,13 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func loadViews() {
         
-        let currentDateComponents = utilCalendar.dateComponents([.year, .month], from: dateInMonthToDisplayInfoFor!)
-        displayMonthLabel.setTitle(TextFormatService.getMonthString(for: currentDateComponents.month!, fullMonth: true), for: .normal)
+        let currentDateComponents = DateComponents(year: selectedYearRow! >= 0 ? Int(string: yearOptions![selectedYearRow!]) : todayComponents!.year!,
+                       month: selectedMonthRow! >= 0 ? Int(selectedMonthRow! + 1) : todayComponents!.month!)
         firstOfDisplayMonth = utilCalendar.date(from: currentDateComponents)
         lastOfDisplayMonth = utilCalendar.date(byAdding: .month, value: 1, to: firstOfDisplayMonth!) // Technically first of next month, but this is correct wrt the query
+        
+        // Set display on the button
+        displayMonthLabel.setTitle(TextFormatService.getMonthAndYearString(for: firstOfDisplayMonth!, fullMonth: false), for: .normal)
         
         displayMonthQueryPredicates = [
             // Greater than first of month
@@ -121,11 +134,16 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: Button / Display Month Stuff
     @IBAction func displayMonthButtonPressed(_ sender: UIButton) {
+        
         ColumnStringPickerPopover(title: "Select a Date",
-                                  choices: [monthDisplayOptions!,yearOptions!],
-                                  selectedRows: [0,0], columnPercents: [0.5, 0.5])
+                                  choices: [monthOptions!,yearOptions!],
+                                  selectedRows: [selectedMonthRow != nil ? selectedMonthRow! : 0, selectedYearRow != nil ? selectedYearRow! : 0],
+                                  columnPercents: [0.5, 0.5])
             .setDoneButton(action: { popover, selectedRows, selectedStrings in
-                print("selected rows \(selectedRows) strings \(selectedStrings)")
+                // Initialize the selected rows & reload views
+                self.selectedMonthRow = selectedRows[0]
+                self.selectedYearRow = selectedRows[1]
+                self.loadViews()
             })
             .setFontSizes([CGFloat(integerLiteral: 20), CGFloat(integerLiteral: 20)])
             .appear(originView: sender, baseViewController: self)
