@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xzA-Ck-A3n">
-    <device id="retina5_9" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -17,7 +17,7 @@
                 <navigationController id="cut-1i-XGO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Analytics" image="analytics" selectedImage="analytics_selected" id="AQp-bt-IgZ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="xTU-wl-393">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="primary"/>
                         <textAttributes key="largeTitleTextAttributes">
@@ -37,14 +37,14 @@
             <objects>
                 <viewController id="Ls7-OV-vMo" customClass="AnalyticsViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BuM-kw-gne">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1v6-lQ-V1Y">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IeF-2y-xIN">
-                                        <rect key="frame" x="16" y="24" width="343" height="62"/>
+                                        <rect key="frame" x="16" y="24" width="343" height="74"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQi-au-v3h">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="34"/>
@@ -52,26 +52,50 @@
                                                 <color key="textColor" name="accent"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spent this Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRt-Wo-HT9">
-                                                <rect key="frame" x="0.0" y="38" width="343" height="24"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Z1-l0-wBM">
+                                                <rect key="frame" x="70" y="38" width="203.5" height="36"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spent in" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HRC-aq-YOS">
+                                                        <rect key="frame" x="0.0" y="0.0" width="71.5" height="36"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3UZ-YQ-kdm">
+                                                        <rect key="frame" x="75.5" y="0.0" width="128" height="36"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <state key="normal" title="February 2019">
+                                                            <color key="titleColor" name="primary"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="displayMonthButtonPressed:" destination="Ls7-OV-vMo" eventType="touchUpInside" id="GfH-1H-xdV"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="HRC-aq-YOS" secondAttribute="bottom" id="Awr-lz-uI3"/>
+                                                    <constraint firstItem="HRC-aq-YOS" firstAttribute="leading" secondItem="3Z1-l0-wBM" secondAttribute="leading" id="Z9Q-ml-XZB"/>
+                                                    <constraint firstAttribute="bottom" secondItem="3UZ-YQ-kdm" secondAttribute="bottom" id="ZlD-Bk-OAj"/>
+                                                    <constraint firstItem="3UZ-YQ-kdm" firstAttribute="leading" secondItem="HRC-aq-YOS" secondAttribute="trailing" constant="4" id="hcE-Op-p1U"/>
+                                                    <constraint firstItem="HRC-aq-YOS" firstAttribute="top" secondItem="3Z1-l0-wBM" secondAttribute="top" id="iYJ-la-MGi"/>
+                                                    <constraint firstItem="3UZ-YQ-kdm" firstAttribute="top" secondItem="3Z1-l0-wBM" secondAttribute="top" id="jlH-i3-6nT"/>
+                                                    <constraint firstAttribute="trailing" secondItem="3UZ-YQ-kdm" secondAttribute="trailing" id="q0G-O1-8y1"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="oQi-au-v3h" firstAttribute="top" secondItem="IeF-2y-xIN" secondAttribute="top" id="9Sj-ee-2me"/>
+                                            <constraint firstItem="3Z1-l0-wBM" firstAttribute="centerX" secondItem="IeF-2y-xIN" secondAttribute="centerX" id="Ape-Kd-FSo"/>
+                                            <constraint firstItem="3Z1-l0-wBM" firstAttribute="top" secondItem="oQi-au-v3h" secondAttribute="bottom" constant="4" id="CZO-64-klV"/>
                                             <constraint firstItem="oQi-au-v3h" firstAttribute="leading" secondItem="IeF-2y-xIN" secondAttribute="leading" id="J1L-3G-kid"/>
-                                            <constraint firstItem="FRt-Wo-HT9" firstAttribute="top" secondItem="oQi-au-v3h" secondAttribute="bottom" constant="4" id="dKz-0f-gLE"/>
-                                            <constraint firstAttribute="bottom" secondItem="FRt-Wo-HT9" secondAttribute="bottom" id="iOU-j7-fvv"/>
-                                            <constraint firstAttribute="trailing" secondItem="FRt-Wo-HT9" secondAttribute="trailing" id="mRm-kx-mBp"/>
+                                            <constraint firstAttribute="bottom" secondItem="3Z1-l0-wBM" secondAttribute="bottom" id="cvm-np-cZ4"/>
                                             <constraint firstAttribute="trailing" secondItem="oQi-au-v3h" secondAttribute="trailing" id="miR-MF-fEE"/>
-                                            <constraint firstItem="FRt-Wo-HT9" firstAttribute="leading" secondItem="IeF-2y-xIN" secondAttribute="leading" id="uyk-W7-CGa"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vMH-pG-5rj">
-                                        <rect key="frame" x="16" y="102" width="343" height="128"/>
+                                        <rect key="frame" x="16" y="114" width="343" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="45E-5D-XpY"/>
@@ -101,15 +125,16 @@
                     </view>
                     <navigationItem key="navigationItem" title="Analytics" id="aOB-0S-FCX"/>
                     <connections>
-                        <outlet property="currentMonthTable" destination="vMH-pG-5rj" id="oVc-bs-jp7"/>
-                        <outlet property="currentMonthTableHeight" destination="45E-5D-XpY" id="Rek-xk-EuH"/>
+                        <outlet property="categoryBreakdownTable" destination="vMH-pG-5rj" id="oVc-bs-jp7"/>
+                        <outlet property="categoryBreakdownTableHeight" destination="45E-5D-XpY" id="Rek-xk-EuH"/>
+                        <outlet property="displayMonthLabel" destination="3UZ-YQ-kdm" id="pZ1-Dp-FGe"/>
+                        <outlet property="displayMonthSpendLabel" destination="oQi-au-v3h" id="r7N-b3-p7I"/>
                         <outlet property="mainScrollView" destination="1v6-lQ-V1Y" id="61N-yT-41a"/>
-                        <outlet property="thisMonthSpendLabel" destination="oQi-au-v3h" id="r7N-b3-p7I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pAC-DX-d6r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="726" y="-1454"/>
+            <point key="canvasLocation" x="725.60000000000002" y="-1454.1229385307347"/>
         </scene>
         <!--Search-->
         <scene sceneID="BLi-9V-xmS">
@@ -117,7 +142,7 @@
                 <navigationController id="FEf-qe-h0Q" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="search" selectedImage="search_selected" id="dlK-4X-lkW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="yhb-ww-XcK">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="primary"/>
                         <textAttributes key="titleTextAttributes">
@@ -140,11 +165,11 @@
             <objects>
                 <viewController id="F5u-T3-7y9" customClass="AdvancedSearchViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VJT-GA-TP0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="cLf-x7-5Gy">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <color key="tintColor" name="accent"/>
                             </tableView>
@@ -179,7 +204,7 @@
             <objects>
                 <tableViewController id="yfV-nT-9mO" customClass="SearchResultsTableViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lIt-3i-eDN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="YUz-vD-uH8">
@@ -206,7 +231,7 @@
             <objects>
                 <tableViewController id="rCF-qS-1R5" customClass="AllReceiptsTableViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Prj-33-jEI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="502"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" misplaced="YES" searchBarStyle="minimal" text="" placeholder="Quick Search" id="Cu6-Jg-1Zt">
@@ -220,7 +245,7 @@
                             </scopeButtonTitles>
                         </searchBar>
                         <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="SaR-Rl-ANC">
-                            <rect key="frame" x="0.0" y="601" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="514" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
@@ -252,11 +277,11 @@
             <objects>
                 <viewController id="4K9-Ub-V7Y" customClass="ViewReceiptViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m7y-aa-j6S">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rLf-Sr-55I">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wJ5-Jn-mMU">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
@@ -400,11 +425,11 @@
             <objects>
                 <viewController title="New Receipt" id="Qoh-ds-eVE" customClass="AddOrEditReceiptViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dsG-A4-kX4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aQ-ja-qIw">
-                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <color key="backgroundColor" name="primary"/>
                                 <color key="barTintColor" name="primary"/>
                                 <textAttributes key="titleTextAttributes">
@@ -432,10 +457,10 @@
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEK-Hn-v9E">
-                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="9yl-mm-WFh">
-                                        <rect key="frame" x="0.0" y="200" width="375" height="490"/>
+                                        <rect key="frame" x="0.0" y="200" width="375" height="403"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" red="0.0" green="0.22352941176470587" blue="0.79607843137254897" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableView>
@@ -494,11 +519,11 @@
             <objects>
                 <viewController id="tVI-F3-N4I" customClass="PickCategoryViewController" customModule="KeepReceipt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i9y-YD-fAd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUP-jX-veG">
-                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <color key="barTintColor" name="primary"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -519,7 +544,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0hu-mM-O6Z">
-                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="4Is-ex-GNQ">
                                     <rect key="frame" x="0.0" y="72" width="375" height="44"/>
@@ -531,7 +556,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xYa-nt-H5z" id="wDf-Qw-eT3">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="tintColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
@@ -541,7 +566,7 @@
                                 </prototypes>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAq-Ig-ojf">
-                                <rect key="frame" x="0.0" y="729" width="375" height="49"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
                                     <barButtonItem title="Add" id="M3E-9D-vv8">
                                         <color key="tintColor" red="1" green="0.6705882353" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -615,7 +640,7 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="rcA-ve-gh4">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="primary"/>

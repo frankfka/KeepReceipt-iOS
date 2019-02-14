@@ -24,4 +24,16 @@ class TextFormatService {
         return dateFormatter.string(from: date)
     }
     
+    static func getMonthString(for monthNumber: Int, fullMonth: Bool) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM"
+        let date = dateFormatter.date(from: "\(monthNumber)")
+        if (fullMonth) {
+            dateFormatter.dateFormat = "MMMM"
+        } else {
+            dateFormatter.dateFormat = "MMM"
+        }
+        return dateFormatter.string(from: date!)
+    }
+    
 }

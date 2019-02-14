@@ -1,8 +1,6 @@
 PODS:
   - EmptyDataSet-Swift (4.2.0)
   - Eureka (4.3.1)
-  - FSCalendar (2.8.0)
-  - NewPopMenu (2.1.1)
   - Realm (3.12.0):
     - Realm/Headers (= 3.12.0)
   - Realm/Headers (3.12.0)
@@ -10,37 +8,35 @@ PODS:
     - Realm (= 3.12.0)
   - SimpleImageViewer (1.1.1)
   - SVProgressHUD (2.2.5)
+  - SwiftyPickerPopover (6.6.5)
 
 DEPENDENCIES:
   - EmptyDataSet-Swift (~> 4.2.0)
   - Eureka
-  - FSCalendar
-  - NewPopMenu
   - RealmSwift
   - SimpleImageViewer (~> 1.1.1)
   - SVProgressHUD
+  - SwiftyPickerPopover
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - EmptyDataSet-Swift
     - Eureka
-    - FSCalendar
-    - NewPopMenu
     - Realm
     - RealmSwift
     - SimpleImageViewer
     - SVProgressHUD
+    - SwiftyPickerPopover
 
 SPEC CHECKSUMS:
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   Eureka: 28ea296f06710f6745266b71f17862048941a32d
-  FSCalendar: 3a5ed3636e2ba1b83ebebfcf0c2603105a6f5efe
-  NewPopMenu: 60d67846a401964dcaa51bffb792f04f6fe2fc76
   Realm: cdaef23c4ddb36ab1ddffed23f5a7f3332fc5585
   RealmSwift: 5576324033f0aa5ef1e0a839a3da2281dff47a7f
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwiftyPickerPopover: f2975fd0233d04c0a8f8d52d09b6f24b882de6fb
 
-PODFILE CHECKSUM: 7306e676c60bafc3348b21044b7662df2244a091
+PODFILE CHECKSUM: 254e6104e793fa9dc779279775ac8b6e9fae1d90
 
 COCOAPODS: 1.5.3

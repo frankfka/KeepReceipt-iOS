@@ -8,10 +8,9 @@ target 'KeepReceipt' do
   # Pods for KeepReceipt
     pod 'RealmSwift'
     pod 'SVProgressHUD'
-    pod 'NewPopMenu'
-    pod 'FSCalendar'
     pod 'SimpleImageViewer', '~> 1.1.1'
     pod 'EmptyDataSet-Swift', '~> 4.2.0'
     pod 'Eureka'
+    pod 'SwiftyPickerPopover'
 
 end
