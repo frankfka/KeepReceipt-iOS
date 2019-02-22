@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1143A56A221FBF8000C03DCA /* MonthValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1143A569221FBF8000C03DCA /* MonthValueFormatter.swift */; };
+		1143A56E2220583F00C03DCA /* CurrencyValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1143A56D2220583F00C03DCA /* CurrencyValueFormatter.swift */; };
 		1177D87F21EFC30200DD9AD8 /* PickCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1177D87E21EFC30200DD9AD8 /* PickCategoryViewController.swift */; };
 		117905B421E391980019EEAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117905B321E391980019EEAA /* AppDelegate.swift */; };
 		117905B921E391980019EEAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117905B721E391980019EEAA /* Main.storyboard */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		10CBB929F2160907E4CE89E3 /* Pods-KeepReceipt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepReceipt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt.debug.xcconfig"; sourceTree = "<group>"; };
+		1143A569221FBF8000C03DCA /* MonthValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthValueFormatter.swift; sourceTree = "<group>"; };
+		1143A56D2220583F00C03DCA /* CurrencyValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyValueFormatter.swift; sourceTree = "<group>"; };
 		1177D87E21EFC30200DD9AD8 /* PickCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickCategoryViewController.swift; sourceTree = "<group>"; };
 		117905B021E391980019EEAA /* KeepReceipt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeepReceipt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		117905B321E391980019EEAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +82,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1143A568221FBF5F00C03DCA /* ChartValueFormatters */ = {
+			isa = PBXGroup;
+			children = (
+				1143A569221FBF8000C03DCA /* MonthValueFormatter.swift */,
+				1143A56D2220583F00C03DCA /* CurrencyValueFormatter.swift */,
+			);
+			path = ChartValueFormatters;
+			sourceTree = "<group>";
+		};
 		117905A721E391980019EEAA = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +138,7 @@
 		117905C821E3DB620019EEAA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1143A568221FBF5F00C03DCA /* ChartValueFormatters */,
 				11902D0C22112753004592BE /* TableViewCells */,
 				117905FF21E5AAA50019EEAA /* AllReceiptsTableViewController.swift */,
 				1179060321E5B9540019EEAA /* AddOrEditReceiptViewController.swift */,
@@ -316,7 +330,9 @@
 			files = (
 				11F377D721FB695300E3CE93 /* AdvancedSearchViewController.swift in Sources */,
 				1179060C21E78C150019EEAA /* ReceiptTableViewCell.swift in Sources */,
+				1143A56E2220583F00C03DCA /* CurrencyValueFormatter.swift in Sources */,
 				11F377D921FB6A1A00E3CE93 /* SearchResultsTableViewController.swift in Sources */,
+				1143A56A221FBF8000C03DCA /* MonthValueFormatter.swift in Sources */,
 				11902D1022134FDF004592BE /* AnalyticsService.swift in Sources */,
 				117905CA21E3DBD90019EEAA /* Receipt.swift in Sources */,
 				11902D0A22112743004592BE /* CategoryAnalyticsTableViewCell.swift in Sources */,
