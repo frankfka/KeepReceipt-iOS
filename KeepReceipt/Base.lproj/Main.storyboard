@@ -103,24 +103,44 @@
                                         </constraints>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anc-jc-coB" customClass="LineChartView" customModule="Charts">
-                                        <rect key="frame" x="16" y="270" width="343" height="200"/>
+                                        <rect key="frame" x="16" y="299" width="343" height="200"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="Ztz-Q4-Zbj"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spend History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKn-78-1db">
+                                        <rect key="frame" x="16" y="270" width="343" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="auj-Jl-Yd5">
+                                        <rect key="frame" x="16" y="294" width="343" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="CH9-xd-5x1"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="vMH-pG-5rj" firstAttribute="leading" secondItem="1v6-lQ-V1Y" secondAttribute="leading" constant="16" id="AqE-Fj-d0d"/>
-                                    <constraint firstItem="anc-jc-coB" firstAttribute="top" secondItem="vMH-pG-5rj" secondAttribute="bottom" constant="32" id="EJW-2u-c3P"/>
                                     <constraint firstAttribute="trailing" secondItem="anc-jc-coB" secondAttribute="trailing" constant="16" id="IES-8R-i0P"/>
                                     <constraint firstItem="IeF-2y-xIN" firstAttribute="leading" secondItem="1v6-lQ-V1Y" secondAttribute="leading" constant="16" id="ITA-x1-Rka"/>
                                     <constraint firstItem="vMH-pG-5rj" firstAttribute="top" secondItem="IeF-2y-xIN" secondAttribute="bottom" constant="16" id="KQH-cn-GSt"/>
                                     <constraint firstAttribute="bottom" secondItem="anc-jc-coB" secondAttribute="bottom" constant="32" id="L8d-Gz-oUM"/>
                                     <constraint firstItem="IeF-2y-xIN" firstAttribute="top" secondItem="1v6-lQ-V1Y" secondAttribute="top" constant="24" id="LGy-g7-lhC"/>
                                     <constraint firstAttribute="trailing" secondItem="IeF-2y-xIN" secondAttribute="trailing" constant="16" id="Src-Q7-KLl"/>
+                                    <constraint firstItem="AKn-78-1db" firstAttribute="top" secondItem="vMH-pG-5rj" secondAttribute="bottom" constant="32" id="W6A-Gl-W8T"/>
+                                    <constraint firstItem="auj-Jl-Yd5" firstAttribute="top" secondItem="AKn-78-1db" secondAttribute="bottom" id="YLR-b1-1Pu"/>
                                     <constraint firstItem="anc-jc-coB" firstAttribute="leading" secondItem="1v6-lQ-V1Y" secondAttribute="leading" constant="16" id="Z7p-lw-F8t"/>
+                                    <constraint firstAttribute="trailing" secondItem="auj-Jl-Yd5" secondAttribute="trailing" constant="16" id="bjS-Ea-ejr"/>
                                     <constraint firstAttribute="trailing" secondItem="vMH-pG-5rj" secondAttribute="trailing" constant="16" id="hoq-wk-sJp"/>
+                                    <constraint firstItem="anc-jc-coB" firstAttribute="top" secondItem="auj-Jl-Yd5" secondAttribute="bottom" constant="4" id="ivv-7C-QbD"/>
+                                    <constraint firstItem="auj-Jl-Yd5" firstAttribute="leading" secondItem="1v6-lQ-V1Y" secondAttribute="leading" constant="16" id="jEK-d1-9NX"/>
+                                    <constraint firstItem="AKn-78-1db" firstAttribute="leading" secondItem="1v6-lQ-V1Y" secondAttribute="leading" constant="16" id="wSd-YZ-9b3"/>
+                                    <constraint firstAttribute="trailing" secondItem="AKn-78-1db" secondAttribute="trailing" constant="16" id="wU4-xD-jOC"/>
                                     <constraint firstItem="vMH-pG-5rj" firstAttribute="centerX" secondItem="1v6-lQ-V1Y" secondAttribute="centerX" id="wXP-iI-jcu"/>
                                 </constraints>
                             </scrollView>
