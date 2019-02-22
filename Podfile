@@ -12,5 +12,6 @@ target 'KeepReceipt' do
     pod 'EmptyDataSet-Swift', '~> 4.2.0'
     pod 'Eureka'
     pod 'SwiftyPickerPopover'
+    pod 'Charts'
 
 end

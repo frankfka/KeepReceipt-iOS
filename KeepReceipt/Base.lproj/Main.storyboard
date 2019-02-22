@@ -102,14 +102,24 @@
                                             <constraint firstAttribute="height" constant="128" id="45E-5D-XpY"/>
                                         </constraints>
                                     </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anc-jc-coB" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="16" y="270" width="343" height="200"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="Ztz-Q4-Zbj"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="vMH-pG-5rj" firstAttribute="leading" secondItem="1v6-lQ-V1Y" secondAttribute="leading" constant="16" id="AqE-Fj-d0d"/>
-                                    <constraint firstAttribute="bottom" secondItem="vMH-pG-5rj" secondAttribute="bottom" constant="32" id="B4Q-1Z-Yxg"/>
+                                    <constraint firstItem="anc-jc-coB" firstAttribute="top" secondItem="vMH-pG-5rj" secondAttribute="bottom" constant="32" id="EJW-2u-c3P"/>
+                                    <constraint firstAttribute="trailing" secondItem="anc-jc-coB" secondAttribute="trailing" constant="16" id="IES-8R-i0P"/>
                                     <constraint firstItem="IeF-2y-xIN" firstAttribute="leading" secondItem="1v6-lQ-V1Y" secondAttribute="leading" constant="16" id="ITA-x1-Rka"/>
                                     <constraint firstItem="vMH-pG-5rj" firstAttribute="top" secondItem="IeF-2y-xIN" secondAttribute="bottom" constant="16" id="KQH-cn-GSt"/>
+                                    <constraint firstAttribute="bottom" secondItem="anc-jc-coB" secondAttribute="bottom" constant="32" id="L8d-Gz-oUM"/>
                                     <constraint firstItem="IeF-2y-xIN" firstAttribute="top" secondItem="1v6-lQ-V1Y" secondAttribute="top" constant="24" id="LGy-g7-lhC"/>
                                     <constraint firstAttribute="trailing" secondItem="IeF-2y-xIN" secondAttribute="trailing" constant="16" id="Src-Q7-KLl"/>
+                                    <constraint firstItem="anc-jc-coB" firstAttribute="leading" secondItem="1v6-lQ-V1Y" secondAttribute="leading" constant="16" id="Z7p-lw-F8t"/>
                                     <constraint firstAttribute="trailing" secondItem="vMH-pG-5rj" secondAttribute="trailing" constant="16" id="hoq-wk-sJp"/>
                                     <constraint firstItem="vMH-pG-5rj" firstAttribute="centerX" secondItem="1v6-lQ-V1Y" secondAttribute="centerX" id="wXP-iI-jcu"/>
                                 </constraints>
@@ -130,6 +140,7 @@
                         <outlet property="categoryBreakdownTableHeight" destination="45E-5D-XpY" id="Rek-xk-EuH"/>
                         <outlet property="displayMonthLabel" destination="3UZ-YQ-kdm" id="pZ1-Dp-FGe"/>
                         <outlet property="displayMonthSpendLabel" destination="oQi-au-v3h" id="r7N-b3-p7I"/>
+                        <outlet property="lineChartView" destination="anc-jc-coB" id="TVK-fU-LB6"/>
                         <outlet property="mainScrollView" destination="1v6-lQ-V1Y" id="61N-yT-41a"/>
                     </connections>
                 </viewController>

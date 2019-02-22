@@ -1,4 +1,7 @@
 PODS:
+  - Charts (3.2.2):
+    - Charts/Core (= 3.2.2)
+  - Charts/Core (3.2.2)
   - EmptyDataSet-Swift (4.2.0)
   - Eureka (4.3.1)
   - Realm (3.12.0):
@@ -11,6 +14,7 @@ PODS:
   - SwiftyPickerPopover (6.6.5)
 
 DEPENDENCIES:
+  - Charts
   - EmptyDataSet-Swift (~> 4.2.0)
   - Eureka
   - RealmSwift
@@ -20,6 +24,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Charts
     - EmptyDataSet-Swift
     - Eureka
     - Realm
@@ -29,6 +34,7 @@ SPEC REPOS:
     - SwiftyPickerPopover
 
 SPEC CHECKSUMS:
+  Charts: f69cf0518b6d1d62608ca504248f1bbe0b6ae77e
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   Eureka: 28ea296f06710f6745266b71f17862048941a32d
   Realm: cdaef23c4ddb36ab1ddffed23f5a7f3332fc5585
@@ -37,6 +43,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyPickerPopover: f2975fd0233d04c0a8f8d52d09b6f24b882de6fb
 
-PODFILE CHECKSUM: 254e6104e793fa9dc779279775ac8b6e9fae1d90
+PODFILE CHECKSUM: a0d6cff63933653bb6786835aeb602bc2ec2a222
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0

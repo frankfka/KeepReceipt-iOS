@@ -101,7 +101,6 @@
 			children = (
 				1179060521E6F8780019EEAA /* Service */,
 				117905C821E3DB620019EEAA /* View */,
-				117905C721E3DB5A0019EEAA /* Controller */,
 				117905C621E3DB4D0019EEAA /* Model */,
 				117905B321E391980019EEAA /* AppDelegate.swift */,
 				117905B721E391980019EEAA /* Main.storyboard */,
@@ -121,13 +120,6 @@
 				11F377DA21FBB0FB00E3CE93 /* Constants.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		117905C721E3DB5A0019EEAA /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		117905C821E3DB620019EEAA /* View */ = {
@@ -287,7 +279,8 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -300,6 +293,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -310,7 +304,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

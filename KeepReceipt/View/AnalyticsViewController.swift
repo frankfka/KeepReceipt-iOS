@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import SwiftyPickerPopover
+import Charts
 
 class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -38,6 +39,7 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var categoryBreakdownTable: UITableView!
     @IBOutlet weak var categoryBreakdownTableHeight: NSLayoutConstraint!
     @IBOutlet weak var displayMonthLabel: UIButton!
+    @IBOutlet weak var lineChartView: LineChartView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +107,33 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
         let displayMonthQuery = NSCompoundPredicate(andPredicateWithSubpredicates: displayMonthQueryPredicates!)
         let totalSpend = AnalyticsService.getTotalSpend(for: receipts!.filter(displayMonthQuery))
         displayMonthSpendLabel.text = TextFormatService.getCurrencyString(for: totalSpend)
+        
+        // Line Chart View
+        let fourPrevSpend = ChartDataEntry(x: 0, y: 2)
+        let threePrevSpend = ChartDataEntry(x: 1, y: 4)
+        let twoPrevSpend = ChartDataEntry(x: 2, y: 4)
+        let onePrevSpend = ChartDataEntry(x: 3, y: 3)
+        let thisMonthSpend = ChartDataEntry(x: 4, y: 4)
+        // Create a new dataset from the prior spend data
+        let lineChartDataset = LineChartDataSet([fourPrevSpend, threePrevSpend, twoPrevSpend, onePrevSpend, thisMonthSpend])
+        lineChartDataset.mode = .linear // Linear lines to join data poitns
+        lineChartDataset.drawCircleHoleEnabled = false // Removes transparent hole for each datapoint
+        lineChartDataset.setColor(NSUIColor(named: "accent")!) // Line color
+        lineChartDataset.setCircleColor(NSUIColor(named: "primary")!) // Data point color
+        lineChartDataset.lineWidth = 2
+        lineChartDataset.circleRadius = 3
+        lineChartDataset.valueFormatter = nil // Change this to a good formatter
+        // Line chart customization
+        lineChartView.isUserInteractionEnabled = false // Disable all the dragging/zooming
+        lineChartView.legend.enabled = false
+        lineChartView.xAxis.drawGridLinesEnabled = false
+        lineChartView.xAxis.valueFormatter = nil // change this to a good formatter
+        lineChartView.xAxis.labelPosition = .bottom
+        // Disable left & right Y axes
+        lineChartView.leftAxis.enabled = false
+        lineChartView.rightAxis.enabled = false
+        // Set the data for the line chart
+        lineChartView.data = LineChartData(dataSet: lineChartDataset)
         
         // Make tableview full height & non-scrollable
         categoryBreakdownTable.reloadData()
