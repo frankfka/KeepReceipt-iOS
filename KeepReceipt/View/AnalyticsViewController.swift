@@ -108,16 +108,36 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
         let totalSpend = AnalyticsService.getTotalSpend(for: receipts!.filter(displayMonthQuery))
         displayMonthSpendLabel.text = TextFormatService.getCurrencyString(for: totalSpend)
         
+        // TODO: We can extract the following into a for-loop
         // Calculate spends for previous few months & get middle-of-month time values
         // We'll use an extracted helper method in Analytics service to keep code clean
+        let firstOfPrevMonth = utilCalendar.date(byAdding: .month, value: -1, to: firstOfDisplayMonth!)!
+        let lastOfPrevMonth = utilCalendar.date(byAdding: .month, value: -1, to: lastOfDisplayMonth!)!
+        let firstOfTwoPrevMonth = utilCalendar.date(byAdding: .month, value: -2, to: firstOfDisplayMonth!)!
+        let lastOfTwoPrevMonth = utilCalendar.date(byAdding: .month, value: -2, to: lastOfDisplayMonth!)!
+        let firstOfThreePrevMonth = utilCalendar.date(byAdding: .month, value: -3, to: firstOfDisplayMonth!)!
+        let lastOfThreePrevMonth = utilCalendar.date(byAdding: .month, value: -3, to: lastOfDisplayMonth!)!
+        let firstOfFourPrevMonth = utilCalendar.date(byAdding: .month, value: -4, to: firstOfDisplayMonth!)!
+        let lastOfFourPrevMonth = utilCalendar.date(byAdding: .month, value: -4, to: lastOfDisplayMonth!)!
+        
+        let prevMonthSpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfPrevMonth, endTime: lastOfPrevMonth)
+        let twoPrevMonthSpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfTwoPrevMonth, endTime: lastOfTwoPrevMonth)
+        let threePrevMonthSpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfThreePrevMonth, endTime: lastOfThreePrevMonth)
+        let fourPrevMonthSpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfFourPrevMonth, endTime: lastOfFourPrevMonth)
+        
+        let thisMonthChartDate = utilCalendar.date(byAdding: .day, value: 15, to: firstOfDisplayMonth!)!.timeIntervalSince1970
+        let onePrevChartDate = getMiddleOfMonthDate(firstOfMonthDate: firstOfPrevMonth).timeIntervalSince1970
+        let twoPrevChartDate = getMiddleOfMonthDate(firstOfMonthDate: firstOfTwoPrevMonth).timeIntervalSince1970
+        let threePrevChartDate = getMiddleOfMonthDate(firstOfMonthDate: firstOfThreePrevMonth).timeIntervalSince1970
+        let fourPrevChartDate = getMiddleOfMonthDate(firstOfMonthDate: firstOfFourPrevMonth).timeIntervalSince1970
         
         // Line Chart View
-        let dummyDatapoint = ChartDataEntry(x: 1539497667, y: 5000) // Dummy data point needed because of a bug in Charts library
-        let fourPrevSpend = ChartDataEntry(x: 1539584067, y: 5000)
-        let threePrevSpend = ChartDataEntry(x: 1542262467, y: 4444)
-        let twoPrevSpend = ChartDataEntry(x: 1544854467, y: 4444)
-        let onePrevSpend = ChartDataEntry(x: 1547532867, y: 3333)
-        let thisMonthSpend = ChartDataEntry(x: 1550211267, y: 4444)
+        let dummyDatapoint = ChartDataEntry(x: fourPrevChartDate - 1000, y: fourPrevMonthSpend) // Dummy data point needed because of a bug in Charts library
+        let fourPrevSpend = ChartDataEntry(x: fourPrevChartDate, y: fourPrevMonthSpend)
+        let threePrevSpend = ChartDataEntry(x: threePrevChartDate, y: threePrevMonthSpend)
+        let twoPrevSpend = ChartDataEntry(x: twoPrevChartDate, y: twoPrevMonthSpend)
+        let onePrevSpend = ChartDataEntry(x: onePrevChartDate, y: prevMonthSpend)
+        let thisMonthSpend = ChartDataEntry(x: thisMonthChartDate, y: totalSpend)
         
         // Create a new dataset from the prior spend data
         let lineChartDataset = LineChartDataSet([dummyDatapoint, fourPrevSpend, threePrevSpend, twoPrevSpend, onePrevSpend, thisMonthSpend])
@@ -138,7 +158,7 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
         xAxis.labelPosition = .bottom
         xAxis.labelFont = UIFont.systemFont(ofSize: 12)
         xAxis.avoidFirstLastClippingEnabled = true // Avoids clipping to bounds
-        xAxis.setLabelCount(5, force: true) // Force # labels to the # months
+        xAxis.setLabelCount(lineChartDataset.count - 1, force: true) // Force # labels to the # months
         // Configure the yAxis
         let yAxis = lineChartView.leftAxis
         yAxis.enabled = true
@@ -190,6 +210,11 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
             })
             .setFontSizes([CGFloat(integerLiteral: 20), CGFloat(integerLiteral: 20)])
             .appear(originView: sender, baseViewController: self)
+    }
+    
+    // Just add 15 days for now to approximate middle of month
+    private func getMiddleOfMonthDate(firstOfMonthDate: Date) -> Date {
+        return utilCalendar.date(byAdding: .day, value: 15, to: firstOfMonthDate)!
     }
 
 }
