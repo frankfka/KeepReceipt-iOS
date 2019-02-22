@@ -108,39 +108,27 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
         let totalSpend = AnalyticsService.getTotalSpend(for: receipts!.filter(displayMonthQuery))
         displayMonthSpendLabel.text = TextFormatService.getCurrencyString(for: totalSpend)
         
-        // TODO: We can extract the following into a for-loop
         // Calculate spends for previous few months & get middle-of-month time values
         // We'll use an extracted helper method in Analytics service to keep code clean
-        let firstOfPrevMonth = utilCalendar.date(byAdding: .month, value: -1, to: firstOfDisplayMonth!)!
-        let lastOfPrevMonth = utilCalendar.date(byAdding: .month, value: -1, to: lastOfDisplayMonth!)!
-        let firstOfTwoPrevMonth = utilCalendar.date(byAdding: .month, value: -2, to: firstOfDisplayMonth!)!
-        let lastOfTwoPrevMonth = utilCalendar.date(byAdding: .month, value: -2, to: lastOfDisplayMonth!)!
-        let firstOfThreePrevMonth = utilCalendar.date(byAdding: .month, value: -3, to: firstOfDisplayMonth!)!
-        let lastOfThreePrevMonth = utilCalendar.date(byAdding: .month, value: -3, to: lastOfDisplayMonth!)!
-        let firstOfFourPrevMonth = utilCalendar.date(byAdding: .month, value: -4, to: firstOfDisplayMonth!)!
-        let lastOfFourPrevMonth = utilCalendar.date(byAdding: .month, value: -4, to: lastOfDisplayMonth!)!
-        
-        let prevMonthSpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfPrevMonth, endTime: lastOfPrevMonth)
-        let twoPrevMonthSpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfTwoPrevMonth, endTime: lastOfTwoPrevMonth)
-        let threePrevMonthSpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfThreePrevMonth, endTime: lastOfThreePrevMonth)
-        let fourPrevMonthSpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfFourPrevMonth, endTime: lastOfFourPrevMonth)
-        
-        let thisMonthChartDate = utilCalendar.date(byAdding: .day, value: 15, to: firstOfDisplayMonth!)!.timeIntervalSince1970
-        let onePrevChartDate = getMiddleOfMonthDate(firstOfMonthDate: firstOfPrevMonth).timeIntervalSince1970
-        let twoPrevChartDate = getMiddleOfMonthDate(firstOfMonthDate: firstOfTwoPrevMonth).timeIntervalSince1970
-        let threePrevChartDate = getMiddleOfMonthDate(firstOfMonthDate: firstOfThreePrevMonth).timeIntervalSince1970
-        let fourPrevChartDate = getMiddleOfMonthDate(firstOfMonthDate: firstOfFourPrevMonth).timeIntervalSince1970
-        
-        // Line Chart View
-        let dummyDatapoint = ChartDataEntry(x: fourPrevChartDate - 1000, y: fourPrevMonthSpend) // Dummy data point needed because of a bug in Charts library
-        let fourPrevSpend = ChartDataEntry(x: fourPrevChartDate, y: fourPrevMonthSpend)
-        let threePrevSpend = ChartDataEntry(x: threePrevChartDate, y: threePrevMonthSpend)
-        let twoPrevSpend = ChartDataEntry(x: twoPrevChartDate, y: twoPrevMonthSpend)
-        let onePrevSpend = ChartDataEntry(x: onePrevChartDate, y: prevMonthSpend)
-        let thisMonthSpend = ChartDataEntry(x: thisMonthChartDate, y: totalSpend)
+        var lineChartData: [ChartDataEntry] = [ChartDataEntry(x: getMiddleOfMonthDate(firstOfMonthDate: firstOfDisplayMonth!).timeIntervalSince1970, y: totalSpend)] // Initialized with this month
+        // Now loop through prior months
+        let maxMonthNumber = 4
+        for monthIncrement in 1...maxMonthNumber {
+            let firstOfMonth = utilCalendar.date(byAdding: .month, value: -monthIncrement, to: firstOfDisplayMonth!)!
+            let lastOfMonth = utilCalendar.date(byAdding: .month, value: -monthIncrement, to: lastOfDisplayMonth!)!
+            let monthlySpend = AnalyticsService.getTotalSpend(for: receipts!, startTime: firstOfMonth, endTime: lastOfMonth)
+            
+            lineChartData.append(ChartDataEntry(x: getMiddleOfMonthDate(firstOfMonthDate: firstOfMonth).timeIntervalSince1970, y: monthlySpend))
+            
+            // Add a dummy data point if this is the earliest month (required for a Chart library bug)
+            if monthIncrement == maxMonthNumber {
+                lineChartData.append(ChartDataEntry(x: getMiddleOfMonthDate(firstOfMonthDate: firstOfMonth).timeIntervalSince1970 - 1000, y: monthlySpend))
+            }
+        }
         
         // Create a new dataset from the prior spend data
-        let lineChartDataset = LineChartDataSet([dummyDatapoint, fourPrevSpend, threePrevSpend, twoPrevSpend, onePrevSpend, thisMonthSpend])
+        let lineChartDataset = LineChartDataSet(Array(lineChartData.reversed()))
+        
         lineChartDataset.mode = .linear // Linear lines to join data poitns
         lineChartDataset.drawCircleHoleEnabled = false // Removes transparent hole for each datapoint
         lineChartDataset.setColor(NSUIColor(named: "accent")!) // Line color
