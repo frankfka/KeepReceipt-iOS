@@ -29,6 +29,8 @@
 		11902D0A22112743004592BE /* CategoryAnalyticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11902D0822112743004592BE /* CategoryAnalyticsTableViewCell.swift */; };
 		11902D0E22132ECF004592BE /* AnalyticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11902D0D22132ECF004592BE /* AnalyticsViewController.swift */; };
 		11902D1022134FDF004592BE /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11902D0F22134FDF004592BE /* AnalyticsService.swift */; };
+		11C7720E222C1ECC0021B0BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C7720D222C1ECC0021B0BC /* GoogleService-Info.plist */; };
+		11C77210222C2A000021B0BC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C7720F222C2A000021B0BC /* SettingsViewController.swift */; };
 		11DA7F9F2213D1D500C001BE /* CategoryAnalyticsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11DA7F9E2213D1D500C001BE /* CategoryAnalyticsTableViewCell.xib */; };
 		11F377D721FB695300E3CE93 /* AdvancedSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F377D621FB695300E3CE93 /* AdvancedSearchViewController.swift */; };
 		11F377D921FB6A1A00E3CE93 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F377D821FB6A1A00E3CE93 /* SearchResultsTableViewController.swift */; };
@@ -62,6 +64,8 @@
 		11902D0822112743004592BE /* CategoryAnalyticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAnalyticsTableViewCell.swift; sourceTree = "<group>"; };
 		11902D0D22132ECF004592BE /* AnalyticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsViewController.swift; sourceTree = "<group>"; };
 		11902D0F22134FDF004592BE /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		11C7720D222C1ECC0021B0BC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		11C7720F222C2A000021B0BC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		11DA7F9E2213D1D500C001BE /* CategoryAnalyticsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryAnalyticsTableViewCell.xib; sourceTree = "<group>"; };
 		11F377D621FB695300E3CE93 /* AdvancedSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSearchViewController.swift; sourceTree = "<group>"; };
 		11F377D821FB6A1A00E3CE93 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 				117905BA21E3919A0019EEAA /* Assets.xcassets */,
 				117905BC21E3919A0019EEAA /* LaunchScreen.storyboard */,
 				117905BF21E3919A0019EEAA /* Info.plist */,
+				11C7720D222C1ECC0021B0BC /* GoogleService-Info.plist */,
 			);
 			path = KeepReceipt;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				11F377D621FB695300E3CE93 /* AdvancedSearchViewController.swift */,
 				11F377D821FB6A1A00E3CE93 /* SearchResultsTableViewController.swift */,
 				11902D0D22132ECF004592BE /* AnalyticsViewController.swift */,
+				11C7720F222C2A000021B0BC /* SettingsViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -204,6 +210,7 @@
 				117905AD21E391980019EEAA /* Frameworks */,
 				117905AE21E391980019EEAA /* Resources */,
 				A08D751AC460BE758741E4DF /* [CP] Embed Pods Frameworks */,
+				92EB926D21647BF93BD045E5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -257,6 +264,7 @@
 				11DA7F9F2213D1D500C001BE /* CategoryAnalyticsTableViewCell.xib in Resources */,
 				117905BB21E3919A0019EEAA /* Assets.xcassets in Resources */,
 				117905B921E391980019EEAA /* Main.storyboard in Resources */,
+				11C7720E222C1ECC0021B0BC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +293,32 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		92EB926D21647BF93BD045E5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseGoogleAuthUI.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseGoogleAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KeepReceipt/Pods-KeepReceipt-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A08D751AC460BE758741E4DF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -297,11 +331,15 @@
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SimpleImageViewer/SimpleImageViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyPickerPopover/SwiftyPickerPopover.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -310,11 +348,15 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleImageViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyPickerPopover.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -341,6 +383,7 @@
 				117905B421E391980019EEAA /* AppDelegate.swift in Sources */,
 				11F377DB21FBB0FB00E3CE93 /* Constants.swift in Sources */,
 				1179060221E5AEC30019EEAA /* RealmConfig.swift in Sources */,
+				11C77210222C2A000021B0BC /* SettingsViewController.swift in Sources */,
 				1179061321E8F8090019EEAA /* DatabaseService.swift in Sources */,
 				11902D0E22132ECF004592BE /* AnalyticsViewController.swift in Sources */,
 				1179061121E8D7DB0019EEAA /* ViewReceiptViewController.swift in Sources */,

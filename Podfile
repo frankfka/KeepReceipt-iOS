@@ -13,5 +13,10 @@ target 'KeepReceipt' do
     pod 'Eureka'
     pod 'SwiftyPickerPopover'
     pod 'Charts'
+    pod 'Firebase/Core'
+    pod 'FirebaseUI/Auth'
+    pod 'FirebaseUI/Google'
 
+
+    
 end
