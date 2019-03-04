@@ -14,9 +14,8 @@ target 'KeepReceipt' do
     pod 'SwiftyPickerPopover'
     pod 'Charts'
     pod 'Firebase/Core'
+    pod 'Firebase/Firestore'
     pod 'FirebaseUI/Auth'
     pod 'FirebaseUI/Google'
-
-
     
 end
