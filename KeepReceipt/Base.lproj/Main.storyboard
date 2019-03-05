@@ -517,6 +517,7 @@
                         <outlet property="categoryLabel" destination="ftz-kg-MYL" id="kl1-eY-85p"/>
                         <outlet property="dateLabel" destination="ODh-P0-kTs" id="YPv-gJ-xYn"/>
                         <outlet property="receiptImageView" destination="wJ5-Jn-mMU" id="SHQ-9O-znY"/>
+                        <outlet property="receiptImageViewHeight" destination="bh3-UY-JU7" id="IC7-mU-M62"/>
                         <outlet property="vendorNameLabel" destination="R9I-wM-YVj" id="3E1-9h-IhF"/>
                         <segue destination="Qoh-ds-eVE" kind="presentation" identifier="EditReceiptSegue" id="EtJ-jM-M6r"/>
                     </connections>
@@ -611,13 +612,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="receiptImageView" destination="cF8-eT-WJC" id="kKx-aM-GNO"/>
+                        <outlet property="receiptImageViewHeight" destination="zbp-Tr-HXK" id="kaT-ZN-TUa"/>
                         <outlet property="tableView" destination="9yl-mm-WFh" id="euC-wZ-uHc"/>
                         <segue destination="tVI-F3-N4I" kind="presentation" identifier="PickCategoryForReceiptSegue" id="D8v-k5-HHe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3py-yi-Fi7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1283" y="863"/>
+            <point key="canvasLocation" x="1282.4000000000001" y="862.21889055472275"/>
         </scene>
         <!--Pick Category View Controller-->
         <scene sceneID="jTj-me-BRu">
@@ -807,7 +809,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="o4S-DA-G3f"/>
+        <segue reference="EtJ-jM-M6r"/>
         <segue reference="nUa-T8-xtl"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -16,6 +16,7 @@ class ViewReceiptViewController: UIViewController {
     
     // UI Stuff
     @IBOutlet weak var receiptImageView: UIImageView!
+    @IBOutlet weak var receiptImageViewHeight: NSLayoutConstraint!
     @IBOutlet weak var vendorNameLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -90,16 +91,22 @@ class ViewReceiptViewController: UIViewController {
     private func loadViews() {
         // Again, these fields are definitely set, but for future optional fields
         // we should do optional checking
-        receiptImageView.image = ImageService.getImage(for: receipt!.receiptId!)
         vendorNameLabel.text = receipt?.vendor
         amountLabel.text = TextFormatService.getCurrencyString(for: receipt!.amount)
         dateLabel.text = TextFormatService.getDateString(for: receipt!.transactionTime!, fullMonth: true)
         categoryLabel.text = receipt!.categories.count == 0 ? "None" : receipt!.categories[0].name
         
-        // Add a recognizer to the ImageView so we can expand it on tap
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        receiptImageView.isUserInteractionEnabled = true
-        receiptImageView.addGestureRecognizer(tapGestureRecognizer)
+        // Load image if it exists (may not for imported entries)
+        if let image = ImageService.getImage(for: receipt!.receiptId!) {
+            receiptImageView.image = image
+            // Add a recognizer to the ImageView so we can expand it on tap
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+            receiptImageView.isUserInteractionEnabled = true
+            receiptImageView.addGestureRecognizer(tapGestureRecognizer)
+        } else {
+            // Make height of imageview to 0
+            receiptImageViewHeight.constant = 0
+        }
     }
     
 

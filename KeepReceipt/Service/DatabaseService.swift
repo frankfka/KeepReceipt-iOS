@@ -137,7 +137,9 @@ class DatabaseService {
                             category.name != nil ? category.name! == newCategory.name! : false
                         }) == nil {
                             print("Adding category \(newCategory.name!)")
-                            // TODO actually add the category
+                            try! realm.write {
+                                realm.add(newCategory)
+                            }
                         } else {
                             print("Category \(newCategory.name!) already exists, skipping.")
                         }
@@ -154,19 +156,30 @@ class DatabaseService {
                                 for document in receiptsQuery!.documents {
                                     // Get all the fields
                                     let newReceipt = getReceipt(for: document)
-                                    
+                                    // Add the new receipt if it does not already exist
                                     if allCurrentReceipts.first(where: { (receipt) -> Bool in
                                         return receipt.receiptId != nil ? receipt.receiptId! == newReceipt.receiptId : false
                                     }) == nil {
-                                        let categories = document.data()["categories"] as! [String]
                                         print("Adding receipt \(newReceipt.receiptId!)")
-                                        // TODO actually add the receipt
+                                        
+                                        // Get the list of categories
+                                        let categories = document.data()["categories"] as! [String]
+                                        try! realm.write {
+                                            // Add the receipt to realm
+                                            realm.add(newReceipt)
+                                            for categoryName in categories {
+                                                // Find the category to add this receipt to & add it if it exists
+                                                if let category = allCurrentCategories.first(where: { (category) -> Bool in
+                                                    category.name != nil ? category.name! == categoryName : false
+                                                }) {
+                                                    category.receipts.append(newReceipt)
+                                                }
+                                            }
+                                        }
                                     } else {
                                         print("Receipt \(newReceipt.receiptId!) already exists, skipping.")
                                     }
                                 }
-                                
-                                // TODO add categories after committing object
                             } else {
                                 // Error occured
                                 print("Error getting receipt documents: \(receiptsErr!)")

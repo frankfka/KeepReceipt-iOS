@@ -29,6 +29,7 @@ class AddOrEditReceiptViewController: FormViewController {
     
     // UI Variables
     @IBOutlet weak var receiptImageView: UIImageView!
+    @IBOutlet weak var receiptImageViewHeight: NSLayoutConstraint!
     override var preferredStatusBarStyle: UIStatusBarStyle {
         // Switch status bar to white
         return .lightContent
@@ -47,7 +48,12 @@ class AddOrEditReceiptViewController: FormViewController {
         } else if let receipt = receiptToEdit {
             title = "Edit Receipt"
             // Populate all the form elements
-            receiptImageView.image = ImageService.getImage(for: receipt.receiptId!)
+            // Image may not be present if we're editing an imported receipt
+            if let image = ImageService.getImage(for: receipt.receiptId!) {
+                receiptImageView.image = image
+            } else {
+                receiptImageViewHeight.constant = 0
+            }
             // Set existing values and update views to match
             setExistingValues()
             updateViews()
