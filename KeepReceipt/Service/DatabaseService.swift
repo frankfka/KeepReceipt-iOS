@@ -118,31 +118,28 @@ class DatabaseService {
     }
     
     // Imports all receipts from firebase
+    // Local storage has preference, items are skipped if they are already present (even though they might have different properties)
     static func importFromFirebase(for userId: String) {
-        // TODO when we create stuff, make sure that the key isnt already taken or else
-        // app will crash!
         
         // Get all the categories
         database.collection(ROOT_FIREBASE)
             .document(userId)
             .collection(ROOT_FIREBASE_CATEGORIES_COL)
             .getDocuments() { (categoriesQuery, categoriesErr) in
-                if let error = categoriesErr {
-                    // Error occured
-                    print("Error getting documents: \(error)")
-                } else {
+                if categoriesErr == nil {
                     // No error, go through all the categories
                     let allCurrentCategories = realm.objects(Category.self)
                     for document in categoriesQuery!.documents {
                         // Get name of category from firebase data
-                        let firebaseCategoryName = document.data()["name"] as! String
+                        let newCategory = getCategory(for: document)
                         // Add a new category if the category doesn't already exist
                         if allCurrentCategories.first(where: { (category) -> Bool in
-                            category.name != nil ? category.name! == firebaseCategoryName : false
+                            category.name != nil ? category.name! == newCategory.name! : false
                         }) == nil {
-                            print("Adding category \(firebaseCategoryName)")
+                            print("Adding category \(newCategory.name!)")
+                            // TODO actually add the category
                         } else {
-                            print("Category \(firebaseCategoryName) already exists, skipping.")
+                            print("Category \(newCategory.name!) already exists, skipping.")
                         }
                     }
                     
@@ -150,22 +147,40 @@ class DatabaseService {
                     database.collection(ROOT_FIREBASE)
                         .document(userId)
                         .collection(ROOT_FIREBASE_RECEIPTS_COL).getDocuments() { (receiptsQuery, receiptsErr) in
-                        
-                            if let error = receiptsErr {
-                                // Error occured
-                                print("Error getting documents: \(error)")
-                            } else {
+                            
+                            if receiptsErr == nil {
                                 // No error, go through all the receipts
+                                let allCurrentReceipts = realm.objects(Receipt.self)
                                 for document in receiptsQuery!.documents {
-                                    print(document.data())
+                                    // Get all the fields
+                                    let newReceipt = getReceipt(for: document)
+                                    
+                                    if allCurrentReceipts.first(where: { (receipt) -> Bool in
+                                        return receipt.receiptId != nil ? receipt.receiptId! == newReceipt.receiptId : false
+                                    }) == nil {
+                                        let categories = document.data()["categories"] as! [String]
+                                        print("Adding receipt \(newReceipt.receiptId!)")
+                                        // TODO actually add the receipt
+                                    } else {
+                                        print("Receipt \(newReceipt.receiptId!) already exists, skipping.")
+                                    }
                                 }
+                                
+                                // TODO add categories after committing object
+                            } else {
+                                // Error occured
+                                print("Error getting receipt documents: \(receiptsErr!)")
                             }
                     }
-                    
+                } else {
+                    // Error occured
+                    print("Error getting category documents: \(categoriesErr!)")
                 }
         }
     }
     
+    // MARK: Firebase helper methods
+    // Get firebase document for a receipt
     static private func getFirebaseDocument(for receipt: Receipt) -> [String: Any] {
         // Build categories array
         var categories: [String] = []
@@ -181,8 +196,37 @@ class DatabaseService {
         ]
     }
     
+    // Get firebase document for a category
     static private func getFirebaseDocument(for category: Category) -> [String: Any] {
         return ["name": category.name!]
+    }
+    
+    // Get a category from a firebase document
+    static private func getCategory(for document: QueryDocumentSnapshot) -> Category {
+        let firebaseCategoryName = document.data()["name"] as! String
+        let newCategory = Category()
+        newCategory.name = firebaseCategoryName
+        return newCategory
+    }
+    
+    // Get a reciept from a firebase document
+    // IGNORES category field for now!
+    static private func getReceipt(for document: QueryDocumentSnapshot) -> Receipt {
+        // Get fields
+        let data = document.data()
+        let receiptId = document.documentID
+        let vendor = data["vendor"] as! String
+        let amount = data["amount"] as! Double
+        let transactionTime = (data["transactionTime"] as! Timestamp).dateValue()
+        
+        // Create object
+        let newReceipt = Receipt()
+        newReceipt.receiptId = receiptId
+        newReceipt.vendor = vendor
+        newReceipt.amount = amount
+        newReceipt.transactionTime = transactionTime
+        
+        return newReceipt
     }
     
 }
