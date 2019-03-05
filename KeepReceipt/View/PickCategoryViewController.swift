@@ -85,9 +85,7 @@ class PickCategoryViewController: UIViewController, UITableViewDelegate, UITable
             // Find and delete the category
             let categoryToDelete = allCategories![indexPath.row]
             selectedCategory = selectedCategory == categoryToDelete ? nil : selectedCategory
-            try! realm.write {
-                realm.delete(allCategories![indexPath.row]) //TODO put in database service
-            }
+            DatabaseService.deleteCategory(allCategories![indexPath.row])
             // Disable editing if there are no categories
             if allCategories?.count == 0 {
                 showEditingState(isEditing: false)
@@ -110,9 +108,7 @@ class PickCategoryViewController: UIViewController, UITableViewDelegate, UITable
                 // Create and save a new category
                 let newCategory = Category()
                 newCategory.name = enteredText
-                try! self.realm.write {
-                    self.realm.add(newCategory) // TODO put in database class
-                }
+                DatabaseService.save(newCategory)
                 self.tableView.reloadData()
                 // This is a bug where editing state is persisted if we delete all categories then create a new one
                 if self.allCategories!.count == 1 {

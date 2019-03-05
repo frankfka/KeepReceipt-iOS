@@ -19,6 +19,9 @@ class DatabaseService {
     static let realm = try! Realm(configuration: RealmConfig.defaultConfig())
     static let database = Firestore.firestore()
     
+    // MARK: Receipt Methods
+    
+    // Save a receipt
     static func save(_ receipt: Receipt) {
         try! realm.write {
             realm.add(receipt)
@@ -26,6 +29,7 @@ class DatabaseService {
         //TODO update firebase
     }
     
+    // Delete a receipt
     static func deleteReceipt(_ receipt: Receipt) {
         let imageId = receipt.receiptId!
         try! realm.write {
@@ -36,7 +40,7 @@ class DatabaseService {
         // TODO update firebase
     }
     
-    // TODO refactor this using an enum once we add more fields
+    // Update a receipt with new fields
     static func updateReceipt(_ receipt: Receipt, newVendor: String, newAmount: Double, newDate: Date) {
         try! realm.write {
             receipt.vendor = newVendor
@@ -46,6 +50,24 @@ class DatabaseService {
         // TODO update firebase
     }
     
+    // MARK: Category Methods
+    // Save a new category
+    static func save(_ category: Category) {
+        try! realm.write {
+            realm.add(category)
+        }
+        // TODO update firebase
+    }
+    
+    // Delete a category
+    static func deleteCategory(_ category: Category) {
+        try! realm.write {
+            realm.delete(category)
+        }
+        // TODO firebase
+    }
+    
+    // Update a category with existing fields
     static func updateCategory(for receipt: Receipt, from oldCategory: Category?, to newCategory: Category?) {
         try! realm.write {
             if oldCategory == nil && newCategory != nil {
@@ -95,8 +117,53 @@ class DatabaseService {
         return false
     }
     
-    static func importFromFirebase() {
-        // TODO
+    // Imports all receipts from firebase
+    static func importFromFirebase(for userId: String) {
+        // TODO when we create stuff, make sure that the key isnt already taken or else
+        // app will crash!
+        
+        // Get all the categories
+        database.collection(ROOT_FIREBASE)
+            .document(userId)
+            .collection(ROOT_FIREBASE_CATEGORIES_COL)
+            .getDocuments() { (categoriesQuery, categoriesErr) in
+                if let error = categoriesErr {
+                    // Error occured
+                    print("Error getting documents: \(error)")
+                } else {
+                    // No error, go through all the categories
+                    let allCurrentCategories = realm.objects(Category.self)
+                    for document in categoriesQuery!.documents {
+                        // Get name of category from firebase data
+                        let firebaseCategoryName = document.data()["name"] as! String
+                        // Add a new category if the category doesn't already exist
+                        if allCurrentCategories.first(where: { (category) -> Bool in
+                            category.name != nil ? category.name! == firebaseCategoryName : false
+                        }) == nil {
+                            print("Adding category \(firebaseCategoryName)")
+                        } else {
+                            print("Category \(firebaseCategoryName) already exists, skipping.")
+                        }
+                    }
+                    
+                    // Then we get all the receipts
+                    database.collection(ROOT_FIREBASE)
+                        .document(userId)
+                        .collection(ROOT_FIREBASE_RECEIPTS_COL).getDocuments() { (receiptsQuery, receiptsErr) in
+                        
+                            if let error = receiptsErr {
+                                // Error occured
+                                print("Error getting documents: \(error)")
+                            } else {
+                                // No error, go through all the receipts
+                                for document in receiptsQuery!.documents {
+                                    print(document.data())
+                                }
+                            }
+                    }
+                    
+                }
+        }
     }
     
     static private func getFirebaseDocument(for receipt: Receipt) -> [String: Any] {

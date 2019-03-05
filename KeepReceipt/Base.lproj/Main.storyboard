@@ -52,12 +52,26 @@
                                     <action selector="syncButtonPressed:" destination="ndw-9X-ucb" eventType="touchUpInside" id="13Z-qR-YeQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RNA-Vs-Ayp">
+                                <rect key="frame" x="164.5" y="184" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="jq7-Yb-kV6"/>
+                                </constraints>
+                                <state key="normal" title="Import">
+                                    <color key="titleColor" name="primary"/>
+                                </state>
+                                <connections>
+                                    <action selector="importButtonPressed:" destination="ndw-9X-ucb" eventType="touchUpInside" id="CFT-rY-x79"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ibL-aX-nYT" firstAttribute="top" secondItem="CvT-cc-6DM" secondAttribute="bottom" constant="20" id="Gw3-eU-Dg4"/>
                             <constraint firstItem="ibL-aX-nYT" firstAttribute="centerX" secondItem="RsQ-Az-Nfv" secondAttribute="centerX" id="KS0-s2-Prc"/>
                             <constraint firstItem="9YO-Ue-nrf" firstAttribute="centerX" secondItem="RsQ-Az-Nfv" secondAttribute="centerX" id="L5D-3s-AX5"/>
+                            <constraint firstItem="RNA-Vs-Ayp" firstAttribute="top" secondItem="9YO-Ue-nrf" secondAttribute="bottom" constant="17" id="bn6-Po-Lrt"/>
+                            <constraint firstItem="RNA-Vs-Ayp" firstAttribute="centerX" secondItem="RsQ-Az-Nfv" secondAttribute="centerX" id="iFD-bT-QfG"/>
                             <constraint firstItem="9YO-Ue-nrf" firstAttribute="top" secondItem="ibL-aX-nYT" secondAttribute="bottom" constant="25" id="kt0-dY-54W"/>
                             <constraint firstItem="CvT-cc-6DM" firstAttribute="top" secondItem="BV6-EP-mwh" secondAttribute="top" constant="32" id="nwI-lN-PID"/>
                             <constraint firstItem="CvT-cc-6DM" firstAttribute="centerX" secondItem="RsQ-Az-Nfv" secondAttribute="centerX" id="tN7-zb-QPC"/>

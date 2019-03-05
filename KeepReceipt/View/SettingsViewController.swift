@@ -67,4 +67,10 @@ class SettingsViewController: UIViewController, FUIAuthDelegate {
             // ...
         }
     }
+    
+    @IBAction func importButtonPressed(_ sender: Any) {
+        if let user = Auth.auth().currentUser {
+            DatabaseService.importFromFirebase(for: user.uid)
+        }
+    }
 }
