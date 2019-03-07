@@ -36,6 +36,9 @@ class SettingsViewController: UIViewController, FUIAuthDelegate {
     
     @IBAction func signInPressed(_ sender: UIButton) {
         let authViewController = FUIAuth.defaultAuthUI()!.authViewController()
+        authViewController.navigationBar.tintColor = UIColor.white
+        authViewController.navigationBar.barTintColor = UIColor(named: "primary")!
+        authViewController.navigationBar.prefersLargeTitles = true
         present(authViewController, animated: true, completion: nil)
     }
     
@@ -54,23 +57,12 @@ class SettingsViewController: UIViewController, FUIAuthDelegate {
     }
     
     @IBAction func syncButtonPressed(_ sender: UIButton) {
-        // delete anything that currently exists?
         
-        // two main collections -> receipts and categories
-        if let user = Auth.auth().currentUser {
-            
-            DatabaseService.syncFirebaseForFirstTime(for: user.uid)
-            // User is signed in.
-            // ...
-        } else {
-            // No user is signed in.
-            // ...
-        }
+        DatabaseService.syncFirebaseForFirstTime()
     }
     
     @IBAction func importButtonPressed(_ sender: Any) {
-        if let user = Auth.auth().currentUser {
-            DatabaseService.importFromFirebase(for: user.uid)
-        }
+        
+        DatabaseService.importFromFirebase()
     }
 }

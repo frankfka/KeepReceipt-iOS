@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import FirebaseFirestore
+import FirebaseAuth
 
 let ROOT_FIREBASE = "users"
 let ROOT_FIREBASE_RECEIPTS_COL = "receipts"
@@ -26,18 +27,24 @@ class DatabaseService {
         try! realm.write {
             realm.add(receipt)
         }
-        //TODO update firebase
+        // Save to firebase
+        if let userId = Auth.auth().currentUser?.uid {
+            addToFirebase(receipt: receipt, for: userId)
+        }
     }
     
     // Delete a receipt
     static func deleteReceipt(_ receipt: Receipt) {
         let imageId = receipt.receiptId!
+        // Delete from firebase first
+        if let userId = Auth.auth().currentUser?.uid {
+            deleteFromFirebase(receipt: receipt, for: userId)
+        }
         try! realm.write {
             realm.delete(receipt)
         }
         let deleteImageSuccess = ImageService.deleteImage(with: imageId)
         print("Deleted receipt, image deletion successful: \(deleteImageSuccess)")
-        // TODO update firebase
     }
     
     // Update a receipt with new fields
@@ -47,7 +54,10 @@ class DatabaseService {
             receipt.amount = newAmount
             receipt.transactionTime = newDate
         }
-        // TODO update firebase
+        // Existing document will be overwritten
+        if let userId = Auth.auth().currentUser?.uid {
+            addToFirebase(receipt: receipt, for: userId)
+        }
     }
     
     // MARK: Category Methods
@@ -56,15 +66,21 @@ class DatabaseService {
         try! realm.write {
             realm.add(category)
         }
-        // TODO update firebase
+        // Save to firebase
+        if let userId = Auth.auth().currentUser?.uid {
+            addToFirebase(category: category, for: userId)
+        }
     }
     
     // Delete a category
     static func deleteCategory(_ category: Category) {
+        // Delete from firebase first
+        if let userId = Auth.auth().currentUser?.uid {
+            deleteFromFirebase(category: category, for: userId)
+        }
         try! realm.write {
             realm.delete(category)
         }
-        // TODO firebase
     }
     
     // Update a category with existing fields
@@ -82,48 +98,43 @@ class DatabaseService {
                 newCategory!.receipts.append(receipt)
             }
         }
-        // TODO update firebase
+        // Just add the receipt to firebase - it will be overwritten
+        if let userId = Auth.auth().currentUser?.uid {
+            addToFirebase(receipt: receipt, for: userId)
+        }
     }
     
     // Uploads all receipts to firebase and returns true if successful
-    static func syncFirebaseForFirstTime(for userId: String) -> Bool {
+    static func syncFirebaseForFirstTime() {
+        let userId = Auth.auth().currentUser?.uid
+        // Return if no user logged in
+        if userId == nil {
+            return
+        }
+        
         let allReceipts = realm.objects(Receipt.self)
         let allCategories = realm.objects(Category.self)
         
         for receipt in allReceipts {
-            database.collection(ROOT_FIREBASE).document(userId)
-                .collection(ROOT_FIREBASE_RECEIPTS_COL).document(receipt.receiptId!)
-                .setData(getFirebaseDocument(for: receipt)) { err in
-                if let err = err {
-                    print("Error writing document: \(err)")
-                } else {
-                    print("Document successfully written!")
-                }
-            }
+            addToFirebase(receipt: receipt, for: userId!)
         }
-        
         for category in allCategories {
-            database.collection(ROOT_FIREBASE).document(userId)
-                    .collection(ROOT_FIREBASE_CATEGORIES_COL).document(category.name!)
-                    .setData(getFirebaseDocument(for: category)) { err in
-                if let err = err {
-                    print("Error writing document: \(err)")
-                } else {
-                    print("Document successfully written!")
-                }
-            }
+            addToFirebase(category: category, for: userId!)
         }
-        
-        return false
     }
     
     // Imports all receipts from firebase
     // Local storage has preference, items are skipped if they are already present (even though they might have different properties)
-    static func importFromFirebase(for userId: String) {
+    static func importFromFirebase() {
+        let userId = Auth.auth().currentUser?.uid
+        // Return if no user logged in
+        if userId == nil {
+            return
+        }
         
         // Get all the categories
         database.collection(ROOT_FIREBASE)
-            .document(userId)
+            .document(userId!)
             .collection(ROOT_FIREBASE_CATEGORIES_COL)
             .getDocuments() { (categoriesQuery, categoriesErr) in
                 if categoriesErr == nil {
@@ -147,7 +158,7 @@ class DatabaseService {
                     
                     // Then we get all the receipts
                     database.collection(ROOT_FIREBASE)
-                        .document(userId)
+                        .document(userId!)
                         .collection(ROOT_FIREBASE_RECEIPTS_COL).getDocuments() { (receiptsQuery, receiptsErr) in
                             
                             if receiptsErr == nil {
@@ -193,6 +204,42 @@ class DatabaseService {
     }
     
     // MARK: Firebase helper methods
+    // Adds a receipt document to firebase
+    static private func addToFirebase(receipt: Receipt, for userId: String) {
+        database.collection(ROOT_FIREBASE).document(userId)
+            .collection(ROOT_FIREBASE_RECEIPTS_COL).document(receipt.receiptId!)
+            .setData(getFirebaseDocument(for: receipt)) { err in
+                if let err = err {
+                    print("Error writing receipt \(receipt.receiptId!): \(err)")
+                }
+        }
+    }
+    
+    // Adds a category document to firebase
+    static private func addToFirebase(category: Category, for userId: String) {
+        database.collection(ROOT_FIREBASE).document(userId)
+            .collection(ROOT_FIREBASE_CATEGORIES_COL).document(category.name!)
+            .setData(getFirebaseDocument(for: category)) { err in
+                if let err = err {
+                    print("Error writing category \(category.name!): \(err)")
+                }
+        }
+    }
+    
+    // Deletes a receipt document from firebase
+    static private func deleteFromFirebase(receipt: Receipt, for userId: String) {
+        database.collection(ROOT_FIREBASE).document(userId)
+            .collection(ROOT_FIREBASE_RECEIPTS_COL).document(receipt.receiptId!)
+            .delete()
+    }
+    
+    // Deletes a category document from firebase
+    static private func deleteFromFirebase(category: Category, for userId: String) {
+        database.collection(ROOT_FIREBASE).document(userId)
+            .collection(ROOT_FIREBASE_CATEGORIES_COL).document(category.name!)
+            .delete()
+    }
+    
     // Get firebase document for a receipt
     static private func getFirebaseDocument(for receipt: Receipt) -> [String: Any] {
         // Build categories array
