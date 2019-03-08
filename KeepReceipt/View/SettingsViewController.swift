@@ -12,84 +12,145 @@ import Eureka
 
 class SettingsViewController: FormViewController, FUIAuthDelegate {
     
-    // Available methods: syncforfirsttime, import, sign in, sign out
-    
     // Firebase variables
     var authUI: FUIAuth?
+    
+    // Specified settings
+    let userDefaults = UserDefaults.standard
+    var syncEnabled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Get saved settings
+        syncEnabled = userDefaults.bool(forKey: Settings.SYNC_ENABLED)
+        
+        // Initialize the form
         setUpForm()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        updateViews()
+    }
+    
+    // Function called when user returns from sign-in
+    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
+        // Update state variables here
+        UIService.showHUDWithNoAction(isSuccessful: true, with: "Signed In Successfully")
+        // Update views to match
+        updateViews()
+    }
+    
+    // MARK: Private UI Helper functions
+    private func updateViews() {
+        
+        // Get the current state
+        let currUser = Auth.auth().currentUser
+        let currUserName = currUser?.displayName
+        let isSignedIn = currUser != nil
+        let userHasName = currUserName != nil
+        
+        // Set the account name
+        form.rowBy(tag: Constants.SIGNED_IN_AS_TAG)?.value = isSignedIn ? (userHasName ? currUserName! : Constants.SIGNED_IN_AS_NO_NAME) : Constants.SIGNED_IN_AS_NO_AUTH
+        // Set the state of the sync enabled switch
+        let syncEnabledSwitch = form.rowBy(tag: Constants.ENABLE_SYNC_TAG) as! SwitchRow
+        syncEnabledSwitch.value = syncEnabled && isSignedIn
+        syncEnabledSwitch.disabled = Condition(booleanLiteral: !isSignedIn)
+        syncEnabledSwitch.reload()
+        // Set disabled state of the sync/import
+        let syncButton = form.rowBy(tag: Constants.SYNC_BUTTON_TAG) as! ButtonRow
+        syncButton.disabled = Condition(booleanLiteral: !isSignedIn || !syncEnabled)
+        syncButton.evaluateDisabled()
+        let importButton = form.rowBy(tag: Constants.IMPORT_BUTTON_TAG) as! ButtonRow
+        importButton.disabled = Condition(booleanLiteral: !isSignedIn || !syncEnabled)
+        importButton.evaluateDisabled()
+        // Initialize sign-in/out button
+        let signInOutButton = form.rowBy(tag: Constants.SIGN_IN_OUT_BUTTON_TAG) as! ButtonRow
+        signInOutButton.title = isSignedIn ? Constants.SIGN_OUT_TITLE : Constants.SIGN_IN_TITLE
+        signInOutButton.onCellSelection { (cell, row) in
+            // Action to take depends on the current state
+            if isSignedIn {
+                self.signOutPressed()
+            } else {
+                self.signInPressed()
+            }
+        }
+        
+        // Reload the form table
+        tableView.reloadData()
     }
     
     // Method to initialize the form
     private func setUpForm() {
         
-        let currUser = Auth.auth().currentUser
-        let currUserName = currUser?.displayName
-        let isSignedIn = currUser != nil
-        let userHasName = currUserName != nil
         // Enables smooth scrolling between form elements
         animateScroll = true
         
-        form +++ Section("Account")
+        form +++ Section(Constants.ACCOUNT_SETTINGS_SECTION_TITLE)
             <<< TextRow() { row in
-                row.title = "Account"
-                row.value = isSignedIn ? (userHasName ? currUserName! : "No Name") : "Not Signed In"
+                row.tag = Constants.SIGNED_IN_AS_TAG
+                row.title = Constants.SIGNED_IN_AS_TITLE
+                // Default value in row
+                row.value = Constants.SIGNED_IN_AS_NO_NAME
                 row.cell.textField.isUserInteractionEnabled = false
             }
             <<< SwitchRow() { row in
-                row.title = "Enable Sync"
-                row.value = false
+                row.tag = Constants.ENABLE_SYNC_TAG
+                row.title = Constants.ENABLE_SYNC_TITLE
                 // Change the tint background for the switch
                 (row.baseCell as! SwitchCell).switchControl.onTintColor = UIColor(named: "accent")
-                row.disabled = Condition(booleanLiteral: !isSignedIn)
+                // On switch listener
+                row.onChange({ (row) in
+                    // Change user defaults & update views
+                    print("Changing default sync enabled to \(row.value!)")
+                    self.syncEnabled = row.value!
+                    self.userDefaults.set(row.value, forKey: Settings.SYNC_ENABLED)
+                    self.updateViews()
+                })
             }
             <<< ButtonRow() { row in
-                row.title = "Force Sync"
+                row.tag = Constants.SYNC_BUTTON_TAG
+                row.title = Constants.SYNC_BUTTON_TITLE
                 row.baseCell.tintColor = UIColor(named: "primary")
-                row.disabled = Condition(booleanLiteral: (!isSignedIn || false))
                 row.onCellSelection({ (cell, row) in
                     // TODO does this get triggered when disabled?
                     print("force sync pressed")
                 })
             }
             <<< ButtonRow() { row in
-                row.title = "Import"
+                row.tag = Constants.IMPORT_BUTTON_TAG
+                row.title = Constants.IMPORT_BUTTON_TITLE
                 row.baseCell.tintColor = UIColor(named: "primary")
-                row.disabled = Condition(booleanLiteral: (!isSignedIn || true))
                 row.onCellSelection({ (cell, row) in
                     // TODO does this get triggered when disabled?
                     print("import pressed")
                 })
             }
             <<< ButtonRow() { row in
-                row.title = isSignedIn ? "Sign Out" : "Sign In"
+                row.tag = Constants.SIGN_IN_OUT_BUTTON_TAG
                 row.baseCell.tintColor = UIColor(named: "primary")
-                row.onCellSelection({ (cell, row) in
-                    if isSignedIn {
-                        self.signOutPressed()
-                    } else {
-                        self.signInPressed()
-                    }
-                })
             }
         
         
         // TODO a delete all row?
+        
+        // Update views does the state configuration for the form
+        updateViews()
     }
     
     // Initialize & launch Google's default sign-in UI
     private func signInPressed() {
+        // Retrieve the authentication UI instance
         authUI = FUIAuth.defaultAuthUI()
         if let auth = authUI {
-            // Setup Firebase sign-in
+            // Set up providers
             auth.delegate = self
             auth.providers = [FUIGoogleAuth()]
             
+            // Change styling of view controller & present it
             let authViewController = FUIAuth.defaultAuthUI()!.authViewController()
             authViewController.navigationBar.tintColor = UIColor.white
             authViewController.navigationBar.barTintColor = UIColor(named: "primary")!
@@ -105,16 +166,10 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
         do {
             try Auth.auth().signOut()
             UIService.showHUDWithNoAction(isSuccessful: true, with: "Signed Out Successfully")
-            // Update state & stuff
+            updateViews()
         } catch {
             print("Error trying to sign out: \(error)")
         }
-    }
-    
-    // Function called when user returns from sign-in
-    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
-        // Update state variables here
-        UIService.showHUDWithNoAction(isSuccessful: true, with: "Signed In Successfully")
     }
     
 }

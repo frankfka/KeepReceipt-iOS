@@ -31,6 +31,7 @@
 		11902D1022134FDF004592BE /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11902D0F22134FDF004592BE /* AnalyticsService.swift */; };
 		11C7720E222C1ECC0021B0BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C7720D222C1ECC0021B0BC /* GoogleService-Info.plist */; };
 		11C77210222C2A000021B0BC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C7720F222C2A000021B0BC /* SettingsViewController.swift */; };
+		11CCC5232231F35B00F7BD6E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CCC5222231F35B00F7BD6E /* Settings.swift */; };
 		11DA7F9F2213D1D500C001BE /* CategoryAnalyticsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11DA7F9E2213D1D500C001BE /* CategoryAnalyticsTableViewCell.xib */; };
 		11F377D721FB695300E3CE93 /* AdvancedSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F377D621FB695300E3CE93 /* AdvancedSearchViewController.swift */; };
 		11F377D921FB6A1A00E3CE93 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F377D821FB6A1A00E3CE93 /* SearchResultsTableViewController.swift */; };
@@ -66,6 +67,7 @@
 		11902D0F22134FDF004592BE /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		11C7720D222C1ECC0021B0BC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		11C7720F222C2A000021B0BC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		11CCC5222231F35B00F7BD6E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		11DA7F9E2213D1D500C001BE /* CategoryAnalyticsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryAnalyticsTableViewCell.xib; sourceTree = "<group>"; };
 		11F377D621FB695300E3CE93 /* AdvancedSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSearchViewController.swift; sourceTree = "<group>"; };
 		11F377D821FB6A1A00E3CE93 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				117905C921E3DBD90019EEAA /* Receipt.swift */,
+				11CCC5222231F35B00F7BD6E /* Settings.swift */,
 				117905CB21E3DD820019EEAA /* Category.swift */,
 				1179060121E5AEC30019EEAA /* RealmConfig.swift */,
 				11F377DA21FBB0FB00E3CE93 /* Constants.swift */,
@@ -388,6 +391,7 @@
 				11902D1022134FDF004592BE /* AnalyticsService.swift in Sources */,
 				117905CA21E3DBD90019EEAA /* Receipt.swift in Sources */,
 				11902D0A22112743004592BE /* CategoryAnalyticsTableViewCell.swift in Sources */,
+				11CCC5232231F35B00F7BD6E /* Settings.swift in Sources */,
 				1179060921E788220019EEAA /* UIService.swift in Sources */,
 				1179060421E5B9540019EEAA /* AddOrEditReceiptViewController.swift in Sources */,
 				117905B421E391980019EEAA /* AppDelegate.swift in Sources */,

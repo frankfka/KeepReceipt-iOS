@@ -23,6 +23,22 @@ class Constants {
     static let CATEGORY_TAG = "category"
     static let CATEGORY_TITLE = "Category"
     
+    // Constants for all the form text/ID's (for settings)
+    static let ACCOUNT_SETTINGS_SECTION_TITLE = "Account"
+    static let SIGNED_IN_AS_TAG = "signedInAs"
+    static let SIGNED_IN_AS_TITLE = "Account"
+    static let SIGNED_IN_AS_NO_AUTH = "Not Signed In"
+    static let SIGNED_IN_AS_NO_NAME = "No Name"
+    static let ENABLE_SYNC_TAG = "enableSync"
+    static let ENABLE_SYNC_TITLE = "Enable Sync"
+    static let SYNC_BUTTON_TAG = "syncButton"
+    static let SYNC_BUTTON_TITLE = "Force Sync"
+    static let IMPORT_BUTTON_TAG = "importButton"
+    static let IMPORT_BUTTON_TITLE = "Import"
+    static let SIGN_IN_OUT_BUTTON_TAG = "signInOutButton"
+    static let SIGN_IN_TITLE = "Sign In"
+    static let SIGN_OUT_TITLE = "Sign Out"
+    
     // Constants for all the form text/ID's (for search)
     static let RECEIPT_SEARCH_SECTION_GENERAL_TITLE = "General"
     static let RECEIPT_SEARCH_KEYWORDS_TITLE = "Keywords"
