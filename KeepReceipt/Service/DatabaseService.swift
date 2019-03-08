@@ -29,7 +29,10 @@ class DatabaseService {
         }
         // Save to firebase
         if let userId = Auth.auth().currentUser?.uid {
-            addToFirebase(receipt: receipt, for: userId)
+            if UserDefaults.standard.bool(forKey: Settings.SYNC_ENABLED) {
+                print("Sync enabled. Saving receipt to Firebase")
+                addToFirebase(receipt: receipt, for: userId)
+            }
         }
     }
     
@@ -38,7 +41,10 @@ class DatabaseService {
         let imageId = receipt.receiptId!
         // Delete from firebase first
         if let userId = Auth.auth().currentUser?.uid {
-            deleteFromFirebase(receipt: receipt, for: userId)
+            if UserDefaults.standard.bool(forKey: Settings.SYNC_ENABLED) {
+                print("Sync enabled. Deleting receipt from Firebase")
+                deleteFromFirebase(receipt: receipt, for: userId)
+            }
         }
         try! realm.write {
             realm.delete(receipt)
@@ -56,7 +62,10 @@ class DatabaseService {
         }
         // Existing document will be overwritten
         if let userId = Auth.auth().currentUser?.uid {
-            addToFirebase(receipt: receipt, for: userId)
+            if UserDefaults.standard.bool(forKey: Settings.SYNC_ENABLED) {
+                print("Sync enabled. Updating receipt on Firebase")
+                addToFirebase(receipt: receipt, for: userId)
+            }
         }
     }
     
@@ -68,7 +77,10 @@ class DatabaseService {
         }
         // Save to firebase
         if let userId = Auth.auth().currentUser?.uid {
-            addToFirebase(category: category, for: userId)
+            if UserDefaults.standard.bool(forKey: Settings.SYNC_ENABLED) {
+                print("Sync enabled. Saving category to Firebase")
+                addToFirebase(category: category, for: userId)
+            }
         }
     }
     
@@ -76,7 +88,10 @@ class DatabaseService {
     static func deleteCategory(_ category: Category) {
         // Delete from firebase first
         if let userId = Auth.auth().currentUser?.uid {
-            deleteFromFirebase(category: category, for: userId)
+            if UserDefaults.standard.bool(forKey: Settings.SYNC_ENABLED) {
+                print("Sync enabled. Deleting category from Firebase")
+                deleteFromFirebase(category: category, for: userId)
+            }
         }
         try! realm.write {
             realm.delete(category)
@@ -100,12 +115,15 @@ class DatabaseService {
         }
         // Just add the receipt to firebase - it will be overwritten
         if let userId = Auth.auth().currentUser?.uid {
-            addToFirebase(receipt: receipt, for: userId)
+            if UserDefaults.standard.bool(forKey: Settings.SYNC_ENABLED) {
+                print("Sync enabled. Updating category to Firebase")
+                addToFirebase(receipt: receipt, for: userId)
+            }
         }
     }
     
     // Uploads all receipts to firebase and returns true if successful
-    static func syncFirebaseForFirstTime() {
+    static func syncFirebase() {
         let userId = Auth.auth().currentUser?.uid
         // Return if no user logged in
         if userId == nil {

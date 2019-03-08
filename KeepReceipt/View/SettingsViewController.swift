@@ -105,7 +105,6 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
                 // On switch listener
                 row.onChange({ (row) in
                     // Change user defaults & update views
-                    print("Changing default sync enabled to \(row.value!)")
                     self.syncEnabled = row.value!
                     self.userDefaults.set(row.value, forKey: Settings.SYNC_ENABLED)
                     self.updateViews()
@@ -116,8 +115,10 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
                 row.title = Constants.SYNC_BUTTON_TITLE
                 row.baseCell.tintColor = UIColor(named: "primary")
                 row.onCellSelection({ (cell, row) in
-                    // TODO does this get triggered when disabled?
-                    print("force sync pressed")
+                    if self.syncEnabled {
+                        print("Syncing with Firebase")
+                        DatabaseService.syncFirebase()
+                    }
                 })
             }
             <<< ButtonRow() { row in
@@ -125,8 +126,10 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
                 row.title = Constants.IMPORT_BUTTON_TITLE
                 row.baseCell.tintColor = UIColor(named: "primary")
                 row.onCellSelection({ (cell, row) in
-                    // TODO does this get triggered when disabled?
-                    print("import pressed")
+                    if self.syncEnabled {
+                        print("Importing from Firebase")
+                        DatabaseService.importFromFirebase()
+                    }
                 })
             }
             <<< ButtonRow() { row in
