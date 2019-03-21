@@ -729,11 +729,11 @@
             </objects>
             <point key="canvasLocation" x="-122.40000000000001" y="98.50074962518741"/>
         </scene>
-        <!--Item-->
+        <!--Settings-->
         <scene sceneID="FPZ-jn-X5c">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="m2y-BP-Txr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="ue4-rv-AZW"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" selectedImage="settings_selected" id="ue4-rv-AZW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="bJh-mm-L7d">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
@@ -758,6 +758,8 @@
         <image name="analytics_selected" width="23" height="23"/>
         <image name="search" width="23" height="23"/>
         <image name="search_selected" width="23" height="23"/>
+        <image name="settings" width="20" height="20"/>
+        <image name="settings_selected" width="20" height="20"/>
         <image name="view_all" width="23" height="23"/>
         <image name="view_all_selected" width="23" height="23"/>
         <namedColor name="accent">

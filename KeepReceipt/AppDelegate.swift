@@ -21,6 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure Firebase
         FirebaseApp.configure()
         
+        // Initialize default settings if they don't exist
+        let userDefaults = UserDefaults.standard
+        if userDefaults.value(forKey: Settings.ANALYTICS_GRAPH_MONTHS) == nil {
+            userDefaults.set(5, forKey: Settings.ANALYTICS_GRAPH_MONTHS)
+        }
+        if userDefaults.value(forKey: Settings.NUM_RECEIPTS_HOME) == nil {
+            userDefaults.set(100, forKey: Settings.NUM_RECEIPTS_HOME)
+        }
+        
         return true
     }
     

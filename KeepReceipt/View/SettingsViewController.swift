@@ -18,12 +18,16 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
     // Specified settings
     let userDefaults = UserDefaults.standard
     var syncEnabled = false
+    var homeNumReceipts = 0
+    var analyticsNumMonths = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Get saved settings
         syncEnabled = userDefaults.bool(forKey: Settings.SYNC_ENABLED)
+        homeNumReceipts = userDefaults.integer(forKey: Settings.NUM_RECEIPTS_HOME)
+        analyticsNumMonths = userDefaults.integer(forKey: Settings.ANALYTICS_GRAPH_MONTHS)
         
         // Initialize the form
         setUpForm()
@@ -89,54 +93,92 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
         // Enables smooth scrolling between form elements
         animateScroll = true
         
-        form +++ Section(Constants.ACCOUNT_SETTINGS_SECTION_TITLE)
-            <<< TextRow() { row in
-                row.tag = Constants.SIGNED_IN_AS_TAG
-                row.title = Constants.SIGNED_IN_AS_TITLE
-                // Default value in row
-                row.value = Constants.SIGNED_IN_AS_NO_NAME
-                row.cell.textField.isUserInteractionEnabled = false
-            }
-            <<< SwitchRow() { row in
-                row.tag = Constants.ENABLE_SYNC_TAG
-                row.title = Constants.ENABLE_SYNC_TITLE
-                // Change the tint background for the switch
-                (row.baseCell as! SwitchCell).switchControl.onTintColor = UIColor(named: "accent")
-                // On switch listener
-                row.onChange({ (row) in
-                    // Change user defaults & update views
-                    self.syncEnabled = row.value!
-                    self.userDefaults.set(row.value, forKey: Settings.SYNC_ENABLED)
-                    self.updateViews()
-                })
-            }
-            <<< ButtonRow() { row in
-                row.tag = Constants.SYNC_BUTTON_TAG
-                row.title = Constants.SYNC_BUTTON_TITLE
-                row.baseCell.tintColor = UIColor(named: "primary")
-                row.onCellSelection({ (cell, row) in
-                    if self.syncEnabled {
-                        print("Syncing with Firebase")
-                        DatabaseService.syncFirebase()
+        form
+            // FIRST GENERAL SECTION
+            +++ Section(Constants.GENERAL_SECTION_TITLE)
+                <<< StepperRow() { row in
+                    row.tag = Constants.HOME_NUM_RECEIPTS_TAG
+                    row.title = Constants.HOME_NUM_RECEIPTS_TITLE
+                    row.value = Double(homeNumReceipts)
+                    row.cell.stepper.minimumValue = 1
+                    row.cell.stepper.stepValue = 1
+                    row.cell.tintColor = UIColor(named: "primary")
+                    row.displayValueFor = { (value) in
+                        return String(Int(value!))
                     }
-                })
-            }
-            <<< ButtonRow() { row in
-                row.tag = Constants.IMPORT_BUTTON_TAG
-                row.title = Constants.IMPORT_BUTTON_TITLE
-                row.baseCell.tintColor = UIColor(named: "primary")
-                row.onCellSelection({ (cell, row) in
-                    if self.syncEnabled {
-                        print("Importing from Firebase")
-                        DatabaseService.importFromFirebase()
+                    row.onChange({ (row) in
+                        // Change user defaults
+                        let intValue = Int(row.value!)
+                        self.homeNumReceipts = intValue
+                        self.userDefaults.set(intValue, forKey: Settings.NUM_RECEIPTS_HOME)
+                    })
+                }
+                <<< StepperRow() { row in
+                    row.tag = Constants.ANALYTICS_NUM_MONTHS_TAG
+                    row.title = Constants.ANALYTICS_NUM_MONTHS_TITLE
+                    row.value = Double(analyticsNumMonths)
+                    row.cell.stepper.minimumValue = 2
+                    row.cell.stepper.stepValue = 1
+                    row.cell.tintColor = UIColor(named: "primary")
+                    row.displayValueFor = { (value) in
+                        return String(Int(value!))
                     }
-                })
-            }
-            <<< ButtonRow() { row in
-                row.tag = Constants.SIGN_IN_OUT_BUTTON_TAG
-                row.baseCell.tintColor = UIColor(named: "primary")
-            }
-        
+                    row.onChange({ (row) in
+                        // Change user defaults
+                        let intValue = Int(row.value!)
+                        self.analyticsNumMonths = intValue
+                        self.userDefaults.set(intValue, forKey: Settings.ANALYTICS_GRAPH_MONTHS)
+                    })
+                }
+            
+            // SECTION FOR FIREBASE SYNC
+            +++ Section(Constants.ACCOUNT_SETTINGS_SECTION_TITLE)
+                <<< TextRow() { row in
+                    row.tag = Constants.SIGNED_IN_AS_TAG
+                    row.title = Constants.SIGNED_IN_AS_TITLE
+                    // Default value in row
+                    row.value = Constants.SIGNED_IN_AS_NO_NAME
+                    row.cell.textField.isUserInteractionEnabled = false
+                }
+                <<< SwitchRow() { row in
+                    row.tag = Constants.ENABLE_SYNC_TAG
+                    row.title = Constants.ENABLE_SYNC_TITLE
+                    // Change the tint background for the switch
+                    (row.baseCell as! SwitchCell).switchControl.onTintColor = UIColor(named: "accent")
+                    // On switch listener
+                    row.onChange({ (row) in
+                        // Change user defaults & update views
+                        self.syncEnabled = row.value!
+                        self.userDefaults.set(row.value, forKey: Settings.SYNC_ENABLED)
+                        self.updateViews()
+                    })
+                }
+                <<< ButtonRow() { row in
+                    row.tag = Constants.SYNC_BUTTON_TAG
+                    row.title = Constants.SYNC_BUTTON_TITLE
+                    row.baseCell.tintColor = UIColor(named: "primary")
+                    row.onCellSelection({ (cell, row) in
+                        if self.syncEnabled {
+                            print("Syncing with Firebase")
+                            DatabaseService.syncFirebase()
+                        }
+                    })
+                }
+                <<< ButtonRow() { row in
+                    row.tag = Constants.IMPORT_BUTTON_TAG
+                    row.title = Constants.IMPORT_BUTTON_TITLE
+                    row.baseCell.tintColor = UIColor(named: "primary")
+                    row.onCellSelection({ (cell, row) in
+                        if self.syncEnabled {
+                            print("Importing from Firebase")
+                            DatabaseService.importFromFirebase()
+                        }
+                    })
+                }
+                <<< ButtonRow() { row in
+                    row.tag = Constants.SIGN_IN_OUT_BUTTON_TAG
+                    row.baseCell.tintColor = UIColor(named: "primary")
+                }
         
         // TODO a delete all row?
         

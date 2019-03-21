@@ -24,6 +24,11 @@ class Constants {
     static let CATEGORY_TITLE = "Category"
     
     // Constants for all the form text/ID's (for settings)
+    static let GENERAL_SECTION_TITLE = "General"
+    static let HOME_NUM_RECEIPTS_TAG = "homeNumReceipts"
+    static let HOME_NUM_RECEIPTS_TITLE = "Visible Receipts"
+    static let ANALYTICS_NUM_MONTHS_TAG = "analyticsNumMonths"
+    static let ANALYTICS_NUM_MONTHS_TITLE = "Analytics Graph Months"
     static let ACCOUNT_SETTINGS_SECTION_TITLE = "Account"
     static let SIGNED_IN_AS_TAG = "signedInAs"
     static let SIGNED_IN_AS_TITLE = "Account"

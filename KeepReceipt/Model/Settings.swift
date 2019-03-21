@@ -11,5 +11,7 @@ import Foundation
 class Settings {
     
     static let SYNC_ENABLED = "syncEnabled"
+    static let ANALYTICS_GRAPH_MONTHS = "analyticsGraphMonths"
+    static let NUM_RECEIPTS_HOME = "numReceiptsHome"
     
 }
