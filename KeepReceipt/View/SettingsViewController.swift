@@ -18,7 +18,6 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
     // Specified settings
     let userDefaults = UserDefaults.standard
     var syncEnabled = false
-    var homeNumReceipts = 0
     var analyticsNumMonths = 0
     
     override func viewDidLoad() {
@@ -26,7 +25,6 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
         
         // Get saved settings
         syncEnabled = userDefaults.bool(forKey: Settings.SYNC_ENABLED)
-        homeNumReceipts = userDefaults.integer(forKey: Settings.NUM_RECEIPTS_HOME)
         analyticsNumMonths = userDefaults.integer(forKey: Settings.ANALYTICS_GRAPH_MONTHS)
         
         // Initialize the form
@@ -96,23 +94,6 @@ class SettingsViewController: FormViewController, FUIAuthDelegate {
         form
             // FIRST GENERAL SECTION
             +++ Section(Constants.GENERAL_SECTION_TITLE)
-                <<< StepperRow() { row in
-                    row.tag = Constants.HOME_NUM_RECEIPTS_TAG
-                    row.title = Constants.HOME_NUM_RECEIPTS_TITLE
-                    row.value = Double(homeNumReceipts)
-                    row.cell.stepper.minimumValue = 1
-                    row.cell.stepper.stepValue = 1
-                    row.cell.tintColor = UIColor(named: "primary")
-                    row.displayValueFor = { (value) in
-                        return String(Int(value!))
-                    }
-                    row.onChange({ (row) in
-                        // Change user defaults
-                        let intValue = Int(row.value!)
-                        self.homeNumReceipts = intValue
-                        self.userDefaults.set(intValue, forKey: Settings.NUM_RECEIPTS_HOME)
-                    })
-                }
                 <<< StepperRow() { row in
                     row.tag = Constants.ANALYTICS_NUM_MONTHS_TAG
                     row.title = Constants.ANALYTICS_NUM_MONTHS_TITLE

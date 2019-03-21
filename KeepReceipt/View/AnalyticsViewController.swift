@@ -87,6 +87,8 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func loadViews() {
+        // Get number of analytics months as defined in user settings
+        let numAnalyticsMonths = UserDefaults.standard.integer(forKey: Settings.ANALYTICS_GRAPH_MONTHS)
         
         let currentDateComponents = DateComponents(year: selectedYearRow! >= 0 ? Int(string: yearOptions![selectedYearRow!]) : todayComponents!.year!,
                        month: selectedMonthRow! >= 0 ? Int(selectedMonthRow! + 1) : todayComponents!.month!)
@@ -112,7 +114,7 @@ class AnalyticsViewController: UIViewController, UITableViewDelegate, UITableVie
         // We'll use an extracted helper method in Analytics service to keep code clean
         var lineChartData: [ChartDataEntry] = [ChartDataEntry(x: getMiddleOfMonthDate(firstOfMonthDate: firstOfDisplayMonth!).timeIntervalSince1970, y: totalSpend)] // Initialized with this month
         // Now loop through prior months
-        let maxMonthNumber = 4
+        let maxMonthNumber = numAnalyticsMonths - 1 // Minus 1 since current month counts as one month
         for monthIncrement in 1...maxMonthNumber {
             let firstOfMonth = utilCalendar.date(byAdding: .month, value: -monthIncrement, to: firstOfDisplayMonth!)!
             let lastOfMonth = utilCalendar.date(byAdding: .month, value: -monthIncrement, to: lastOfDisplayMonth!)!
